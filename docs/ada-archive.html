@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apple Design Awards Archive (2020–2025)</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f5f3ee;
+    --surface:#ffffff;
+    --surface-hi:#fcfbf8;
+    --line:#e7e3d9;
+    --line-soft:#efece4;
+    --text:#1d1c18;
+    --muted:#6c685f;
+    --muted-dim:#9b968b;
+    --gold:#a9842f;
+    --gold-dim:#8a6c26;
+
+    --c-delight:#e0612f;
+    --c-inclusivity:#159c7e;
+    --c-innovation:#3a6ff0;
+    --c-interaction:#8a52e0;
+    --c-social:#e0457a;
+    --c-visuals:#b5820f;
+    --c-spatial:#1391c4;
+    --c-uncat:#7a7e88;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Pretendard Variable",Pretendard,-apple-system,system-ui,sans-serif;
+    background:
+      radial-gradient(1100px 640px at 82% -10%, rgba(169,132,47,0.08), transparent 60%),
+      radial-gradient(900px 560px at 2% 2%, rgba(58,111,240,0.05), transparent 55%),
+      var(--bg);
+    color:var(--text);line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh;
+  }
+  a{color:inherit;text-decoration:none}
+
+  header{max-width:1180px;margin:0 auto;padding:62px 28px 28px;position:relative}
+  .eyebrow{
+    font-size:12px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);
+    font-weight:600;margin-bottom:22px;display:flex;align-items:center;gap:12px;
+  }
+  .eyebrow::before{content:"";width:34px;height:1px;background:linear-gradient(90deg,var(--gold),transparent)}
+  h1{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(38px,6.5vw,76px);
+     line-height:1.02;letter-spacing:-0.015em;margin-bottom:18px}
+  h1 .it{font-style:italic;font-weight:400;color:var(--gold)}
+  .lede{font-size:clamp(15px,1.7vw,18px);color:var(--muted);max-width:660px;line-height:1.7}
+  .stats{display:flex;flex-wrap:wrap;gap:34px;margin-top:34px;padding-top:30px;border-top:1px solid var(--line-soft)}
+  .stat .n{font-family:"Fraunces",serif;font-size:34px;font-weight:600;line-height:1}
+  .stat .l{font-size:12.5px;color:var(--muted-dim);margin-top:7px;letter-spacing:.04em}
+
+  /* Language toggle */
+  .lang-toggle{
+    position:absolute;top:62px;right:28px;
+    display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;
+    font-size:12px;font-weight:600;letter-spacing:.06em;
+  }
+  .lang-btn{
+    padding:6px 12px;cursor:pointer;background:transparent;border:none;
+    font-family:inherit;font-size:12px;font-weight:600;letter-spacing:.06em;
+    color:var(--muted-dim);transition:all .16s;
+  }
+  .lang-btn.active{background:var(--text);color:#fff;}
+  .lang-btn:hover:not(.active){color:var(--text);background:var(--line-soft);}
+
+  .controls{position:sticky;top:0;z-index:40;
+    background:linear-gradient(180deg, rgba(245,243,238,0.96) 70%, rgba(245,243,238,0));
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--line-soft);padding:14px 0 16px}
+  .controls-inner{max-width:1180px;margin:0 auto;padding:0 28px}
+  .filter-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:10px}
+  .filter-row:last-child{margin-bottom:0}
+  .flabel{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-dim);width:62px;flex-shrink:0;font-weight:600}
+  .chip{font-family:inherit;font-size:13px;font-weight:500;color:var(--muted);background:var(--surface);
+    border:1px solid var(--line);border-radius:999px;padding:6px 14px;cursor:pointer;transition:all .16s;
+    white-space:nowrap;display:inline-flex;align-items:center;gap:7px}
+  .chip:hover{color:var(--text);border-color:#cfc9bb;background:var(--surface-hi)}
+  .chip.active{color:#fff;background:var(--text);border-color:var(--text);font-weight:600}
+  .chip .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+  .search-wrap{position:relative;margin-left:auto;flex-grow:1;max-width:280px;min-width:170px}
+  .search-wrap svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);opacity:.45}
+  #search{width:100%;font-family:inherit;font-size:13.5px;color:var(--text);background:var(--surface);
+    border:1px solid var(--line);border-radius:999px;padding:8px 14px 8px 36px;outline:none;transition:border-color .16s}
+  #search:focus{border-color:var(--gold)}
+  #search::placeholder{color:var(--muted-dim)}
+  .toggle{display:inline-flex;align-items:center;gap:9px;cursor:pointer;font-size:13px;color:var(--muted);user-select:none}
+  .toggle .sw{width:38px;height:21px;border-radius:999px;background:#dcd7ca;position:relative;transition:background .18s;flex-shrink:0}
+  .toggle .sw::after{content:"";position:absolute;width:15px;height:15px;border-radius:50%;background:#fff;top:3px;left:3px;transition:all .18s;box-shadow:0 1px 2px rgba(0,0,0,.18)}
+  .toggle.on .sw{background:var(--gold)}
+  .toggle.on .sw::after{left:20px}
+  .toggle.on{color:var(--text)}
+
+  main{max-width:1180px;margin:0 auto;padding:26px 28px 90px}
+  .meta-line{font-size:13px;color:var(--muted-dim);margin-bottom:22px;letter-spacing:.02em}
+  .meta-line b{color:var(--text);font-weight:600}
+
+  .yeargroup{margin-bottom:46px}
+  .yearhead{display:flex;align-items:baseline;gap:14px;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--line-soft)}
+  .yearhead .yr{font-family:"Fraunces",serif;font-size:40px;font-weight:600;letter-spacing:-0.01em}
+  .yearhead .yc{font-size:12.5px;color:var(--muted-dim)}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(296px,1fr));gap:14px}
+
+  .card{position:relative;background:var(--surface);border:1px solid var(--line-soft);border-radius:16px;
+    padding:18px 18px 16px;overflow:hidden;display:flex;flex-direction:column;
+    box-shadow:0 1px 2px rgba(30,28,22,.04);
+    transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease}
+  .card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--ac,var(--gold));opacity:.9}
+  .card:hover{transform:translateY(-3px);border-color:#ddd6c7;box-shadow:0 14px 30px -16px rgba(30,28,22,.22)}
+
+  .card-head{display:flex;gap:13px;align-items:center;margin-bottom:14px}
+  .icon{width:56px;height:56px;border-radius:13px;flex-shrink:0;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;border:1px solid var(--line);
+    background:#fff;box-shadow:0 1px 3px rgba(30,28,22,.10)}
+  .icon img{width:100%;height:100%;object-fit:cover;display:block;animation:fade .35s ease}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .icon .mono{width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+    font-family:"Fraunces",serif;font-weight:600;font-size:24px;color:#fff;
+    background:linear-gradient(140deg, var(--ac), color-mix(in srgb, var(--ac) 68%, #000 10%))}
+  .head-text{min-width:0;flex:1}
+  .head-text h3{font-family:"Fraunces",serif;font-weight:600;font-size:20px;line-height:1.16;
+    letter-spacing:-0.01em;margin-bottom:4px;word-break:keep-all}
+  .head-text h3 a:hover{color:var(--gold)}
+  .dev{font-size:12.5px;color:var(--muted)}
+  .dev .country{color:var(--muted-dim)}
+
+  .badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:4px}
+  .badge{font-size:10.5px;font-weight:600;letter-spacing:.03em;padding:3px 8px;border-radius:6px;white-space:nowrap}
+  .badge.cat{color:var(--ac);background:color-mix(in srgb,var(--ac) 11%, #fff);border:1px solid color-mix(in srgb,var(--ac) 28%, #fff)}
+  .badge.type{color:var(--muted);background:#f4f1ea;border:1px solid var(--line)}
+  .badge.award{display:inline-flex;align-items:center;gap:4px}
+  .badge.award.winner{color:var(--gold-dim);background:color-mix(in srgb,var(--gold) 14%, #fff);border:1px solid color-mix(in srgb,var(--gold) 34%, #fff)}
+  .badge.award.finalist{color:var(--muted-dim);background:#f4f1ea;border:1px solid var(--line)}
+
+  .plats{font-size:11.5px;color:var(--muted-dim);margin-top:auto;padding-top:13px}
+  .dl{margin-top:12px;display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;
+    color:var(--text);border:1px solid var(--line);border-radius:9px;padding:7px 12px;align-self:flex-start;transition:all .16s}
+  .card .dl:hover{background:var(--text);color:#fff;border-color:var(--text)}
+  .dl svg{transition:transform .16s}
+  .card .dl:hover svg{transform:translate(1px,-1px)}
+
+  .empty{text-align:center;padding:70px 20px;color:var(--muted-dim)}
+  .empty .big{font-family:"Fraunces",serif;font-size:26px;color:var(--muted);margin-bottom:8px}
+
+  footer{max-width:1180px;margin:0 auto;padding:30px 28px 60px;border-top:1px solid var(--line-soft);
+    color:var(--muted-dim);font-size:12.5px;line-height:1.8}
+  footer a{color:var(--gold-dim);text-decoration:underline;text-underline-offset:2px}
+
+  @media (max-width:560px){
+    header{padding:44px 20px 24px}
+    .lang-toggle{top:44px;right:20px}
+    .controls-inner,main,footer{padding-left:20px;padding-right:20px}
+    .flabel{width:100%;margin-bottom:2px}
+    .search-wrap{margin-left:0;max-width:none}
+    .grid{grid-template-columns:1fr}
+    .stats{gap:24px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Apple Design Awards · 2020–2025</div>
+  <h1 id="mainTitle"></h1>
+  <p class="lede" id="mainLede"></p>
+  <div class="stats">
+    <div class="stat"><div class="n" id="stWin">–</div><div class="l" id="stWinLabel"></div></div>
+    <div class="stat"><div class="n" id="stFin">–</div><div class="l" id="stFinLabel"></div></div>
+    <div class="stat"><div class="n">6</div><div class="l" id="stYearsLabel"></div></div>
+    <div class="stat"><div class="n">7</div><div class="l" id="stCatsLabel"></div></div>
+  </div>
+  <div class="lang-toggle" aria-label="Language">
+    <button class="lang-btn active" id="btnEn" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" id="btnKo" onclick="setLang('ko')">한국어</button>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="controls-inner">
+    <div class="filter-row">
+      <span class="flabel" id="labelYear"></span>
+      <div id="yearChips" class="chips"></div>
+    </div>
+    <div class="filter-row">
+      <span class="flabel" id="labelCat"></span>
+      <div id="catChips" class="chips"></div>
+    </div>
+    <div class="filter-row">
+      <span class="flabel" id="labelType"></span>
+      <button class="chip type active" data-type="all" id="chipAll"></button>
+      <button class="chip type" data-type="app" id="chipApp"></button>
+      <button class="chip type" data-type="game" id="chipGame"></button>
+      <label class="toggle" id="finToggle" style="margin-left:14px">
+        <span class="sw"></span><span id="finToggleLabel"></span>
+      </label>
+      <div class="search-wrap">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="search" type="text" autocomplete="off">
+      </div>
+    </div>
+  </div>
+</div>
+
+<main>
+  <div class="meta-line" id="metaLine"></div>
+  <div id="results"></div>
+</main>
+
+<footer id="mainFooter"></footer>
+
+<script>
+// ─── i18n ────────────────────────────────────────────────────────────────────
+const STRINGS = {
+  en: {
+    title: 'ADA <span class="it">Winners</span><br>Archive',
+    lede: 'The Apple Design Awards recognize apps and games that reflect excellence in design, innovation, and technology. Browse winners and finalists from 2020 to 2025 by category, year, and platform. App icons and App Store links are included.',
+    statWin: 'Winners',
+    statFin: 'Finalists',
+    statYears: 'Years',
+    statCats: 'Categories',
+    labelYear: 'Year',
+    labelCat: 'Category',
+    labelType: 'Type',
+    all: 'All',
+    app: 'App',
+    game: 'Game',
+    inclFinalists: 'Include Finalists',
+    searchPlaceholder: 'Search apps / developers…',
+    metaWithFin: (total, win, fin) => `Total <b>${total}</b> — Winners <b>${win}</b> · Finalists <b>${fin}</b>`,
+    metaWinOnly: (win) => `<b>${win}</b> Winner${win !== 1 ? 's' : ''}`,
+    yearNote2020: 'Pre-category era · 8 apps',
+    yearNote: (cats, items) => `${cats} categories · ${items} apps`,
+    noResults: 'No results',
+    noResultsSub: 'Try a different combination of filters.',
+    awardWinner: 'Winner',
+    awardFinalist: 'Finalist',
+    typeApp: 'App',
+    typeGame: 'Game',
+    dlBtn: 'App Store',
+    footer: `Source: Apple Developer official <a href="https://developer.apple.com/design/awards/" target="_blank" rel="noopener">Apple Design Awards</a> page — data from 2020 to 2025.<br>
+App icons are loaded live from the Apple iTunes API (internet connection required). Apps removed from the store are shown with an initial icon.
+2020 selected 8 apps without category distinction, labeled as "Uncategorized". The app/game split for 2021–2022 reflects the nature of each work (official distinction began in 2023). Download links point to the US App Store; availability may vary by region.`,
+  },
+  ko: {
+    title: '역대 ADA <span class="it">수상작</span><br>아카이브',
+    lede: '애플이 매년 WWDC에서 디자인의 혁신성·독창성·기술적 성취를 인정해 선정하는 Apple Design Awards. 2020년부터 2025년까지의 수상작과 파이널리스트를 카테고리·연도·플랫폼별로 정리했습니다. 앱 아이콘과 App Store 다운로드 링크가 함께 제공됩니다.',
+    statWin: '수상작 (Winners)',
+    statFin: '파이널리스트',
+    statYears: '개 연도',
+    statCats: '개 카테고리',
+    labelYear: '연도',
+    labelCat: '카테고리',
+    labelType: '유형',
+    all: '전체',
+    app: '앱',
+    game: '게임',
+    inclFinalists: '파이널리스트 포함',
+    searchPlaceholder: '앱 / 개발사 검색…',
+    metaWithFin: (total, win, fin) => `총 <b>${total}</b>개 — 수상작 <b>${win}</b> · 파이널리스트 <b>${fin}</b>`,
+    metaWinOnly: (win) => `총 <b>${win}</b>개 수상작`,
+    yearNote2020: '카테고리 도입 전 · 8개 작품',
+    yearNote: (cats, items) => `${cats}개 카테고리 · ${items}개 작품`,
+    noResults: '결과가 없습니다',
+    noResultsSub: '다른 필터 조합을 시도해 보세요.',
+    awardWinner: '수상',
+    awardFinalist: '파이널리스트',
+    typeApp: '앱',
+    typeGame: '게임',
+    dlBtn: 'App Store',
+    footer: `출처: Apple Developer 공식 <a href="https://developer.apple.com/design/awards/" target="_blank" rel="noopener">Apple Design Awards</a> 페이지 — 2020~2025년 자료 기준.<br>
+앱 아이콘은 페이지를 열 때 Apple iTunes API에서 실시간으로 불러옵니다(인터넷 연결 필요). 스토어에서 내려간 일부 앱·게임은 카테고리 색상의 이니셜 아이콘으로 대체됩니다. 2020년은 카테고리·앱/게임 구분 없이 8개 작품이 선정되어 '미분류'로 표기했고, 2021~2022년의 앱/게임 구분은 작품 성격에 따라 정리한 것입니다(2023년부터 Apple이 공식 구분). 다운로드 링크는 미국(US) App Store 기준이며 지역에 따라 제공 여부가 다를 수 있습니다.`,
+  },
+};
+
+let lang = 'en';
+
+function t(key, ...args){
+  const val = STRINGS[lang][key];
+  return typeof val === 'function' ? val(...args) : val;
+}
+
+function setLang(l){
+  lang = l;
+  document.documentElement.lang = l;
+  document.getElementById('btnEn').classList.toggle('active', l === 'en');
+  document.getElementById('btnKo').classList.toggle('active', l === 'ko');
+  applyLang();
+  buildChips();
+  render();
+}
+
+function applyLang(){
+  document.getElementById('mainTitle').innerHTML = t('title');
+  document.getElementById('mainLede').textContent = t('lede');
+  document.getElementById('stWinLabel').textContent = t('statWin');
+  document.getElementById('stFinLabel').textContent = t('statFin');
+  document.getElementById('stYearsLabel').textContent = t('statYears');
+  document.getElementById('stCatsLabel').textContent = t('statCats');
+  document.getElementById('labelYear').textContent = t('labelYear');
+  document.getElementById('labelCat').textContent = t('labelCat');
+  document.getElementById('labelType').textContent = t('labelType');
+  document.getElementById('chipAll').textContent = t('all');
+  document.getElementById('chipApp').textContent = t('app');
+  document.getElementById('chipGame').textContent = t('game');
+  document.getElementById('finToggleLabel').textContent = t('inclFinalists');
+  document.getElementById('search').placeholder = t('searchPlaceholder');
+  document.getElementById('mainFooter').innerHTML = t('footer');
+}
+
+// ─── Data ─────────────────────────────────────────────────────────────────────
+const CATS = {
+  delight:    {ko:"즐거움과 재미",  en:"Delight and Fun",      v:"--c-delight"},
+  inclusivity:{ko:"포용성",         en:"Inclusivity",          v:"--c-inclusivity"},
+  innovation: {ko:"혁신",           en:"Innovation",           v:"--c-innovation"},
+  interaction:{ko:"인터랙션",       en:"Interaction",          v:"--c-interaction"},
+  social:     {ko:"사회적 영향",     en:"Social Impact",        v:"--c-social"},
+  visuals:    {ko:"비주얼 & 그래픽", en:"Visuals and Graphics", v:"--c-visuals"},
+  spatial:    {ko:"공간 컴퓨팅",     en:"Spatial Computing",    v:"--c-spatial"},
+  uncat:      {ko:"미분류",          en:"Uncategorized",        v:"--c-uncat"}
+};
+const CAT_ORDER = ["delight","inclusivity","innovation","interaction","social","visuals","spatial","uncat"];
+
+function w(year,cat,type,name,dev,country,plats,url){return{year,cat,type,name,dev,country,plats,url,award:"winner"}}
+function f(year,cat,type,name,dev,country,plats,url){return{year,cat,type,name,dev,country,plats,url,award:"finalist"}}
+
+const DATA = [
+// ===================== 2025 =====================
+w(2025,"delight","app","CapWords","HappyPlan Tech","China","iPhone · iPad","https://apps.apple.com/us/app/id6738896465"),
+f(2025,"delight","app","Lumy","Raja V","India","iPhone · iPad · Watch","https://apps.apple.com/us/app/lumy/id908905093"),
+f(2025,"delight","app","Denim – Playlist Cover Maker","Feel Good Tech","India","iPhone","https://apps.apple.com/us/app/denim-playlist-cover-maker/id1532250420"),
+w(2025,"delight","game","Balatro","LocalThunk","Canada","iPhone · iPad · Mac · TV · Vision Pro","https://apps.apple.com/us/app/id6502453075"),
+f(2025,"delight","game","Thank Goodness You're Here!","Panic","USA","Mac","https://apps.apple.com/us/app/thank-goodness-youre-here/id6504887308"),
+f(2025,"delight","game","Prince of Persia: The Lost Crown","Ubisoft Montpellier","France","iPhone · iPad · Mac","https://apps.apple.com/us/app/prince-of-persia-lost-crown/id6498547840"),
+
+w(2025,"inclusivity","app","Speechify","Speechify","USA","iPhone · iPad","https://apps.apple.com/us/app/speechify-text-to-speech/id1209815023"),
+f(2025,"inclusivity","app","Evolve: Daily Self-Care Coach","GTA Solutions","India","iPhone · iPad","https://apps.apple.com/in/app/daily-self-care-coach-evolve/id1515433542"),
+f(2025,"inclusivity","app","Train Fitness","Train Fitness","Canada","iPhone · iPad","https://apps.apple.com/us/app/train-fitness-for-apple-watch/id1548577496"),
+w(2025,"inclusivity","game","Art of Fauna","Klemens Strasser","Austria","iPhone · iPad","https://apps.apple.com/us/app/id1630468596"),
+f(2025,"inclusivity","game","puffies.","Lykke Studios","Thailand · Cyprus","iPhone · iPad · Mac · TV · Vision Pro","https://apps.apple.com/us/app/puffies/id1659992476"),
+f(2025,"inclusivity","game","Land of Livia","Split Atom Labs","Australia","iPhone · iPad · Mac · Vision Pro","https://apps.apple.com/au/app/land-of-livia/id1052641617"),
+
+w(2025,"innovation","app","Play","Rabbit 3 Times","USA","iPhone · Mac","https://apps.apple.com/us/app/id6669873480"),
+f(2025,"innovation","app","Moises","Music.AI","Brazil","iPhone · iPad","https://apps.apple.com/us/app/moises-the-musicians-app/id1515796612"),
+f(2025,"innovation","app","Capybara AI Meeting Translator","Digital Workroom Ltd.","UK","iPhone · iPad","https://apps.apple.com/us/app/capybara-ai-meeting-translator/id6667094162"),
+w(2025,"innovation","game","PBJ — The Musical","Philipp Stollenmayer","Germany","iPhone · iPad","https://apps.apple.com/us/app/id6499055208"),
+f(2025,"innovation","game","Pawz","Bootloader Studio Holdings","Singapore","Vision Pro","https://apps.apple.com/vn/app/pawz-take-a-break/id6593665132"),
+f(2025,"innovation","game","Gears & Goo","Resolution Games AB","Sweden","Vision Pro","https://apps.apple.com/us/app/gears-goo/id6471676214"),
+
+w(2025,"interaction","app","Taobao","Zhejiang Taobao Network","China","Vision Pro","https://apps.apple.com/us/app/id387682726"),
+f(2025,"interaction","app","iA Writer","Information Architects AG","Switzerland","iPhone · iPad · Mac","https://apps.apple.com/us/app/id775737590"),
+f(2025,"interaction","app","Mela – Recipe Manager","Silvio Rizzi","Switzerland","iPhone · iPad · Mac","https://apps.apple.com/us/app/id1548466041"),
+w(2025,"interaction","game","DREDGE","Black Salt Games","New Zealand","iPhone · iPad · Mac","https://apps.apple.com/us/app/id6526463862"),
+f(2025,"interaction","game","Gears & Goo","Resolution Games AB","Sweden","Vision Pro","https://apps.apple.com/us/app/id6471676214"),
+f(2025,"interaction","game","Skate City: New York","Snowman","Canada","iPhone · iPad · Mac · TV","https://apps.apple.com/us/app/id6448986810"),
+
+w(2025,"social","app","Watch Duty: Wildfire Maps","Sherwood Forestry Service","USA","iPhone · iPad","https://apps.apple.com/us/app/id1574452924"),
+f(2025,"social","app","Ground News","Snapwise","Canada","iPhone · iPad","https://apps.apple.com/us/app/id1324203419"),
+f(2025,"social","app","Opal","Opal OS","USA","iPhone · iPad","https://apps.apple.com/us/app/id1497465230"),
+w(2025,"social","game","Neva","Devolver Digital","USA","Mac","https://apps.apple.com/us/app/id6737359999"),
+f(2025,"social","game","Ahoy! From Picardy","Daniel Jones","USA","Vision Pro","https://apps.apple.com/us/app/ahoy-from-picardy/id6470239695"),
+f(2025,"social","game","Art of Fauna","Klemens Strasser","Austria","iPhone · iPad","https://apps.apple.com/us/app/art-of-fauna-cozy-puzzles/id1630468596"),
+
+w(2025,"visuals","app","Feather: Draw in 3D","Sketchsoft","South Korea","iPad","https://apps.apple.com/us/app/id6737254232"),
+f(2025,"visuals","app","Vocabulary – Learn words daily","Monkey Taps","USA","iPhone · iPad · Watch","https://apps.apple.com/app/id1084540807"),
+f(2025,"visuals","app","CellWalk","Timothy Davison","Canada","Vision Pro","https://apps.apple.com/us/app/id1627776848"),
+w(2025,"visuals","game","Infinity Nikki","Infold Games","Singapore","iPhone · iPad","https://apps.apple.com/us/app/id6502622570"),
+f(2025,"visuals","game","Control Ultimate Edition","Remedy Entertainment","Finland","Mac","https://apps.apple.com/us/app/id6502953520"),
+f(2025,"visuals","game","Neva","Devolver Digital","USA","Mac","https://apps.apple.com/us/app/id6737359999"),
+
+// ===================== 2024 =====================
+w(2024,"delight","app","Bears Gratitude","Isuru Wanasinghe","Australia","iPhone · iPad · Mac","https://apps.apple.com/us/app/bears-gratitude/id6443609622"),
+w(2024,"delight","game","NYT Games","The New York Times Company","USA","iPhone · iPad","https://apps.apple.com/us/app/nyt-games-word-games-sudoku/id307569751"),
+f(2024,"delight","game","Rooms","Things, Inc.","USA","iPhone · iPad","https://apps.apple.com/us/app/rooms/id6443548715"),
+f(2024,"delight","app","Dudel Draw","Silly Little Apps LLC","USA","iPhone · iPad","https://apps.apple.com/us/app/dudel-draw/id6450056192"),
+f(2024,"delight","game","WHAT THE CAR?","Triband ApS","Denmark","iPhone · iPad · Mac · TV · Vision Pro","https://apps.apple.com/us/app/what-the-car/id1534708672"),
+f(2024,"delight","game","Hello Kitty Island Adventure","Sunblink Entertainment","USA","iPhone · iPad · Mac · TV · Vision Pro","https://apps.apple.com/us/app/hello-kitty-island-adventure/id1553505132"),
+
+w(2024,"inclusivity","app","oko","AYES","Belgium","iPhone","https://apps.apple.com/us/app/oko-accessible-navigation/id1583614988"),
+w(2024,"inclusivity","game","Crayola Adventures","RED GAMES CO","USA","iPhone · iPad · Mac · TV · Vision Pro","https://apps.apple.com/us/app/crayola-adventures/id6444109249"),
+f(2024,"inclusivity","app","Complete Anatomy 2024","Elsevier","Ireland","iPad · Mac","https://apps.apple.com/us/app/complete-anatomy-2024/id1054948424"),
+f(2024,"inclusivity","app","Tiimo","tiimo ApS","Denmark","iPhone · iPad · Watch","https://apps.apple.com/us/app/tiimo-visual-daily-planner/id1480220328"),
+f(2024,"inclusivity","game","Unpacking","Humble Bundle","USA","iPhone · iPad","https://apps.apple.com/us/app/unpacking/id6450058135"),
+f(2024,"inclusivity","game","quadline","Kovalov Ivan","Ukraine","iPhone · iPad · Mac · TV · Vision Pro","https://apps.apple.com/us/app/quadline/id1575569233"),
+
+w(2024,"innovation","app","Procreate Dreams","Savage Interactive","Australia","iPad","https://apps.apple.com/us/app/procreate-dreams/id1595520602"),
+w(2024,"innovation","game","Lost in Play","Happy Juice Games","Israel","iPhone · iPad · Vision Pro","https://apps.apple.com/us/app/lost-in-play/id6449434958"),
+f(2024,"innovation","app","Copilot Money","Copilot Money","USA","iPhone · Mac","https://apps.apple.com/us/app/copilot-track-budget-money/id1447330651"),
+f(2024,"innovation","app","SmartGym","Mateus Abras","Brazil","iPhone · iPad · Watch · Mac · Vision Pro","https://apps.apple.com/us/app/smartgym-gym-home-workouts/id922744883"),
+f(2024,"innovation","app","Wavelength","Palm Court LLC","USA","iPhone · iPad · Vision Pro","https://apps.apple.com/us/app/wavelength/id1512834505"),
+f(2024,"innovation","game","Call of Duty: Warzone Mobile","Activision","USA","iPhone · iPad","https://apps.apple.com/us/app/call-of-duty-warzone-mobile/id1638368439"),
+
+w(2024,"interaction","app","Crouton","Devin Davies","New Zealand","iPhone · iPad · Mac · Watch · Vision Pro","https://apps.apple.com/us/app/crouton-recipe-manager/id1461650987"),
+w(2024,"interaction","game","Rytmos","Floppy Club ApS","Denmark","iPhone · iPad","https://apps.apple.com/us/app/rytmos/id1673697954"),
+f(2024,"interaction","app","Procreate Dreams","Savage Interactive","Australia","iPad","https://apps.apple.com/us/app/procreate-dreams/id1595520602"),
+f(2024,"interaction","app","Arc Search","The Browser Company","USA","iPhone","https://apps.apple.com/us/app/arc-search-find-it-faster/id6472513080"),
+f(2024,"interaction","game","Little Nightmares","Playdigious","France","iPhone · iPad","https://apps.apple.com/us/app/little-nightmares/id1620883955"),
+f(2024,"interaction","game","finity.","Seabaa","USA","iPhone · iPad · Mac · TV","https://apps.apple.com/us/app/finity/id1071698434"),
+
+w(2024,"social","app","Gentler Streak Fitness Tracker","Gentler Stories","Slovenia","iPhone · iPad · Watch","https://apps.apple.com/us/app/gentler-streak-workout-tracker/id1576857102"),
+w(2024,"social","game","The Wreck","The Pixel Hunt","France","iPhone · iPad","https://apps.apple.com/us/app/the-wreck/id6450220805"),
+f(2024,"social","app","How We Feel","The How We Feel Project","USA","iPhone","https://apps.apple.com/us/app/how-we-feel/id1562706384"),
+f(2024,"social","app","Ahead: Emotions Coach","ahead solutions GmbH","Germany","iPhone","https://apps.apple.com/us/app/ahead-emotions-coach/id1570430177"),
+f(2024,"social","game","Cityscapes: Sim Builder","MagicFuel Games","USA","iPhone · iPad · Mac · TV · Vision Pro","https://apps.apple.com/us/app/cityscapes-sim-builder/id1631153096"),
+f(2024,"social","game","The Bear","Mucks Games","Germany","iPhone · iPad","https://apps.apple.com/us/app/the-bear/id6449494088"),
+
+w(2024,"visuals","app","Rooms","Things Inc.","USA","iPhone · iPad","https://apps.apple.com/us/app/rooms/id6443548715"),
+w(2024,"visuals","game","Lies of P","NEOWIZ","South Korea","Mac","https://apps.apple.com/us/app/lies-of-p/id6459738231"),
+f(2024,"visuals","app","Sunlitt","Nicolas Mariniello","Italy","iPhone · iPad · Watch","https://apps.apple.com/us/app/sunlitt-sun-position-path/id1628751457"),
+f(2024,"visuals","app","Meditate","RhythmicWorks Software","India","iPhone · Watch","https://apps.apple.com/us/app/meditate-mindfulness-app/id1242738872"),
+f(2024,"visuals","game","DEATH STRANDING DIRECTOR'S CUT","505 Games","USA","iPhone · iPad · Mac","https://apps.apple.com/us/app/death-stranding-directors-cut/id6449748961"),
+f(2024,"visuals","game","Honkai: Star Rail","COGNOSPHERE","Singapore","iPhone · iPad","https://apps.apple.com/us/app/honkai-star-rail/id1599719154"),
+
+w(2024,"spatial","app","djay","Algoriddim GmbH","Germany","Vision Pro · iPhone · iPad · Mac · Watch","https://apps.apple.com/us/app/djay-dj-app-ai-mixer/id450527929"),
+w(2024,"spatial","game","Blackbox","Shapes and Stories","USA","Vision Pro","https://apps.apple.com/us/app/blackbox-for-vision/id6458588937"),
+f(2024,"spatial","app","Sky Guide","Fifth Star Labs","USA","Vision Pro · iPhone · iPad","https://apps.apple.com/us/app/sky-guide/id576588894"),
+f(2024,"spatial","app","NBA","NBA Media Ventures","USA","Vision Pro · iPhone · iPad · Watch","https://apps.apple.com/us/app/nba-live-games-scores/id484672289"),
+f(2024,"spatial","game","Synth Riders","Kluge Strategic","USA","Vision Pro · iPhone · iPad","https://apps.apple.com/us/app/synth-riders/id6473729300"),
+f(2024,"spatial","game","Loóna: Cozy Puzzle Games","Loona Inc.","USA","Vision Pro","https://apps.apple.com/us/app/lo%C3%B3na-cozy-puzzle-games/id6467633844"),
+
+// ===================== 2023 =====================
+w(2023,"inclusivity","app","Universe — Website Builder","Universe Exploration Company","","iPhone · iPad · Mac","https://apps.apple.com/us/app/universe-website-builder/id1211437633"),
+w(2023,"inclusivity","game","stitch.","Lykke Studios","","iPhone · iPad · Mac · TV","https://apps.apple.com/us/app/stitch/id1581052096"),
+f(2023,"inclusivity","game","Anne","Alessandro Di Maio","","iPhone · iPad","https://apps.apple.com/us/app/anne/id1628657638"),
+f(2023,"inclusivity","app","Passenger Assistance","TRANSREPORT","UK only","iPhone","https://apps.apple.com/gb/app/id1542190496"),
+f(2023,"inclusivity","game","Ancient Board Game Collection","Klemens Strasser","","iPhone · iPad","https://apps.apple.com/us/app/ancient-board-game-collection/id1510226148"),
+f(2023,"inclusivity","game","Finding Hannah","Fein Games GmbH","","iPhone · iPad","https://apps.apple.com/us/app/finding-hannah/id1617252957"),
+
+w(2023,"delight","app","Duolingo","Duolingo, Inc.","","iPhone · iPad","https://apps.apple.com/us/app/duolingo-language-lessons/id570060128"),
+w(2023,"delight","game","Afterplace","Evan Kice","","iPhone · iPad","https://apps.apple.com/us/app/afterplace/id1539778232"),
+f(2023,"delight","game","CREME","The CREME Group Inc.","","iPhone","https://apps.apple.com/app/creme-its-time-to-cook/id1638361026"),
+f(2023,"delight","game","Chantlings","IORAMA","","iPhone · iPad","https://apps.apple.com/us/app/chantlings/id1560632579"),
+f(2023,"delight","game","Pocket Card Jockey: Ride On!","GAME FREAK Inc.","","iPhone · iPad","https://apps.apple.com/us/app/pocket-card-jockey-ride-on/id1604577143"),
+f(2023,"delight","game","Knotwords","Zach Gage & Jack Schlesinger","","iPhone · iPad","https://apps.apple.com/us/app/knotwords/id1598756238"),
+
+w(2023,"interaction","app","Flighty","Flighty LLC","","iPhone · iPad · Mac","https://apps.apple.com/us/app/flighty-live-flight-tracker/id1358823008"),
+w(2023,"interaction","game","Railbound","Afterburn","","iPhone · iPad","https://apps.apple.com/app/railbound/id1636439801"),
+f(2023,"interaction","app","Shuffles by Pinterest","Pinterest, Inc.","","iPhone","https://apps.apple.com/us/app/shuffles-by-pinterest/id1573869498"),
+f(2023,"interaction","app","Tide Guide: Charts & Tables","Condor Digital LLC","","iPhone · iPad","https://apps.apple.com/us/app/tide-guide-charts-tables/id1406371071"),
+f(2023,"interaction","game","Automatoys","Idle Friday LTD","","iPhone · iPad","https://apps.apple.com/app/automatoys/id1580281448"),
+f(2023,"interaction","game","Kimono Cats","HumaNature Studios","","iPhone · iPad","https://apps.apple.com/us/app/kimono-cats/id1623684333"),
+
+w(2023,"social","app","Headspace","Headspace","","iPhone · iPad · Watch","https://apps.apple.com/us/app/headspace-mindful-meditation/id493145008"),
+w(2023,"social","game","Endling","HandyGames","","iPhone · iPad","https://apps.apple.com/us/app/endling/id1625083646"),
+f(2023,"social","app","Duolingo","Duolingo, Inc.","","iPhone · iPad","https://apps.apple.com/us/app/duolingo-language-lessons/id570060128"),
+f(2023,"social","app","Sago Mini First Words","Sago Mini","","iPhone · iPad","https://apps.apple.com/us/app/sago-mini-first-words-kids-1/id1592702367"),
+f(2023,"social","game","Hindsight","Team Hindsight","","iPhone · iPad","https://apps.apple.com/us/app/hindsight-game/id1552046093"),
+f(2023,"social","game","Beecarbonize","Charles Games s.r.o.","","iPhone · iPad","https://apps.apple.com/app/id1664426101"),
+
+w(2023,"visuals","app","Any Distance","Any Distance Inc.","","iPhone · Watch","https://apps.apple.com/us/app/any-distance-workout-tracker/id1545233932"),
+w(2023,"visuals","game","Resident Evil Village","CAPCOM","","Mac","https://apps.apple.com/us/app/resident-evil-village/id1640627334?mt=12"),
+f(2023,"visuals","app","Gentler Streak Health Fitness","Gentler Stories LLC","","iPhone · iPad · Watch","https://apps.apple.com/us/app/gentler-streak-workout-tracker/id1576857102"),
+f(2023,"visuals","app","Riveo","Forge and Form GmbH","","iPhone","https://apps.apple.com/us/app/riveo/id1546053158"),
+f(2023,"visuals","game","Diablo Immortal","Blizzard / NetEase","","iPhone · iPad","https://apps.apple.com/us/app/diablo-immortal/id1492005122"),
+f(2023,"visuals","game","Endling","HandyGames","","iPhone · iPad","https://apps.apple.com/us/app/endling/id1625083646"),
+
+w(2023,"innovation","app","SwingVision: A.I. Tennis App","SwingVision Inc.","","iPhone · iPad · Mac · Watch","https://apps.apple.com/us/app/swingvision-a-i-tennis-app/id989461317"),
+w(2023,"innovation","game","MARVEL SNAP","Second Dinner","","iPhone · iPad","https://apps.apple.com/us/app/marvel-snap/id1592081003"),
+f(2023,"innovation","app","Camo Studio","Reincubate Ltd.","","Mac","https://reincubate.com/camo/"),
+f(2023,"innovation","app","Rise: Energy & Sleep Tracker","Rise Science Inc.","","iPhone","https://apps.apple.com/de/app/rise-energy-sleep-tracker/id1453884781"),
+f(2023,"innovation","game","Resident Evil Village","CAPCOM","","Mac","https://apps.apple.com/us/app/resident-evil-village/id1640627334?mt=12"),
+f(2023,"innovation","game","stitch.","Lykke Studios","","iPhone · iPad · Mac · TV","https://apps.apple.com/us/app/stitch/id1581052096"),
+
+// ===================== 2022 =====================
+w(2022,"inclusivity","app","Procreate","Savage Interactive","","iPad","https://apps.apple.com/us/app/procreate/id425073498/"),
+w(2022,"inclusivity","game","Wylde Flowers","Studio Drydock","","iPhone · iPad · Mac · TV","https://apps.apple.com/us/app/wylde-flowers/id1458605549/"),
+f(2022,"inclusivity","game","Letter Rooms","Klemens Strasser","","iPhone · iPad","https://apps.apple.com/us/app/letter-rooms/id1563407977/"),
+f(2022,"inclusivity","app","Navi","Good Snooze","","iPhone","https://apps.apple.com/us/app/navi-subtitles-translation/id1573261774/"),
+f(2022,"inclusivity","app","Noted.","Digital Workroom Ltd","","iPhone · iPad","https://apps.apple.com/us/app/noted-record-every-moment/id1149425482/"),
+f(2022,"inclusivity","game","tint.","Lykkegaard Europe Limited","","iPhone · iPad","https://apps.apple.com/us/app/tint/id1451786388/"),
+
+w(2022,"delight","app","(Not Boring) Habits","Andy Works LLC","","iPhone · iPad","https://apps.apple.com/us/app/not-boring-habits/id1593891243/"),
+w(2022,"delight","game","Overboard!","inkle","","iPhone · iPad","https://apps.apple.com/us/app/overboard/id1557505849/"),
+f(2022,"delight","app","Chineasy","Chineasy","","iPhone · iPad","https://apps.apple.com/us/app/chineasy-learn-chinese-easily/id1318941705/"),
+f(2022,"delight","game","Moncage","Optillusion","","iPhone · iPad","https://apps.apple.com/us/app/moncage/id1587860402/"),
+f(2022,"delight","game","Please, Touch The Artwork","Studio Waterzooi","","iPhone · iPad","https://apps.apple.com/us/app/please-touch-the-artwork/id1447671288/"),
+f(2022,"delight","app","Waterllama","Vitalii Mogylevets","","iPhone · iPad · Watch","https://apps.apple.com/us/app/water-tracker-waterllama/id1454778585/"),
+
+w(2022,"interaction","game","A Musical Story","Glee-Cheese Studio","","iPhone · iPad","https://apps.apple.com/us/app/a-musical-story/id1584362594/"),
+w(2022,"interaction","app","Slopes","Breakpoint Studio LLC","","iPhone · iPad · Watch","https://apps.apple.com/us/app/slopes-ski-snowboard/id643351983/"),
+f(2022,"interaction","game","Gibbon: Beyond the Trees","Broken Rules","","iPhone · iPad · Mac · TV","https://apps.apple.com/app/gibbon-beyond-the-trees/id1482634476/"),
+f(2022,"interaction","app","Transit","Transit, Inc.","","iPhone","https://apps.apple.com/app/apple-store/id498151501/"),
+f(2022,"interaction","app","Vectornator: Vector Design","Linearity GmbH","","iPhone · iPad","https://apps.apple.com/us/app/vectornator-design-software/id1219074514/"),
+f(2022,"interaction","game","What Remains of Edith Finch","Giant Sparrow","","iPhone · iPad","https://apps.apple.com/us/app/what-remains-of-edith-finch/id1508051949/"),
+
+w(2022,"social","game","Gibbon: Beyond the Trees","Broken Rules","","iPhone · iPad · Mac · TV","https://apps.apple.com/app/gibbon-beyond-the-trees/id1482634476/"),
+w(2022,"social","app","Rebel Girls","Rebel Girls Inc.","","iPhone · iPad","https://apps.apple.com/us/app/rebel-girls-dream-on/id1555126110/"),
+f(2022,"social","app","Active Arcade","Nex","","iPhone · iPad","https://apps.apple.com/us/app/active-arcade/id1553158383/"),
+f(2022,"social","app","Empathy","The Empathy Project","","iPhone","https://apps.apple.com/us/app/empathy-loss-companion/id1536395192/"),
+f(2022,"social","app","Headspace","Headspace Health","","iPhone · iPad · Watch","https://apps.apple.com/us/app/headspace-mindful-meditation/id493145008/"),
+f(2022,"social","game","Wylde Flowers","Studio Drydock","","iPhone · iPad · Mac · TV","https://apps.apple.com/us/app/wylde-flowers/id1458605549/"),
+
+w(2022,"visuals","app","Halide Mark II","Lux Optics","","iPhone · iPad · Watch","https://apps.apple.com/us/app/halide-mark-ii-pro-camera/id885697368/"),
+w(2022,"visuals","game","LEGO Star Wars: Castaways","Gameloft","","iPhone · iPad · Mac · TV","https://apps.apple.com/us/app/lego-star-wars-castaways/id1474344996/"),
+f(2022,"visuals","game","Alien: Isolation","Feral Interactive","","iPhone · iPad","https://apps.apple.com/us/app/alien-isolation/id1573029040/"),
+f(2022,"visuals","game","Behind the Frame","Silver Lining Studio","","iPhone · iPad","https://apps.apple.com/us/app/behind-the-frame/id1571194454/"),
+f(2022,"visuals","app","MD Clock","Hangzhou Midi Technology","","iPhone · iPad","https://apps.apple.com/us/app/md-clock-live-in-the-present/id1536358464/"),
+f(2022,"visuals","app","(Not Boring) Habits","Andy Works LLC","","iPhone · iPad","https://apps.apple.com/us/app/not-boring-habits/id1593891243/"),
+
+w(2022,"innovation","game","MARVEL Future Revolution","Netmarble Corp.","","iPhone · iPad","https://apps.apple.com/us/app/marvel-future-revolution/id1453366542/"),
+w(2022,"innovation","app","Odio","Volst","","iPhone · iPad","https://apps.apple.com/us/app/odio-spatial-soundscapes/id1556016869/"),
+f(2022,"innovation","app","Active Arcade","Nex","","iPhone · iPad","https://apps.apple.com/us/app/active-arcade/id1553158383/"),
+f(2022,"innovation","app","Focus Noodles","ideaTiny Co., Ltd.","","iPhone · iPad","https://apps.apple.com/us/app/focus-noodles/id1492424176/"),
+f(2022,"innovation","app","Procreate","Savage Interactive","","iPad","https://apps.apple.com/us/app/procreate/id425073498/"),
+f(2022,"innovation","game","Townscaper","Oskar Stålberg","","iPhone · iPad","https://apps.apple.com/us/app/townscaper/id1549531491/"),
+
+// ===================== 2021 =====================
+w(2021,"inclusivity","game","HoloVista","Aconite","","iPhone · iPad","https://apps.apple.com/us/app/holovista/id1474114304"),
+w(2021,"inclusivity","app","Voice Dream Reader","Voice Dream LLC","","iPhone · iPad · Watch","https://apps.apple.com/us/app/voice-dream-reader/id496177674"),
+f(2021,"inclusivity","app","1Password","AgileBits Inc.","","Mac","https://apps.apple.com/us/app/1password-7-password-manager/id1333542190?mt=12"),
+f(2021,"inclusivity","game","A Monster's Expedition","Draknek Limited","","iPhone · iPad","https://apps.apple.com/us/app/a-monsters-expedition/id1449606823"),
+f(2021,"inclusivity","game","Alba: A Wildlife Adventure","ustwo games","","iPhone · iPad · Mac · TV","https://apps.apple.com/us/app/alba-a-wildlife-adventure/id1528014682"),
+f(2021,"inclusivity","app","Me: A Kid's Diary by Tinybop","Tinybop Inc.","","iPhone · iPad","https://apps.apple.com/us/app/apple-store/id1126531257?mt=8"),
+
+w(2021,"delight","game","Little Orpheus","The Chinese Room","","iPhone · iPad · TV","https://apps.apple.com/us/app/little-orpheus/id1446279575"),
+w(2021,"delight","app","Pok Pok Playroom","Pok Pok","","iPhone · iPad","https://apps.apple.com/us/app/pok-pok-playroom/id1550204730"),
+f(2021,"delight","app","Poolsuite FM","Poolsuite","","iPhone","https://apps.apple.com/gb/app/poolside-fm/id1514817810"),
+f(2021,"delight","app","RakugakiAR","Whatever Inc.","","iPhone · iPad","https://apps.apple.com/us/app/rakugakiar/id1515215584"),
+f(2021,"delight","game","Wonderbox","AQUIRIS GAME STUDIO","","iPhone · iPad","https://apps.apple.com/us/app/wonderbox-the-adventure-maker/id1520720139"),
+f(2021,"delight","game","South of the Circle","State of Play Games","","iPhone · iPad","https://apps.apple.com/us/app/south-of-the-circle/id1477077753"),
+
+w(2021,"interaction","game","Bird Alone","George Batchelor","","iPhone · iPad","https://apps.apple.com/us/app/bird-alone/id1435827876"),
+w(2021,"interaction","app","CARROT Weather","Brian Mueller, Grailr LLC","","iPhone · iPad · Watch","https://apps.apple.com/us/app/carrot-weather/id961390574"),
+f(2021,"interaction","app","Craft","Luki Labs Limited","","iPhone · iPad · Mac","https://apps.apple.com/us/app/craft-docs-and-notes-editor/id1487937127"),
+f(2021,"interaction","app","Nova","Panic","","Mac","https://nova.app"),
+f(2021,"interaction","game","Sp!ng","SMG Studio","","iPhone · iPad","https://apps.apple.com/us/app/sp-ng/id1483542433"),
+f(2021,"interaction","game","Wonderbox","AQUIRIS GAME STUDIO","","iPhone · iPad","https://apps.apple.com/us/app/wonderbox-the-adventure-maker/id1520720139"),
+
+w(2021,"social","game","Alba: A Wildlife Adventure","ustwo games","","iPhone · iPad · Mac · TV","https://apps.apple.com/us/app/alba-a-wildlife-adventure/id1528014682"),
+w(2021,"social","app","Be My Eyes","Be My Eyes","","iPhone · iPad","https://apps.apple.com/app/apple-store/id905177575"),
+f(2021,"social","app","Brief","Broadsheet","","iPhone","https://apps.apple.com/us/app/brief-unbiased-us-news/id1475186118"),
+f(2021,"social","game","If Found...","Annapurna Interactive","","iPhone · iPad","https://apps.apple.com/us/app/if-found/id1440072561"),
+f(2021,"social","app","Klima","Climate Labs GmbH","","iPhone","https://apps.apple.com/gb/app/klima-live-carbon-neutral/id1527437330"),
+f(2021,"social","game","Attentat 1942","Charles Games s.r.o.","","iPhone · iPad","https://apps.apple.com/us/app/attentat-1942/id1512771916"),
+
+w(2021,"visuals","game","Genshin Impact","miHoYo Limited","","iPhone · iPad","https://apps.apple.com/us/app/genshin-impact/id1517783697"),
+w(2021,"visuals","app","Loóna","Loona Inc","","iPhone · iPad","https://apps.apple.com/us/app/lo%C3%B3na-relax-calm-happiness/id1465238901"),
+f(2021,"visuals","game","Beyond a Steel Sky","Revolution","","iPhone · iPad","https://apps.apple.com/us/app/beyond-a-steel-sky/id1474849377"),
+f(2021,"visuals","app","Mission to Mars AR","SN Digital LLC","","iPhone · iPad","https://apps.apple.com/us/app/mission-to-mars-ar/id1550116275"),
+f(2021,"visuals","app","(Not Boring) Weather","Andy Works LLC","","iPhone · iPad","https://apps.apple.com/us/app/not-boring-weather/id1531063436"),
+f(2021,"visuals","game","Little Orpheus","The Chinese Room","","iPhone · iPad · TV","https://apps.apple.com/us/app/little-orpheus/id1446279575"),
+
+w(2021,"innovation","game","League of Legends: Wild Rift","Riot Games","","iPhone · iPad","https://apps.apple.com/ph/app/league-of-legends-wild-rift/id1480616990"),
+w(2021,"innovation","app","NaadSadhana","Sandeep Ranade","","iPhone · iPad","https://apps.apple.com/us/app/naadsadhana/id1348181386"),
+f(2021,"innovation","game","Bird Alone","George Batchelor","","iPhone · iPad","https://apps.apple.com/us/app/bird-alone/id1435827876"),
+f(2021,"innovation","game","Blind Drive","Lo-Fi People","","iPhone · iPad","https://apps.apple.com/us/app/blind-drive/id964294239"),
+f(2021,"innovation","app","Museum Alive","Alchemy Immersive Ltd","","iPhone · iPad","https://apps.apple.com/us/app/museum-alive/id1548503337"),
+f(2021,"innovation","app","Universe","Universe Exploration Company","","iPhone · iPad · Mac","https://apps.apple.com/us/app/universe-website-builder/id1211437633"),
+
+// ===================== 2020 (no categories) =====================
+w(2020,"uncat","app","Shapr 3D","Shapr3D Zrt.","Hungary","iPad","https://apps.apple.com/us/app/shapr-3d-cad-modeling/id1091675654"),
+w(2020,"uncat","app","Looom","Eran Hilleli","","iPad","https://apps.apple.com/us/app/looom/id1454153126"),
+w(2020,"uncat","app","StaffPad","StaffPad Ltd","","iPad","https://apps.apple.com/us/app/staffpad/id1442074103"),
+w(2020,"uncat","app","Darkroom","Bergen Co.","","iPhone · iPad","https://apps.apple.com/us/app/darkroom-photo-video-editor/id953286746"),
+w(2020,"uncat","game","Sayonara Wild Hearts","Simogo / Annapurna","","iPhone · iPad · Mac · TV","https://apps.apple.com/us/app/sayonara-wild-hearts/id1441675161"),
+w(2020,"uncat","game","Song of Bloom","Philipp Stollenmayer","","iPhone · iPad","https://apps.apple.com/us/app/song-of-bloom/id1479162134"),
+w(2020,"uncat","game","Where Cards Fall","The Game Band / Snowman","","iPhone · iPad · Mac · TV","https://apps.apple.com/us/app/where-cards-fall/id1466331487"),
+w(2020,"uncat","game","Sky: Children of the Light","Thatgamecompany","","iPhone · iPad","https://apps.apple.com/us/app/sky-children-of-the-light/id1462117269"),
+];
+
+// ─── Icon fetching ─────────────────────────────────────────────────────────────
+const iconCache = {};
+function appId(url){const m=url.match(/id(\d+)/);return m?m[1]:null;}
+function storeCountry(url){const m=url.match(/apps\.apple\.com\/([a-z]{2})\//);return m?m[1]:"us";}
+
+let jsonpId=0;
+function jsonp(url){
+  return new Promise(resolve=>{
+    const name="__ic"+(jsonpId++);
+    const s=document.createElement("script");
+    let done=false;
+    window[name]=function(data){done=true;try{resolve(data)}finally{delete window[name];s.remove();}};
+    s.onerror=()=>{if(!done){delete window[name];s.remove();resolve(null);}};
+    s.src=url+(url.includes("?")?"&":"?")+"callback="+name;
+    document.head.appendChild(s);
+    setTimeout(()=>{if(!done){try{delete window[name]}catch(e){}; s.remove(); resolve(null);}},8000);
+  });
+}
+function applyResults(data){
+  if(!data||!data.results)return;
+  data.results.forEach(r=>{
+    const id=String(r.trackId||"");
+    let a=r.artworkUrl100||r.artworkUrl512||r.artworkUrl60;
+    if(id && a){
+      a=a.replace(/\/\d+x\d+bb\.(jpg|jpeg|png|webp)/,"/180x180bb.$1");
+      iconCache[id]=a;
+    }
+  });
+  patchIcons();
+}
+async function fetchIcons(){
+  const byC={};
+  DATA.forEach(d=>{const id=appId(d.url);if(!id)return;const cc=storeCountry(d.url);(byC[cc]=byC[cc]||new Set()).add(id);});
+  const jobs=[];
+  for(const cc in byC){
+    const ids=[...byC[cc]];
+    for(let i=0;i<ids.length;i+=18){
+      const batch=ids.slice(i,i+18).join(",");
+      jobs.push(jsonp("https://itunes.apple.com/lookup?country="+cc+"&id="+batch).then(applyResults));
+    }
+  }
+  await Promise.all(jobs);
+}
+function patchIcons(){
+  document.querySelectorAll('.icon[data-appid]').forEach(el=>{
+    const id=el.dataset.appid;
+    if(iconCache[id] && el.dataset.loaded!=="1"){
+      el.dataset.loaded="1";
+      const img=new Image();
+      img.alt="";
+      img.onload=()=>{el.innerHTML="";el.appendChild(img);};
+      img.src=iconCache[id];
+    }
+  });
+}
+
+// ─── State & chips ────────────────────────────────────────────────────────────
+const state={year:"all",cat:"all",type:"all",q:"",showFinalists:false};
+const YEARS=[...new Set(DATA.map(d=>d.year))].sort((a,b)=>b-a);
+
+function buildChips(){
+  const yearChips=document.getElementById("yearChips");
+  yearChips.innerHTML="";
+  yearChips.appendChild(makeChip(t('all'),"all",()=>{state.year="all";render();},"year"));
+  YEARS.forEach(y=>yearChips.appendChild(makeChip(String(y),String(y),()=>{state.year=String(y);render();},"year")));
+
+  const catChips=document.getElementById("catChips");
+  catChips.innerHTML="";
+  catChips.appendChild(makeChip(t('all'),"all",()=>{state.cat="all";render();},"cat"));
+  CAT_ORDER.forEach(k=>{
+    const c=CATS[k];
+    const chip=makeChip(c[lang],k,()=>{state.cat=k;render();},"cat");
+    const dot=document.createElement("span");dot.className="dot";dot.style.background=`var(${c.v})`;
+    chip.prepend(dot);chip.dataset.color=c.v;
+    catChips.appendChild(chip);
+  });
+}
+
+function makeChip(label,val,onclick,kind){
+  const b=document.createElement("button");
+  b.className="chip "+kind;b.textContent=label;b.dataset.val=val;b.dataset.kind=kind;
+  b.addEventListener("click",onclick);return b;
+}
+
+document.querySelectorAll(".chip.type").forEach(b=>b.addEventListener("click",()=>{state.type=b.dataset.type;render();}));
+const finToggle=document.getElementById("finToggle");
+finToggle.addEventListener("click",()=>{state.showFinalists=!state.showFinalists;finToggle.classList.toggle("on",state.showFinalists);render();});
+document.getElementById("search").addEventListener("input",e=>{state.q=e.target.value.trim().toLowerCase();render();});
+
+document.getElementById("stWin").textContent=DATA.filter(d=>d.award==="winner").length;
+document.getElementById("stFin").textContent=DATA.filter(d=>d.award==="finalist").length;
+
+// ─── Render ───────────────────────────────────────────────────────────────────
+function setActive(){
+  document.querySelectorAll(".chip.year").forEach(b=>b.classList.toggle("active",b.dataset.val===state.year));
+  document.querySelectorAll(".chip.cat").forEach(b=>{
+    const on=b.dataset.val===state.cat;
+    b.classList.toggle("active",on);
+    if(on&&b.dataset.color){b.style.background=`var(${b.dataset.color})`;b.style.borderColor=`var(${b.dataset.color})`;}
+    else{b.style.background="";b.style.borderColor="";}
+  });
+  document.querySelectorAll(".chip.type").forEach(b=>b.classList.toggle("active",b.dataset.type===state.type));
+}
+function escapeHtml(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+function monogram(name){const m=name.match(/[A-Za-z0-9]/);return escapeHtml(m?m[0].toUpperCase():"·");}
+
+function cardHTML(d){
+  const c=CATS[d.cat];
+  const id=appId(d.url);
+  const country=d.country?`<span class="country"> · ${escapeHtml(d.country)}</span>`:"";
+  const typeLbl=d.type==="app"?t('typeApp'):t('typeGame');
+  const awardLbl=d.award==="winner"?t('awardWinner'):t('awardFinalist');
+  const ico=d.award==="winner"?"★":"○";
+  const iconInner=(id&&iconCache[id])
+    ? `<img src="${iconCache[id]}" alt="">`
+    : `<span class="mono">${monogram(d.name)}</span>`;
+  const dataAttr=id?` data-appid="${id}"${iconCache[id]?' data-loaded="1"':''}`:"";
+  return `<article class="card" style="--ac:var(${c.v})">
+    <div class="card-head">
+      <div class="icon"${dataAttr}>${iconInner}</div>
+      <div class="head-text">
+        <h3><a href="${d.url}" target="_blank" rel="noopener">${escapeHtml(d.name)}</a></h3>
+        <div class="dev">${escapeHtml(d.dev)}${country}</div>
+      </div>
+    </div>
+    <div class="badges">
+      <span class="badge cat">${escapeHtml(c[lang])}</span>
+      <span class="badge type">${typeLbl}</span>
+      <span class="badge award ${d.award}">${ico} ${awardLbl}</span>
+    </div>
+    <div class="plats">${escapeHtml(d.plats)}</div>
+    <a class="dl" href="${d.url}" target="_blank" rel="noopener">${t('dlBtn')}
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg>
+    </a>
+  </article>`;
+}
+
+function render(){
+  setActive();
+  let rows=DATA.filter(d=>{
+    if(!state.showFinalists&&d.award!=="winner")return false;
+    if(state.year!=="all"&&String(d.year)!==state.year)return false;
+    if(state.cat!=="all"&&d.cat!==state.cat)return false;
+    if(state.type!=="all"&&d.type!==state.type)return false;
+    if(state.q){const hay=(d.name+" "+d.dev+" "+(d.country||"")).toLowerCase();if(!hay.includes(state.q))return false;}
+    return true;
+  });
+  const results=document.getElementById("results");
+  const meta=document.getElementById("metaLine");
+  const winN=rows.filter(r=>r.award==="winner").length;
+  const finN=rows.filter(r=>r.award==="finalist").length;
+  meta.innerHTML=state.showFinalists
+    ? t('metaWithFin', rows.length, winN, finN)
+    : t('metaWinOnly', winN);
+  if(rows.length===0){
+    results.innerHTML=`<div class="empty"><div class="big">${t('noResults')}</div><div>${t('noResultsSub')}</div></div>`;return;
+  }
+  const yrs=[...new Set(rows.map(r=>r.year))].sort((a,b)=>b-a);
+  results.innerHTML=yrs.map(yr=>{
+    const items=rows.filter(r=>r.year===yr);
+    items.sort((a,b)=>{
+      const ci=CAT_ORDER.indexOf(a.cat)-CAT_ORDER.indexOf(b.cat);
+      if(ci!==0)return ci;
+      if(a.award!==b.award)return a.award==="winner"?-1:1;
+      return a.type.localeCompare(b.type);
+    });
+    const catCount=new Set(items.map(i=>i.cat)).size;
+    const note=yr===2020?t('yearNote2020'):t('yearNote', catCount, items.length);
+    return `<section class="yeargroup">
+      <div class="yearhead"><span class="yr">${yr}</span><span class="yc">${note}</span></div>
+      <div class="grid">${items.map(cardHTML).join("")}</div>
+    </section>`;
+  }).join("");
+  patchIcons();
+}
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
+applyLang();
+buildChips();
+render();
+fetchIcons();
+</script>
+</body>
+</html>
