@@ -2,7 +2,7 @@
 
 Browse all Apple Design Awards winners and finalists from 2020 to 2025.
 
-**[View Live Site →](https://M1zz.github.io/ADA/ada-archive.html)**
+**[View Live Site →](https://m1zz.github.io/ADA/ada-archive.html)**
 
 ## Features
 
