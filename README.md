@@ -1,12 +1,12 @@
-# Apple Design Awards Archive (2020–2025)
+# Apple Design Awards Archive (2020–2026)
 
-Browse all Apple Design Awards winners and finalists from 2020 to 2025.
+Browse all Apple Design Awards winners and finalists from 2020 to 2026.
 
 **[View Live Site →](https://m1zz.github.io/ADA/ada-archive.html)**
 
 ## Features
 
-- Complete ADA winners & finalists from 2020–2025
+- Complete ADA winners & finalists from 2020–2026
 - Filter by year, category, and type (app / game)
 - Search by app name or developer
 - Live app icons from the iTunes API

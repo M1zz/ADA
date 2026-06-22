@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Apple Design Awards Archive (2020–2025)</title>
+<title>Apple Design Awards Archive (2020–2026)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;1,14..32,300;1,14..32,400&display=swap" rel="stylesheet">
@@ -300,13 +300,13 @@
 <body>
 
 <header>
-  <div class="eyebrow"><span class="eyebrow-dot"></span>Apple Design Awards · 2020–2025</div>
+  <div class="eyebrow"><span class="eyebrow-dot"></span>Apple Design Awards · 2020–2026</div>
   <h1 id="mainTitle"></h1>
   <p class="lede" id="mainLede"></p>
   <div class="stats">
     <div class="stat"><div class="n" id="stWin">–</div><div class="l" id="stWinLabel"></div></div>
     <div class="stat"><div class="n" id="stFin">–</div><div class="l" id="stFinLabel"></div></div>
-    <div class="stat"><div class="n">6</div><div class="l" id="stYearsLabel"></div></div>
+    <div class="stat"><div class="n">7</div><div class="l" id="stYearsLabel"></div></div>
     <div class="stat"><div class="n">7</div><div class="l" id="stCatsLabel"></div></div>
   </div>
   <div class="lang-toggle" aria-label="Language">
@@ -353,7 +353,7 @@
 const STRINGS = {
   en: {
     title: 'ADA <span class="it">Winners</span><br>Archive',
-    lede: 'The Apple Design Awards recognize apps and games that reflect excellence in design, innovation, and technology. Browse winners and finalists from 2020 to 2025 by category, year, and platform. App icons and App Store links are included.',
+    lede: 'The Apple Design Awards recognize apps and games that reflect excellence in design, innovation, and technology. Browse winners and finalists from 2020 to 2026 by category, year, and platform. App icons and App Store links are included.',
     statWin: 'Winners',
     statFin: 'Finalists',
     statYears: 'Years',
@@ -377,13 +377,13 @@ const STRINGS = {
     typeApp: 'App',
     typeGame: 'Game',
     dlBtn: 'App Store',
-    footer: `Source: Apple Developer official <a href="https://developer.apple.com/design/awards/" target="_blank" rel="noopener">Apple Design Awards</a> page — data from 2020 to 2025.<br>
+    footer: `Source: Apple Developer official <a href="https://developer.apple.com/design/awards/" target="_blank" rel="noopener">Apple Design Awards</a> page — data from 2020 to 2026.<br>
 App icons are loaded live from the Apple iTunes API (internet connection required). Apps removed from the store are shown with an initial icon.
 2020 selected 8 apps without category distinction, labeled as "Uncategorized". The app/game split for 2021–2022 reflects the nature of each work (official distinction began in 2023). Download links point to the US App Store; availability may vary by region.`,
   },
   ko: {
     title: '역대 ADA <span class="it">수상작</span><br>아카이브',
-    lede: '애플이 매년 WWDC에서 디자인의 혁신성·독창성·기술적 성취를 인정해 선정하는 Apple Design Awards. 2020년부터 2025년까지의 수상작과 파이널리스트를 카테고리·연도·플랫폼별로 정리했습니다. 앱 아이콘과 App Store 다운로드 링크가 함께 제공됩니다.',
+    lede: '애플이 매년 WWDC에서 디자인의 혁신성·독창성·기술적 성취를 인정해 선정하는 Apple Design Awards. 2020년부터 2026년까지의 수상작과 파이널리스트를 카테고리·연도·플랫폼별로 정리했습니다. 앱 아이콘과 App Store 다운로드 링크가 함께 제공됩니다.',
     statWin: '수상작 (Winners)',
     statFin: '파이널리스트',
     statYears: '개 연도',
@@ -407,7 +407,7 @@ App icons are loaded live from the Apple iTunes API (internet connection require
     typeApp: '앱',
     typeGame: '게임',
     dlBtn: 'App Store',
-    footer: `출처: Apple Developer 공식 <a href="https://developer.apple.com/design/awards/" target="_blank" rel="noopener">Apple Design Awards</a> 페이지 — 2020~2025년 자료 기준.<br>
+    footer: `출처: Apple Developer 공식 <a href="https://developer.apple.com/design/awards/" target="_blank" rel="noopener">Apple Design Awards</a> 페이지 — 2020~2026년 자료 기준.<br>
 앱 아이콘은 페이지를 열 때 Apple iTunes API에서 실시간으로 불러옵니다(인터넷 연결 필요). 스토어에서 내려간 일부 앱·게임은 카테고리 색상의 이니셜 아이콘으로 대체됩니다. 2020년은 카테고리·앱/게임 구분 없이 8개 작품이 선정되어 '미분류'로 표기했고, 2021~2022년의 앱/게임 구분은 작품 성격에 따라 정리한 것입니다(2023년부터 Apple이 공식 구분). 다운로드 링크는 미국(US) App Store 기준이며 지역에 따라 제공 여부가 다를 수 있습니다.`,
   },
 };
@@ -464,6 +464,49 @@ function w(year,cat,type,name,dev,country,plats,url){return{year,cat,type,name,d
 function f(year,cat,type,name,dev,country,plats,url){return{year,cat,type,name,dev,country,plats,url,award:"finalist"}}
 
 const DATA = [
+// ===================== 2026 =====================
+w(2026,"delight","app","grug","Ocho","Netherlands","iPhone","https://apps.apple.com/us/app/grug/id6751649802"),
+f(2026,"delight","app","Blippo+","Panic, Inc.","USA","Mac","https://apps.apple.com/us/app/blippo/id6756083719?mt=12"),
+f(2026,"delight","app","Metaballs","Apposite","USA","iPhone · Vision Pro","https://apps.apple.com/us/app/metaballs/id6748781900"),
+w(2026,"delight","game","Is This Seat Taken?","Poti Poti Studio","Spain","iPhone · iPad · Mac","https://apps.apple.com/us/app/is-this-seat-taken/id6747814605"),
+f(2026,"delight","game","Ball x Pit","Kenny Sun Studios","USA","iPhone · iPad","https://apps.apple.com/us/app/ball-x-pit/id6738703497"),
+f(2026,"delight","game","PowerWash Simulator","FuturLab Limited","UK","iPhone · iPad · Mac · TV · Vision Pro","https://apps.apple.com/us/app/powerwash-simulator/id6477445344"),
+
+w(2026,"inclusivity","app","Guitar Wiz","Bijoy Thangaraj","India","iPhone · iPad · Mac · Watch","https://apps.apple.com/us/app/guitar-wiz-chords-tuner/id6740015002"),
+f(2026,"inclusivity","app","Hearing Buddy","Lilly Seay","USA","iPhone · iPad · Watch","https://apps.apple.com/us/app/hearing-buddy-live-captions/id6747363502"),
+f(2026,"inclusivity","app","Structured","unorderly GmbH","Germany","iPhone · iPad · Mac · Watch","https://apps.apple.com/us/app/structured-daily-planner-todo/id1499198946"),
+w(2026,"inclusivity","game","Pine Hearts","Hyper Luminal Games","UK","iPhone · iPad","https://apps.apple.com/us/app/pine-hearts/id6745611937"),
+f(2026,"inclusivity","game","Sago Mini Jinja's Garden","Sago Mini","Canada","iPhone · iPad · Mac · TV","https://apps.apple.com/us/app/sago-mini-jinjas-garden/id6477492925"),
+f(2026,"inclusivity","game","Sid Meier's Civilization VII","Firaxis Games","USA","iPhone · iPad · Mac","https://apps.apple.com/us/app/sid-meiers-civilization-vii/id6744373452"),
+
+w(2026,"innovation","app","NBA: Live Games & Scores","NBA Media Ventures","USA","Vision Pro","https://apps.apple.com/us/app/nba-live-games-scores/id484672289"),
+f(2026,"innovation","app","D-Day: The Camera Soldier","TARGO","France","Vision Pro","https://apps.apple.com/us/app/d-day-the-camera-soldier/id6737838494"),
+f(2026,"innovation","app","Detail: AI Video Editor","Detail Technologies B.V.","Netherlands","iPhone · iPad · Watch","https://apps.apple.com/us/app/detail-ai-video-editor/id1673518618"),
+w(2026,"innovation","game","Blue Prince","Dogubomb","USA","Mac","https://apps.apple.com/us/app/blue-prince/id6752822014?mt=12"),
+f(2026,"innovation","game","Pickle Pro","Resolution Games AB","Sweden","Vision Pro","https://apps.apple.com/us/app/pickle-pro/id6744969406"),
+f(2026,"innovation","game","TR-49","inkle","UK","iPhone · iPad","https://apps.apple.com/us/app/tr-49/id6754027574"),
+
+w(2026,"interaction","app","Moonlitt: Moon Phase Tracker","Flipping Hues Srls","Italy","iPhone · iPad · Mac · Vision Pro · Watch","https://apps.apple.com/us/app/moonlitt-moon-phase-tracker/id6444718902"),
+f(2026,"interaction","app","The Outsiders: Athlete Tracker","Gentler Stories","Slovenia","iPhone · Watch","https://apps.apple.com/us/app/the-outsiders-athlete-tracker/id6751584800"),
+f(2026,"interaction","app","Tide Guide: Charts & Tables","Condor Digital","USA","iPhone · iPad · Mac · TV · Vision Pro · Watch","https://apps.apple.com/us/app/tide-guide-charts-tables/id1406371071"),
+w(2026,"interaction","game","Sago Mini Jinja's Garden","Sago Mini","Canada","iPhone · iPad · Mac · TV","https://apps.apple.com/us/app/sago-mini-jinjas-garden/id6477492925"),
+f(2026,"interaction","game","Grand Mountain Adventure 2","Toppluva AB","Sweden","iPhone · iPad","https://apps.apple.com/us/app/grand-mountain-adventure-2/id6475040075"),
+f(2026,"interaction","game","TR-49","inkle","UK","iPhone · iPad","https://apps.apple.com/us/app/tr-49/id6754027574"),
+
+w(2026,"social","app","Primary: News in Depth","Wood Metal Rocks LLC","USA","Vision Pro","https://apps.apple.com/us/app/primary-news-in-depth/id6751006185"),
+f(2026,"social","app","Katha Room","Parjanya Creative Solutions","India","iPhone · iPad","https://apps.apple.com/us/app/bedtime-audio-tales-for-kids/id6463834306"),
+f(2026,"social","app","Harvee","Peak Labs Ltd.","UK","iPhone · Watch","https://apps.apple.com/us/app/harvee-watch-stress-monitor/id6746194884"),
+w(2026,"social","game","Consume Me","Jenny Jiao Hsia, AP Thomson","USA","Mac","https://apps.apple.com/us/app/consume-me/id6769877287"),
+f(2026,"social","game","despelote","Julián Cordero, Sebastian Valbuena","Ecuador","Mac","https://apps.apple.com/us/app/despelote/id6747992743?mt=12"),
+f(2026,"social","game","Spilled!","Lente Cuenen","Netherlands","iPhone · iPad","https://apps.apple.com/us/app/spilled/id6752525411"),
+
+w(2026,"visuals","app","Tide Guide: Charts & Tables","Condor Digital","USA","iPhone · iPad · Mac · TV · Vision Pro · Watch","https://apps.apple.com/us/app/tide-guide-charts-tables/id1406371071"),
+f(2026,"visuals","app","Caradise","PSQV AB","Sweden","Vision Pro","https://apps.apple.com/us/app/caradise/id6751403753"),
+f(2026,"visuals","app","(Not Boring) Camera","Not Boring Software LLC","USA","iPhone · iPad","https://apps.apple.com/us/app/not-boring-camera/id6737783441"),
+w(2026,"visuals","game","Cyberpunk 2077 Ultimate Edition","CD PROJEKT RED","Poland","Mac","https://apps.apple.com/us/app/cyberpunk-2077-ultimate/id6633429424?mt=12"),
+f(2026,"visuals","game","Arknights: Endfield","Hypergryph","China · Singapore","iPhone · iPad","https://apps.apple.com/us/app/arknights-endfield/id6752642477"),
+f(2026,"visuals","game","SILT","Spiral Circus","UK","iPhone · iPad","https://apps.apple.com/us/app/silt/id6477457763"),
+
 // ===================== 2025 =====================
 w(2025,"delight","app","CapWords","HappyPlan Tech","China","iPhone · iPad","https://apps.apple.com/us/app/id6738896465"),
 f(2025,"delight","app","Lumy","Raja V","India","iPhone · iPad · Watch","https://apps.apple.com/us/app/lumy/id908905093"),
