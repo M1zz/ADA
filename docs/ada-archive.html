@@ -167,6 +167,7 @@
   .toggle.on .sw{background:var(--accent)}
   .toggle.on .sw::after{left:19px}
   .toggle.on{color:var(--text)}
+  .filters-toggle{display:none}
 
   /* ── Main ── */
   main{max-width:1200px;margin:0 auto;padding:28px 32px 100px}
@@ -299,6 +300,24 @@
     header{padding:52px 20px 32px}
     .lang-toggle{top:52px;right:20px}
     .controls-inner,main,footer{padding-left:20px;padding-right:20px}
+    .controls{padding:10px 0}
+    .filters-toggle{
+      display:flex;align-items:center;gap:7px;width:100%;
+      font-family:inherit;font-size:13px;font-weight:600;color:var(--text);
+      background:transparent;border:1px solid var(--line);border-radius:10px;
+      padding:9px 12px;cursor:pointer;
+    }
+    .filters-toggle svg{opacity:.55;flex-shrink:0}
+    .filters-toggle .chev{margin-left:auto;transition:transform .16s}
+    .controls.open .filters-toggle .chev{transform:rotate(180deg)}
+    .fcount{
+      min-width:18px;height:18px;border-radius:999px;
+      background:var(--accent);color:#fff;
+      font-size:11px;font-weight:700;line-height:18px;text-align:center;
+      padding:0 5px;
+    }
+    .filter-body{display:none;margin-top:12px;max-height:55vh;overflow-y:auto;overscroll-behavior:contain}
+    .controls.open .filter-body{display:block}
     .flabel{width:100%;margin-bottom:2px}
     .search-wrap{margin-left:0;max-width:none}
     .grid{grid-template-columns:1fr}
@@ -327,8 +346,15 @@
   </div>
 </header>
 
-<div class="controls">
+<div class="controls" id="controls">
   <div class="controls-inner">
+    <button class="filters-toggle" id="filtersToggle" onclick="toggleFilters()" aria-expanded="false" aria-controls="filterBody">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg>
+      <span id="filtersToggleLabel"></span>
+      <span class="fcount" id="filtersCount" hidden></span>
+      <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+    </button>
+    <div class="filter-body" id="filterBody">
     <div class="filter-row">
       <span class="flabel" id="labelYear"></span>
       <div id="yearChips" class="chips"></div>
@@ -349,6 +375,7 @@
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
         <input id="search" type="text" autocomplete="off">
       </div>
+    </div>
     </div>
   </div>
 </div>
@@ -373,6 +400,7 @@ const STRINGS = {
     labelYear: 'Year',
     labelCat: 'Category',
     labelType: 'Type',
+    filtersBtn: 'Filters',
     all: 'All',
     app: 'App',
     game: 'Game',
@@ -404,6 +432,7 @@ App icons are loaded live from the Apple iTunes API (internet connection require
     labelYear: '연도',
     labelCat: '카테고리',
     labelType: '유형',
+    filtersBtn: '필터',
     all: '전체',
     app: '앱',
     game: '게임',
@@ -453,6 +482,7 @@ function applyLang(){
   document.getElementById('labelYear').textContent = t('labelYear');
   document.getElementById('labelCat').textContent = t('labelCat');
   document.getElementById('labelType').textContent = t('labelType');
+  document.getElementById('filtersToggleLabel').textContent = t('filtersBtn');
   document.getElementById('chipAll').textContent = t('all');
   document.getElementById('chipApp').textContent = t('app');
   document.getElementById('chipGame').textContent = t('game');
@@ -1104,8 +1134,22 @@ function cardHTML(d){
   </article>`;
 }
 
+function toggleFilters(){
+  const c=document.getElementById("controls");
+  const open=c.classList.toggle("open");
+  document.getElementById("filtersToggle").setAttribute("aria-expanded",open);
+}
+
+function updateFilterCount(){
+  const n=(state.year!=="all"?1:0)+(state.cat!=="all"?1:0)+(state.type!=="all"?1:0)+(state.showFinalists?1:0)+(state.q?1:0);
+  const fc=document.getElementById("filtersCount");
+  fc.hidden=n===0;
+  fc.textContent=n;
+}
+
 function render(){
   setActive();
+  updateFilterCount();
   let rows=DATA.filter(d=>{
     if(!state.showFinalists&&d.award!=="winner")return false;
     if(state.year!=="all"&&String(d.year)!==state.year)return false;
