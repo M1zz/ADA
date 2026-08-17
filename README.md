@@ -2,12 +2,13 @@
 
 Browse all Apple Design Awards winners and finalists from 2020 to 2026.
 
-**[View Live Site →](https://m1zz.github.io/ADA/ada-archive.html)**
+**[View Live Site →](https://m1zz.github.io/ADA/)**
 
 ## Tabs
 
 | Page | Description |
 |------|-------------|
+| **[/](https://m1zz.github.io/ADA/)** (`docs/index.html`) | Redirects to the archive |
 | **[ADA Archive](https://m1zz.github.io/ADA/ada-archive.html)** (`docs/ada-archive.html`) | ADA winners & finalists, 2020–2026 · EN/KO |
 | **[App Field Guide](https://m1zz.github.io/ADA/field-guide.html)** (`docs/field-guide.html`) | 100-app teardown checklist in 10 categories · KO only |
 
