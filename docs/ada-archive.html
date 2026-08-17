@@ -43,8 +43,26 @@
   }
   a{color:inherit;text-decoration:none}
 
+  /* ── Top bar / tabs ── */
+  .topbar{
+    max-width:1200px;margin:0 auto;
+    padding:20px 32px 0;
+    display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  }
+  .tabs{
+    display:inline-flex;background:var(--line-soft);
+    border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px;
+  }
+  .tab{
+    padding:7px 16px;border-radius:999px;
+    font-size:13px;font-weight:600;color:var(--muted);
+    transition:all .15s;white-space:nowrap;
+  }
+  .tab:hover{color:var(--text)}
+  .tab.active{background:#fff;color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+
   /* ── Header ── */
-  header{max-width:1200px;margin:0 auto;padding:72px 32px 40px;position:relative}
+  header{max-width:1200px;margin:0 auto;padding:36px 32px 40px;position:relative}
   .eyebrow{
     display:inline-flex;align-items:center;gap:8px;
     font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
@@ -95,7 +113,7 @@
 
   /* ── Lang toggle ── */
   .lang-toggle{
-    position:absolute;top:72px;right:32px;
+    margin-left:auto;
     display:inline-flex;
     background:var(--line-soft);
     border:1px solid var(--line);
@@ -297,8 +315,9 @@
 
   /* ── Mobile ── */
   @media (max-width:600px){
-    header{padding:52px 20px 32px}
-    .lang-toggle{top:52px;right:20px}
+    .topbar{padding:16px 20px 0}
+    .tab{padding:7px 13px;font-size:12.5px}
+    header{padding:28px 20px 32px}
     .controls-inner,main,footer{padding-left:20px;padding-right:20px}
     .controls{padding:10px 0}
     .filters-toggle{
@@ -330,6 +349,17 @@
 </head>
 <body>
 
+<div class="topbar">
+  <nav class="tabs" aria-label="Sections">
+    <a class="tab active" href="ada-archive.html" aria-current="page" id="tabArchive"></a>
+    <a class="tab" href="field-guide.html" id="tabGuide"></a>
+  </nav>
+  <div class="lang-toggle" aria-label="Language">
+    <button class="lang-btn active" id="btnEn" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" id="btnKo" onclick="setLang('ko')">한국어</button>
+  </div>
+</div>
+
 <header>
   <div class="eyebrow"><span class="eyebrow-dot"></span>Apple Design Awards · 2020–2026</div>
   <h1 id="mainTitle"></h1>
@@ -339,10 +369,6 @@
     <div class="stat"><div class="n" id="stFin">–</div><div class="l" id="stFinLabel"></div></div>
     <div class="stat"><div class="n">7</div><div class="l" id="stYearsLabel"></div></div>
     <div class="stat"><div class="n">7</div><div class="l" id="stCatsLabel"></div></div>
-  </div>
-  <div class="lang-toggle" aria-label="Language">
-    <button class="lang-btn active" id="btnEn" onclick="setLang('en')">EN</button>
-    <button class="lang-btn" id="btnKo" onclick="setLang('ko')">한국어</button>
   </div>
 </header>
 
@@ -391,6 +417,8 @@
 // ─── i18n ────────────────────────────────────────────────────────────────────
 const STRINGS = {
   en: {
+    tabArchive: 'ADA Archive',
+    tabGuide: 'App Field Guide (KO)',
     title: 'ADA <span class="it">Winners</span><br>Archive',
     lede: 'The Apple Design Awards recognize apps and games that reflect excellence in design, innovation, and technology. Browse winners and finalists from 2020 to 2026 by category, year, and platform — each entry explains why it won, framed by its award category, with what to look for. App icons and App Store links are included.',
     statWin: 'Winners',
@@ -423,6 +451,8 @@ App icons are loaded live from the Apple iTunes API (internet connection require
 2020 selected 8 apps without category distinction, labeled as "Uncategorized". The app/game split for 2021–2022 reflects the nature of each work (official distinction began in 2023). Download links point to the US App Store; availability may vary by region.`,
   },
   ko: {
+    tabArchive: 'ADA 아카이브',
+    tabGuide: '앱 관찰 기록부',
     title: '역대 ADA <span class="it">수상작</span><br>아카이브',
     lede: '애플이 매년 WWDC에서 디자인의 혁신성·독창성·기술적 성취를 인정해 선정하는 Apple Design Awards. 2020년부터 2026년까지의 수상작과 파이널리스트를 카테고리·연도·플랫폼별로 정리했으며, 각 작품마다 수상 카테고리 관점에서 "왜 상을 받았는지"와 관찰 포인트를 함께 설명합니다. 앱 아이콘과 App Store 다운로드 링크가 함께 제공됩니다.',
     statWin: '수상작 (Winners)',
@@ -473,6 +503,8 @@ function setLang(l){
 }
 
 function applyLang(){
+  document.getElementById('tabArchive').textContent = t('tabArchive');
+  document.getElementById('tabGuide').textContent = t('tabGuide');
   document.getElementById('mainTitle').innerHTML = t('title');
   document.getElementById('mainLede').textContent = t('lede');
   document.getElementById('stWinLabel').textContent = t('statWin');
@@ -1188,6 +1220,16 @@ function render(){
 }
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
+// field-guide.html에서 ada-archive.html?q=<앱 이름>으로 넘어온 경우 검색어를 미리 채운다
+(function applyQueryParam(){
+  const q0 = new URLSearchParams(location.search).get("q");
+  if(!q0) return;
+  state.q = q0.trim().toLowerCase();
+  document.getElementById("search").value = q0;
+  state.showFinalists = true;               // 파이널리스트도 검색 결과에 포함
+  finToggle.classList.add("on");
+})();
+
 applyLang();
 buildChips();
 render();

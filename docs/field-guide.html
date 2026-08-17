@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>앱 관찰 기록부 · 100 Specimens</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;1,14..32,300;1,14..32,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ffffff;
+    --surface:#ffffff;
+    --surface-hi:#f8fafc;
+    --line:#e2e8f0;
+    --line-soft:#f1f5f9;
+    --text:#0f172a;
+    --muted:#64748b;
+    --muted-dim:#94a3b8;
+    --accent:#0ea5e9;
+    --accent-dim:#0284c7;
+
+    --c-a:#0ea5e9;
+    --c-b:#f59e0b;
+    --c-c:#8b5cf6;
+    --c-d:#10b981;
+    --c-e:#ec4899;
+    --c-f:#6366f1;
+    --c-g:#06b6d4;
+    --c-h:#0d9488;
+    --c-i:#f43f5e;
+    --c-j:#65a30d;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Inter",system-ui,-apple-system,"Apple SD Gothic Neo","Pretendard",sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    min-height:100vh;
+    font-feature-settings:"cv02","cv03","cv04","cv11";
+  }
+  a{color:inherit;text-decoration:none}
+
+  /* ── Top bar / tabs ── */
+  .topbar{
+    max-width:1200px;margin:0 auto;
+    padding:20px 32px 0;
+    display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  }
+  .tabs{
+    display:inline-flex;background:var(--line-soft);
+    border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px;
+  }
+  .tab{
+    padding:7px 16px;border-radius:999px;
+    font-size:13px;font-weight:600;color:var(--muted);
+    transition:all .15s;white-space:nowrap;
+  }
+  .tab:hover{color:var(--text)}
+  .tab.active{background:#fff;color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+
+  /* ── Header ── */
+  header{max-width:1200px;margin:0 auto;padding:36px 32px 40px;position:relative}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--muted);
+    background:var(--line-soft);border:1px solid var(--line);
+    border-radius:999px;padding:5px 12px;margin-bottom:28px;
+  }
+  .eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0}
+  h1{
+    font-size:clamp(40px,6.5vw,80px);
+    font-weight:800;line-height:1;letter-spacing:-0.04em;
+    margin-bottom:20px;color:var(--text);
+  }
+  h1 .it{font-style:italic;font-weight:300;color:var(--accent);letter-spacing:-0.03em}
+  .lede{
+    font-size:clamp(15px,1.6vw,17px);
+    color:var(--muted);max-width:620px;line-height:1.75;font-weight:400;
+  }
+  .lede b{color:var(--text);font-weight:600}
+
+  .stats{
+    display:flex;flex-wrap:wrap;gap:0;margin-top:40px;
+    border:1px solid var(--line);border-radius:16px;overflow:hidden;width:fit-content;
+  }
+  .stat{padding:20px 32px;border-right:1px solid var(--line)}
+  .stat:last-child{border-right:none}
+  .stat .n{font-size:30px;font-weight:800;line-height:1;letter-spacing:-0.03em;color:var(--text)}
+  .stat .l{font-size:12px;color:var(--muted);margin-top:5px;font-weight:500}
+
+  .progress{max-width:520px;margin-top:24px}
+  .progress-row{
+    display:flex;justify-content:space-between;align-items:baseline;
+    font-size:12px;color:var(--muted);font-weight:500;margin-bottom:8px;
+  }
+  .progress-row b{color:var(--text);font-weight:700}
+  .track{height:8px;border-radius:999px;background:var(--line-soft);border:1px solid var(--line);overflow:hidden}
+  .track i{
+    display:block;height:100%;width:0;border-radius:999px;
+    background:linear-gradient(90deg,var(--accent),#22d3ee);
+    transition:width .35s cubic-bezier(.2,.8,.2,1);
+  }
+
+  /* ── Controls ── */
+  .controls{
+    position:sticky;top:0;z-index:40;
+    background:rgba(255,255,255,0.88);
+    backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--line);
+    padding:12px 0 14px;
+  }
+  .controls-inner{max-width:1200px;margin:0 auto;padding:0 32px}
+  .filter-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-bottom:8px}
+  .filter-row:last-child{margin-bottom:0}
+  .flabel{
+    font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--muted-dim);width:68px;flex-shrink:0;font-weight:600;
+  }
+  .chip{
+    font-family:inherit;font-size:12.5px;font-weight:500;
+    color:var(--muted);background:transparent;
+    border:1px solid var(--line);border-radius:999px;
+    padding:5px 13px;cursor:pointer;transition:all .14s;
+    white-space:nowrap;display:inline-flex;align-items:center;gap:6px;
+  }
+  .chip:hover{color:var(--text);border-color:var(--muted-dim);background:var(--line-soft)}
+  .chip.active{color:#fff;background:var(--text);border-color:var(--text);font-weight:600}
+  .chip .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+  .search-wrap{position:relative;margin-left:auto;flex-grow:1;max-width:280px;min-width:170px}
+  .search-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);opacity:.4}
+  #search{
+    width:100%;font-family:inherit;font-size:13px;
+    color:var(--text);background:var(--surface);
+    border:1px solid var(--line);border-radius:999px;
+    padding:7px 14px 7px 34px;outline:none;
+    transition:border-color .14s, box-shadow .14s;
+  }
+  #search:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(14,165,233,.1)}
+  #search::placeholder{color:var(--muted-dim)}
+  .filters-toggle{display:none}
+
+  /* ── Main ── */
+  main{max-width:1200px;margin:0 auto;padding:28px 32px 40px}
+  .meta-line{font-size:12.5px;color:var(--muted-dim);margin-bottom:24px;font-weight:500}
+  .meta-line b{color:var(--text);font-weight:700}
+
+  .catgroup{margin-bottom:52px}
+  .cathead{
+    display:flex;align-items:flex-start;gap:16px;
+    margin-bottom:18px;padding-bottom:16px;
+    border-bottom:1px solid var(--line);
+  }
+  .catkey{
+    width:44px;height:44px;flex-shrink:0;border-radius:13px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:19px;font-weight:800;letter-spacing:-.02em;color:#fff;
+    background:var(--ac,var(--accent));
+    box-shadow:0 2px 8px color-mix(in srgb,var(--ac,var(--accent)) 35%, transparent);
+  }
+  .cathead h2{font-size:21px;font-weight:750;letter-spacing:-0.03em;line-height:1.2}
+  .cathead .why{
+    display:inline-block;margin-top:7px;
+    font-size:11px;font-weight:700;letter-spacing:.05em;
+    color:var(--ac,var(--accent));
+    background:color-mix(in srgb,var(--ac,var(--accent)) 9%, #fff);
+    border:1px solid color-mix(in srgb,var(--ac,var(--accent)) 20%, #fff);
+    border-radius:6px;padding:3px 8px;
+  }
+  .cathead p.desc{font-size:13.5px;color:var(--muted);margin-top:9px;max-width:70ch;line-height:1.65}
+  .cathead .cc{
+    margin-left:auto;flex-shrink:0;
+    font-size:12px;color:var(--muted-dim);font-weight:500;
+    background:var(--line-soft);border:1px solid var(--line);
+    border-radius:6px;padding:3px 8px;white-space:nowrap;
+  }
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+
+  /* ── Card ── */
+  .card{
+    position:relative;background:#fff;
+    border:1px solid var(--line);border-radius:18px;
+    padding:20px 20px 18px;overflow:hidden;
+    display:flex;flex-direction:column;
+    transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    box-shadow:0 1px 2px rgba(0,0,0,.04);
+  }
+  .card::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+    background:var(--ac,var(--accent));border-radius:2px 0 0 2px;
+  }
+  .card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 12px 32px rgba(0,0,0,.08), 0 2px 8px rgba(0,0,0,.04);
+    border-color:var(--muted-dim);
+  }
+  .card.done{background:var(--surface-hi)}
+  .card.done .card-head h3{color:var(--muted)}
+
+  .card-head{display:flex;gap:14px;align-items:center;margin-bottom:14px}
+  .num{
+    width:54px;height:54px;border-radius:14px;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    font-size:16px;font-weight:800;letter-spacing:.01em;color:#fff;
+    background:linear-gradient(135deg, var(--ac,var(--accent)), color-mix(in srgb, var(--ac,var(--accent)) 68%, #000 22%));
+    box-shadow:0 1px 4px rgba(0,0,0,.12);
+    font-variant-numeric:tabular-nums;
+  }
+  .head-text{min-width:0;flex:1}
+  .head-text h3{
+    font-weight:700;font-size:16px;line-height:1.25;
+    letter-spacing:-0.02em;margin-bottom:5px;word-break:break-word;
+  }
+  .head-text h3 a:hover{color:var(--accent)}
+  .kws{display:flex;flex-wrap:wrap;gap:5px}
+  .kw{
+    font-size:10px;font-weight:600;letter-spacing:.02em;
+    padding:3px 7px;border-radius:6px;white-space:nowrap;
+    color:var(--muted);background:var(--line-soft);border:1px solid var(--line);
+  }
+  .badge-ada{
+    display:inline-flex;align-items:center;gap:4px;
+    font-size:10px;font-weight:700;letter-spacing:.02em;
+    padding:3px 8px;border-radius:6px;margin-bottom:8px;align-self:flex-start;
+    color:#92400e;background:#fef3c7;border:1px solid #fde68a;
+    transition:all .14s;
+  }
+  .badge-ada:hover{background:#fde68a;border-color:#fcd34d}
+
+  .look{
+    font-size:12.5px;line-height:1.65;color:#334155;font-weight:400;
+    margin:0 0 4px;padding:11px 13px;
+    background:color-mix(in srgb,var(--ac,var(--accent)) 6%, #fff);
+    border:1px solid color-mix(in srgb,var(--ac,var(--accent)) 16%, #fff);
+    border-radius:11px;
+  }
+  .look-label{
+    display:block;font-size:9.5px;font-weight:700;letter-spacing:.09em;
+    text-transform:uppercase;color:var(--ac,var(--accent));margin-bottom:5px;
+  }
+  .look b{color:var(--text);font-weight:650}
+
+  .card-foot{display:flex;gap:8px;margin-top:auto;padding-top:14px}
+  .dl{
+    display:inline-flex;align-items:center;gap:5px;
+    font-size:12px;font-weight:600;color:var(--text);
+    border:1px solid var(--line);border-radius:8px;padding:6px 11px;
+    transition:all .14s;background:#fff;
+  }
+  .card .dl:hover{background:var(--text);color:#fff;border-color:var(--text)}
+  .dl svg{transition:transform .14s}
+  .card .dl:hover svg{transform:translate(1px,-1px)}
+  .mark{
+    font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;
+    display:inline-flex;align-items:center;gap:5px;margin-left:auto;
+    color:var(--muted);background:#fff;
+    border:1px solid var(--line);border-radius:8px;padding:6px 11px;
+    transition:all .14s;
+  }
+  .mark:hover{color:var(--text);border-color:var(--muted-dim)}
+  .card.done .mark{color:#fff;background:#10b981;border-color:#10b981}
+  .mark svg{flex-shrink:0}
+
+  .empty{text-align:center;padding:80px 20px;color:var(--muted-dim)}
+  .empty .big{font-size:24px;font-weight:700;color:var(--muted);margin-bottom:8px;letter-spacing:-0.02em}
+  .empty .sub{font-size:14px}
+
+  /* ── Protocol ── */
+  .protocol{
+    max-width:1200px;margin:0 auto;padding:0 32px 80px;
+  }
+  .protocol-inner{
+    border:1px solid var(--line);border-radius:20px;
+    background:var(--surface-hi);padding:28px 30px;
+  }
+  .protocol .plabel{
+    display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--accent-dim);margin-bottom:8px;
+  }
+  .protocol h3{font-size:20px;font-weight:750;letter-spacing:-0.03em;margin-bottom:6px}
+  .protocol .psub{font-size:13.5px;color:var(--muted);margin-bottom:20px}
+  .plist{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+  .pitem{
+    background:#fff;border:1px solid var(--line);border-radius:13px;
+    padding:14px 16px;font-size:13px;line-height:1.6;color:var(--muted);
+  }
+  .pitem .pt{
+    display:block;font-size:12px;font-weight:700;color:var(--text);
+    margin-bottom:4px;letter-spacing:-0.01em;
+  }
+  .pitem .pn{
+    font-size:10.5px;font-weight:700;letter-spacing:.06em;
+    color:var(--accent-dim);display:block;margin-bottom:5px;
+  }
+  .pnote{margin-top:14px;font-size:12.5px;color:var(--muted-dim);line-height:1.8}
+  .pnote b{color:var(--muted);font-weight:650}
+
+  /* ── Footer ── */
+  footer{
+    max-width:1200px;margin:0 auto;padding:28px 32px 64px;
+    border-top:1px solid var(--line);
+    color:var(--muted-dim);font-size:12px;line-height:1.9;
+    display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  }
+  footer a{color:var(--accent-dim);text-decoration:underline;text-underline-offset:2px}
+  .reset{
+    font-family:inherit;font-size:12px;background:none;border:none;cursor:pointer;
+    color:var(--accent-dim);text-decoration:underline;text-underline-offset:2px;padding:0;
+  }
+
+  /* ── Mobile ── */
+  @media (max-width:600px){
+    .topbar{padding:16px 20px 0}
+    .tab{padding:7px 13px;font-size:12.5px}
+    header{padding:28px 20px 32px}
+    .controls-inner,main,footer,.protocol{padding-left:20px;padding-right:20px}
+    .controls{padding:10px 0}
+    .filters-toggle{
+      display:flex;align-items:center;gap:7px;width:100%;
+      font-family:inherit;font-size:13px;font-weight:600;color:var(--text);
+      background:transparent;border:1px solid var(--line);border-radius:10px;
+      padding:9px 12px;cursor:pointer;
+    }
+    .filters-toggle svg{opacity:.55;flex-shrink:0}
+    .filters-toggle .chev{margin-left:auto;transition:transform .16s}
+    .controls.open .filters-toggle .chev{transform:rotate(180deg)}
+    .fcount{
+      min-width:18px;height:18px;border-radius:999px;
+      background:var(--accent);color:#fff;
+      font-size:11px;font-weight:700;line-height:18px;text-align:center;padding:0 5px;
+    }
+    .filter-body{display:none;margin-top:12px;max-height:55vh;overflow-y:auto;overscroll-behavior:contain}
+    .controls.open .filter-body{display:block}
+    .flabel{width:100%;margin-bottom:2px}
+    .search-wrap{margin-left:0;max-width:none}
+    .grid{grid-template-columns:1fr}
+    .stats{flex-direction:column;width:100%}
+    .stat{border-right:none;border-bottom:1px solid var(--line);padding:16px 20px}
+    .stat:last-child{border-bottom:none}
+    .cathead{flex-wrap:wrap}
+    .cathead .cc{margin-left:0;order:3}
+    .protocol-inner{padding:22px 18px}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <nav class="tabs" aria-label="섹션">
+    <a class="tab" href="ada-archive.html">ADA 아카이브</a>
+    <a class="tab active" href="field-guide.html" aria-current="page">앱 관찰 기록부</a>
+  </nav>
+</div>
+
+<header>
+  <div class="eyebrow"><span class="eyebrow-dot"></span>Field Guide · 10 Taxa / 100 Specimens</div>
+  <h1>앱 관찰 <span class="it">기록부</span></h1>
+  <p class="lede">사용자로 쓰는 게 아니라 <b>해부하려고</b> 쓰는 목록입니다. 앱마다 "무엇을 볼 것인가"가 하나씩 붙어 있어요. 열어보고, 그 한 가지만 확인하고, 관찰 완료로 표시하세요. ADA 수상작과 겹치는 앱에는 배지가 붙어 있고, 누르면 아카이브 탭에서 바로 확인할 수 있습니다.</p>
+  <div class="stats">
+    <div class="stat"><div class="n">100</div><div class="l">관찰 대상 앱</div></div>
+    <div class="stat"><div class="n">10</div><div class="l">개 카테고리</div></div>
+    <div class="stat"><div class="n" id="stDone">0</div><div class="l">관찰 완료</div></div>
+    <div class="stat"><div class="n" id="stAda">–</div><div class="l">ADA 수상작 중복</div></div>
+  </div>
+  <div class="progress">
+    <div class="progress-row"><span>관찰 진행률</span><span><b id="pctText">0%</b> · <span id="leftText">100개 남음</span></span></div>
+    <div class="track"><i id="bar"></i></div>
+  </div>
+</header>
+
+<div class="controls" id="controls">
+  <div class="controls-inner">
+    <button class="filters-toggle" id="filtersToggle" onclick="toggleFilters()" aria-expanded="false" aria-controls="filterBody">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg>
+      <span>필터</span>
+      <span class="fcount" id="filtersCount" hidden></span>
+      <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+    </button>
+    <div class="filter-body" id="filterBody">
+      <div class="filter-row">
+        <span class="flabel">카테고리</span>
+        <div id="catChips" class="chips" style="display:contents"></div>
+      </div>
+      <div class="filter-row">
+        <span class="flabel">상태</span>
+        <button class="chip st active" data-st="all">전체</button>
+        <button class="chip st" data-st="todo">미관찰</button>
+        <button class="chip st" data-st="done">관찰 완료</button>
+        <button class="chip st" data-st="ada">ADA 수상작만</button>
+        <div class="search-wrap">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input id="search" type="text" autocomplete="off" placeholder="앱 이름 · 키워드 검색 (예: 위젯, 온보딩, 구독)">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<main>
+  <div class="meta-line" id="metaLine"></div>
+  <div id="results"></div>
+</main>
+
+<div class="protocol">
+  <div class="protocol-inner">
+    <span class="plabel">관찰 프로토콜</span>
+    <h3>한 앱을 30분에 해부하는 법</h3>
+    <p class="psub">타이머를 켜고, 아래 순서대로. 길게 쓰면 다음 앱을 못 봅니다.</p>
+    <div class="plist">
+      <div class="pitem"><span class="pn">0–5분</span><span class="pt">첫 실행은 딱 한 번뿐입니다</span>설치 직후 화면 기록을 켜고 여세요. 권한 요청 순서, 회원가입을 언제 요구하는지, 가치를 먼저 보여주는지 기록합니다.</div>
+      <div class="pitem"><span class="pn">5–10분</span><span class="pt">결제 벽까지 최단 경로</span>유료 화면에 몇 번 만에 도달하는지, 가격 표기·무료 체험·연간 기본값을 캡처합니다. 스크린샷은 앱별 폴더에 모으세요.</div>
+      <div class="pitem"><span class="pn">10–15분</span><span class="pt">빈 상태와 실패 상태</span>데이터 0개일 때, 비행기 모드일 때, 잘못 입력했을 때 무엇을 보여주는지. 여기서 완성도가 갈립니다.</div>
+      <div class="pitem"><span class="pn">15–20분</span><span class="pt">접근성 감사</span>VoiceOver 켜고 한 바퀴, 손쉬운 사용 → 텍스트 크기 최대로 한 바퀴. 깨지는 지점이 곧 그 팀의 우선순위표입니다.</div>
+      <div class="pitem"><span class="pn">20–25분</span><span class="pt">시스템 통합 표면</span>위젯·잠금화면·Live Activity·Shortcuts·공유 시트·Spotlight 지원 여부. 1인 개발자에게 가성비가 가장 높은 영역입니다.</div>
+      <div class="pitem"><span class="pn">25–30분</span><span class="pt">한 줄 결론</span>"이 앱이 나에게 훔칠 만한 것 하나"를 적고 끝냅니다.</div>
+    </div>
+    <p class="pnote">
+      <b>주 5개, 20주.</b> 100개를 한 번에 보면 아무것도 안 남습니다. 카테고리를 한 주에 하나씩 도세요.<br>
+      <b>App Store 페이지도 관찰 대상입니다.</b> 스크린샷 1번 컷의 카피, 프리뷰 영상 길이, 부제목, 업데이트 노트 톤을 함께 보세요. 다운로드 전에 이미 절반은 결정됩니다.<br>
+      <b>같은 앱을 6개월 뒤 다시.</b> 변경점이 그 팀이 배운 것입니다. 이게 이 기록부의 진짜 수익입니다.
+    </p>
+  </div>
+</div>
+
+<footer>
+  <span>관찰 기록은 이 브라우저(localStorage)에만 저장됩니다 · App Store 링크는 한국(KR) 스토어 검색 결과로 연결됩니다.</span>
+  <button class="reset" id="reset">전체 기록 지우기</button>
+</footer>
+
+<script>
+// ─── Data ─────────────────────────────────────────────────────────────────────
+const CATS = {
+  A:{t:"온보딩 & 첫 실행",      why:"첫 90초가 리텐션의 대부분",        v:"--c-a",
+     d:"설치 직후 화면은 다시 볼 수 없습니다. 권한 요청 타이밍, 가입 강제 시점, 가치를 먼저 보여주는지를 봅니다."},
+  B:{t:"구독 · 수익화 구조",     why:"20개 앱 포트폴리오의 수익 곡선",    v:"--c-b",
+     d:"가격 화면 하나가 매출의 전부입니다. 티어 구성, 앵커링, 일회성 구매를 고수하는 앱의 논리를 봅니다."},
+  C:{t:"위젯 · Live Activity · Dynamic Island", why:"1인 개발자 가성비 최고 영역", v:"--c-c",
+     d:"앱을 열지 않아도 존재감을 만드는 표면. 갱신 주기, 정보 밀도, 탭 시 진입 지점을 봅니다."},
+  D:{t:"접근성 레퍼런스",        why:"워크숍·캠프 교보재",               v:"--c-d",
+     d:"VoiceOver를 켠 상태로 여세요. 잘 만든 앱은 소리만으로도 구조가 들립니다."},
+  E:{t:"제스처 · 인터랙션 · 모션", why:"SwiftUI 애니메이션 감각 훈련",     v:"--c-e",
+     d:"손가락을 떼기 전에 무엇이 반응하는지 보세요. 인터럽터블 애니메이션인지, 고무줄 저항이 있는지."},
+  F:{t:"정보구조 & 복잡도 관리",  why:"기능이 늘어도 안 무너지는 구조",    v:"--c-f",
+     d:"기능이 100개인데 첫 화면이 조용한 앱들. 무엇을 숨기고 무엇을 꺼냈는지가 핵심입니다."},
+  G:{t:"온디바이스 AI · ML",     why:"AI 라이브 코딩 세미나 소재",       v:"--c-g",
+     d:"응답 대기 시간을 어떻게 감추는지, 실패했을 때 뭐라고 말하는지가 이 카테고리의 전부입니다."},
+  H:{t:"로컬 퍼스트 & 동기화",    why:"CloudKit 설계 참고",              v:"--c-h",
+     d:"비행기 모드로 켜보세요. 충돌이 났을 때 사용자에게 무엇을 묻는지가 진짜 실력입니다."},
+  I:{t:"인디 · 단일 기능 유틸리티", why:"내 포트폴리오와 가장 가까운 층",   v:"--c-i",
+     d:"혼자 만들어 혼자 유지하는 앱들. 업데이트 노트와 지원 페이지까지 함께 관찰하세요."},
+  J:{t:"한국 시장 & 로컬라이제이션", why:"KR 스토어 감각 유지",            v:"--c-j",
+     d:"글로벌 문법이 통하지 않는 지점들. 본인인증, 결제, 카피 톤, 알림 밀도를 봅니다."},
+};
+const CAT_ORDER = ["A","B","C","D","E","F","G","H","I","J"];
+
+// ADA 아카이브 탭과 겹치는 앱 (연도 · 수상/파이널리스트 · 아카이브 검색어)
+const ADA = {
+  "Duolingo":          {y:2023, a:"수상",        q:"Duolingo"},
+  "Headspace":         {y:2023, a:"수상",        q:"Headspace"},
+  "Arc Search":        {y:2024, a:"파이널리스트", q:"Arc Search"},
+  "Craft":             {y:2021, a:"파이널리스트", q:"Craft"},
+  "Halide":            {y:2022, a:"수상",        q:"Halide", n:"Halide Mark II"},
+  "Procreate Pocket":  {y:2022, a:"수상",        q:"Procreate", n:"Procreate"},
+  "Flighty":           {y:2023, a:"수상",        q:"Flighty"},
+  "Carrot Weather":    {y:2021, a:"수상",        q:"Carrot", n:"CARROT Weather"},
+  "Structured":        {y:2026, a:"파이널리스트", q:"Structured"},
+  "Waterllama":        {y:2022, a:"파이널리스트", q:"Waterllama"},
+  "Gentler Streak":    {y:2024, a:"수상",        q:"Gentler Streak", n:"Gentler Streak Fitness Tracker"},
+  "Voice Dream Reader":{y:2021, a:"수상",        q:"Voice Dream"},
+  "Be My Eyes":        {y:2021, a:"수상",        q:"Be My Eyes"},
+  "Speechify":         {y:2025, a:"수상",        q:"Speechify"},
+  "Copilot Money":     {y:2024, a:"파이널리스트", q:"Copilot Money"},
+  "1Password":         {y:2021, a:"파이널리스트", q:"1Password"},
+};
+
+const SPECIMENS = {
+A:[
+ ["Duolingo",["온보딩","게이미피케이션","스트릭"],"가입 <b>전에</b> 첫 학습을 끝내게 만드는 순서."],
+ ["Headspace",["명상","호흡","오디오"],"호흡 애니메이션의 속도와 카피 — 숨돌리기와 직접 비교할 레퍼런스."],
+ ["Noom",["설문형 온보딩","개인화"],"질문 20개를 지루하지 않게 만드는 진행 표시와 중간 요약."],
+ ["Robinhood",["금융","신뢰","규제 카피"],"민감한 정보를 요구하기 직전에 신뢰를 쌓는 문구 배치."],
+ ["Arc Search",["브라우저","AI","제스처"],"튜토리얼 없이 제스처를 가르치는 방식."],
+ ["Bumble",["소셜","프로필 작성","단계 분할"],"긴 입력 폼을 한 화면 한 질문으로 쪼갠 리듬."],
+ ["Peloton",["피트니스","구독","동기부여"],"무료 체험 제안을 어느 화면에 끼워 넣는가."],
+ ["Blinkist",["요약","독서","체험"],"온보딩 마지막이 곧 결제 화면인 구조의 장단점."],
+ ["Calm",["수면","사운드","무료 진입"],"첫 화면에서 소리를 즉시 들려주는 감각적 훅."],
+ ["Strava",["운동","권한","위치"],"위치 권한을 요구하기 전에 이유를 설명하는 프리퍼미션 화면."]
+],
+B:[
+ ["Bear",["노트","구독","테마"],"무료로 다 쓰게 두고 동기화·테마만 파는 경계선."],
+ ["Ulysses",["집필","구독 전환","마이그레이션"],"매절→구독 전환 후 기존 사용자를 다룬 방식."],
+ ["Things 3",["할일","일회성 구매","기기별 과금"],"구독 시대에 일회성 구매로 버티는 앱의 가격표."],
+ ["Craft",["문서","협업","팀 티어"],"개인/팀 티어를 앱 안에서 구분해 보여주는 UI."],
+ ["Fantastical",["캘린더","패밀리","연간 할인"],"패밀리 공유를 세일즈 포인트로 쓰는 문구."],
+ ["Halide",["카메라","프로 사용자","평생 라이선스"],"구독 + 평생 옵션을 동시에 제시하는 화면 구성."],
+ ["Streaks",["습관","일회성","위젯"],"저가 일회성 앱의 App Store 스크린샷 전략."],
+ ["AllTrails",["아웃도어","지도","프리미엄 잠금"],"무료 사용 중 자연스럽게 유료 기능에 부딪히게 하는 지점."],
+ ["Tinder",["소비재 IAP","소모성 아이템"],"구독과 소모성 아이템을 섞는 하이브리드 매출 구조."],
+ ["Procreate Pocket",["크리에이티브","일회성","브랜드"],"구독 없이 브랜드 신뢰만으로 파는 사례."]
+],
+C:[
+ ["Widgetsmith",["위젯","커스터마이즈","홈화면"],"위젯 하나로 시작해 카테고리를 만든 사례."],
+ ["Flighty",["항공","Live Activity","실시간"],"Live Activity 정보 밀도의 사실상 교과서."],
+ ["Uber",["이동","Dynamic Island","ETA"],"섬 축소 상태에서 남기는 최소 정보 선택."],
+ ["Carrot Weather",["날씨","위젯 다양성","톤앤매너"],"같은 데이터를 크기별로 다르게 자르는 법."],
+ ["Structured",["일정","타임라인","잠금화면"],"하루 타임라인을 잠금화면에 압축하는 방식."],
+ ["Dark Noise",["사운드","재생 컨트롤","위젯"],"위젯에서 바로 재생/정지되는 인터랙티브 위젯 구현."],
+ ["Sleep Cycle",["수면","백그라운드","알람"],"밤새 도는 앱의 배터리·권한 커뮤니케이션."],
+ ["Timery for Toggl",["시간 추적","Shortcuts","위젯"],"Shortcuts 액션을 1급 기능으로 대우한 설계."],
+ ["Waterllama",["습관","캐릭터","마이크로 인터랙션"],"기록 1회의 즉각적 보상 연출."],
+ ["Gentler Streak",["운동","건강 데이터","링"],"HealthKit 데이터를 위젯 한 칸으로 요약하는 편집력."]
+],
+D:[
+ ["Voice Dream Reader",["TTS","읽기 장애","커스텀"],"읽기 속도·음성·색상을 사용자에게 완전히 넘긴 설정 구조."],
+ ["Be My Eyes",["시각장애","자원봉사","영상통화"],"저시력 사용자와 봉사자, 두 인터페이스를 한 앱에 담는 법."],
+ ["Seeing AI",["카메라","OCR","실시간 설명"],"카메라 결과를 음성으로 전달하는 지연 시간과 표현."],
+ ["Speechify",["TTS","생산성","웹 읽기"],"접근성 기능이 일반 사용자 시장으로 넘어간 사례."],
+ ["Otter.ai",["전사","자막","회의"],"실시간 전사 UI의 오류 표시와 수정 흐름."],
+ ["Proloquo2Go",["AAC","보완대체의사소통","심볼"],"비언어 사용자를 위한 그리드 UI 설계 원칙."],
+ ["Ava",["청각장애","실시간 자막","다인 대화"],"화자 구분을 색과 위치로 표현하는 방법."],
+ ["TapTapSee",["사물 인식","원탭","최소 UI"],"버튼 한 개짜리 화면이 가능한 이유."],
+ ["Envision AI",["문서 인식","시각 보조","다국어"],"복잡한 기능을 VoiceOver 순서로만 정리한 IA."],
+ ["Clips",["자동 자막","영상","Apple"],"Apple 자사 앱의 자막 기본값 처리."]
+],
+E:[
+ ["Instagram",["피드","전환","제스처"],"화면 전환이 손가락을 따라오는 정도(인터랙티브 트랜지션)."],
+ ["Ivory",["타임라인","커스터마이즈","인디"],"인디 팀이 만든 대형 SNS 클라이언트의 세밀한 햅틱."],
+ ["Clear Todos",["제스처 전용","스와이프","미니멀"],"버튼 없이 제스처만으로 전 기능을 쓰게 한 극단적 실험."],
+ ["Spotify",["미디어","미니 플레이어","확장 전환"],"미니 플레이어 → 전체 화면 모프 애니메이션."],
+ ["Pinterest",["그리드","공유 요소","로딩"],"셀에서 상세로 이어지는 이미지 연결 전환."],
+ ["TikTok",["풀스크린","스크롤","프리로드"],"끊김 없는 세로 스크롤을 만드는 프리로드 체감."],
+ ["Snapchat",["카메라 우선","방향 이동","숨은 화면"],"상하좌우로 화면을 배치한 비선형 내비게이션."],
+ ["Overcast",["팟캐스트","커스텀 컨트롤","인디"],"손가락 크기에 맞춘 오디오 스크러버 설계."],
+ ["Shazam",["단일 액션","대기 상태","결과 연출"],"버튼 하나짜리 앱의 대기·성공·실패 3상태 연출."],
+ ["Apple Music",["시스템 앱","블러","계층"],"Apple 자신이 쓰는 머티리얼·블러 계층 규칙."]
+],
+F:[
+ ["Notion",["문서","블록","무한 중첩"],"모바일에서 무한 중첩을 다루는 뒤로가기 전략."],
+ ["Obsidian",["로컬 마크다운","플러그인","그래프"],"확장성을 사용자에게 넘겼을 때 생기는 UI 부담."],
+ ["Airtable",["데이터베이스","뷰 전환","모바일 축약"],"데스크톱 기능을 모바일에서 어디까지 잘라냈는가."],
+ ["Linear",["이슈 트래커","속도","키보드"],"빠름 자체를 제품 특징으로 만든 인터랙션 예산."],
+ ["Figma",["디자인","캔버스","확대축소"],"큰 캔버스를 작은 화면에서 다루는 내비게이션."],
+ ["Slack",["메시징","채널","알림 설정"],"알림 설정처럼 복잡한 설정 화면의 계층 정리."],
+ ["Microsoft Excel",["표","입력","리본 축약"],"극한의 밀도를 터치로 옮긴 입력 도구 설계."],
+ ["Google Sheets",["협업","실시간","셀 편집"],"같은 문제를 다르게 푼 경쟁 사례와의 비교."],
+ ["Reeder",["RSS","읽기","동기화"],"읽음/안읽음 하나로 전체 IA를 조직한 단순함."],
+ ["Readwise Reader",["읽기 later","하이라이트","통합"],"수집–읽기–복습 3단계를 한 앱에 담은 탭 구성."]
+],
+G:[
+ ["ChatGPT",["대화","스트리밍","음성"],"스트리밍 출력 중 중단·재생성 컨트롤의 위치."],
+ ["Claude",["대화","긴 문서","아티팩트"],"긴 응답을 모바일에서 읽게 만드는 타이포그래피."],
+ ["Perplexity",["검색","출처 표시","후속 질문"],"출처를 본문에 녹이는 인용 UI."],
+ ["Photomath",["카메라","수식 인식","단계 풀이"],"인식 실패 시 사용자에게 책임을 넘기지 않는 문구."],
+ ["Google",["렌즈","멀티모달","즉시 인식"],"카메라 프리뷰 위에 실시간 오버레이를 얹는 밀도."],
+ ["Adobe Lightroom",["사진","마스킹","AI 선택"],"AI 결과를 사용자가 수정할 수 있게 남겨두는 방식."],
+ ["Photoroom",["배경 제거","템플릿","즉시성"],"단일 ML 기능을 제품 전체로 확장한 사례."],
+ ["Just Press Record",["녹음","온디바이스 전사","단순"],"SFSpeechRecognizer 기반 앱의 UX 최소 형태."],
+ ["Photomator",["사진 편집","온디바이스 처리","Apple 실리콘"],"무거운 연산 중 진행 표시와 취소 가능성."],
+ ["Draw Things",["이미지 생성","온디바이스","고급 설정"],"전문가 설정을 초보자에게 숨기는 점진적 공개."]
+],
+H:[
+ ["Day One",["일기","암호화","동기화"],"암호화와 동기화를 동시에 설명하는 설정 카피."],
+ ["Agenda",["노트","날짜 연결","프리미엄 잠금"],"기존 데이터는 지키면서 기능만 잠그는 모델."],
+ ["GoodNotes",["필기","대용량 문서","클라우드"],"큰 파일 동기화 진행률과 부분 로딩."],
+ ["Notability",["필기","오디오 싱크","백업"],"오디오+필기 동시 기록의 데이터 구조 힌트."],
+ ["MindNode",["마인드맵","문서 기반","공유"],"문서 기반 앱의 파일 앱 통합 방식."],
+ ["Drafts",["빠른 입력","액션","자동화"],"첫 화면이 항상 빈 입력창인 앱의 철학."],
+ ["1Password",["보안","동기화","생체인증"],"보안 앱이 마찰을 설계에 일부러 남기는 지점."],
+ ["Strongbox",["로컬 금고","오프라인","오픈 표준"],"클라우드 없이도 성립하는 동기화 UX."],
+ ["Copilot Money",["가계부","연동","분류"],"자동 분류가 틀렸을 때 수정시키는 흐름."],
+ ["Tot",["메모","7칸 제한","크로스 플랫폼"],"의도적 제약(7개)을 세일즈 포인트로 만든 카피."]
+],
+I:[
+ ["PCalc",["계산기","장수 앱","커스터마이즈"],"15년 넘게 유지되는 유틸리티의 업데이트 리듬."],
+ ["Deliveries",["배송 추적","위젯","알림"],"작은 문제 하나를 끝까지 판 앱의 기능 경계."],
+ ["Hello Weather",["날씨","데이터 소스 선택","단순"],"레드오션에서 단순함으로 자리 잡은 포지셔닝."],
+ ["Due",["리마인더","집요한 알림","반복"],"핵심 차별점(끈질긴 알림)을 이름과 아이콘까지 밀어붙인 사례."],
+ ["Prompt",["SSH","니치","프로 도구"],"극소수 사용자용 앱의 가격 정책."],
+ ["Working Copy",["Git","iOS 개발","파일 통합"],"iOS 파일 시스템 제약을 우회한 통합 설계."],
+ ["Scriptable",["자동화","JS","위젯"],"위젯을 플랫폼처럼 개방한 확장 모델."],
+ ["Shortcuts",["자동화","시스템","액션"],"내 앱이 노출할 App Intents 후보를 여기서 찾을 것."],
+ ["Screens",["원격 데스크톱","니치","고가"],"고가 유틸리티의 스크린샷·설명 문구 톤."],
+ ["Toolbox Pro",["Shortcuts 확장","개발자용","모듈"],"다른 앱의 확장으로 존재하는 제품의 생존 방식."]
+],
+J:[
+ ["토스",["금융","마이크로카피","단계 분할"],"한 화면 한 질문 원칙과 본인인증 흐름의 마찰 제거."],
+ ["당근",["로컬 커뮤니티","신뢰","위치"],"동네 인증이라는 제약을 신뢰 장치로 바꾼 설계."],
+ ["카카오톡",["메신저","플랫폼","기능 과밀"],"기능이 계속 붙는 앱의 탭 구조 변천사."],
+ ["배달의민족",["커머스","브랜드 폰트","프로모션"],"타이포그래피로 브랜드를 만든 국내 대표 사례."],
+ ["네이버 지도",["지도","대중교통","밀도"],"한국형 지도 UI의 정보 밀도 기준선."],
+ ["쿠팡",["커머스","속도","결제"],"결제까지의 단계 수를 줄이는 저장된 선택지 처리."],
+ ["리멤버",["명함","OCR","B2B"],"OCR 결과 검수 UI — CalendarSnap과 직접 비교 대상."],
+ ["인프런",["교육","강의 소비","진도"],"모바일에서 강의 진도를 관리하는 방식."],
+ ["밀리의 서재",["구독","독서","오디오"],"국내 구독 서비스의 해지 방어 화면."],
+ ["오늘의집",["커머스+콘텐츠","피드","태그"],"콘텐츠에서 상품으로 넘어가는 연결 UI."]
+],
+};
+
+// 평탄화 + 일련번호 부여
+const ITEMS = [];
+CAT_ORDER.forEach(k=>{
+  SPECIMENS[k].forEach(a=>{
+    ITEMS.push({n:ITEMS.length+1, cat:k, name:a[0], kw:a[1], look:a[2], ada:ADA[a[0]]||null});
+  });
+});
+
+// ─── State ────────────────────────────────────────────────────────────────────
+const KEY = "ada-field-guide-v1";
+const state = {cat:"all", st:"all", q:""};
+let done = new Set();
+
+function loadDone(){
+  try{
+    const raw = localStorage.getItem(KEY);
+    if(raw) done = new Set(JSON.parse(raw));
+  }catch(e){}
+}
+function saveDone(){
+  try{ localStorage.setItem(KEY, JSON.stringify([...done])); }catch(e){}
+}
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+function escapeHtml(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+function pad(i){return String(i).padStart(3,"0");}
+function storeUrl(name){return "https://apps.apple.com/kr/search?term="+encodeURIComponent(name);}
+function adaUrl(a){return "ada-archive.html?q="+encodeURIComponent(a.q);}
+
+// ─── Chips ────────────────────────────────────────────────────────────────────
+function buildChips(){
+  const box = document.getElementById("catChips");
+  box.innerHTML = "";
+  box.appendChild(makeChip("전체","all"));
+  CAT_ORDER.forEach(k=>{
+    const c = CATS[k];
+    const chip = makeChip(k+" · "+c.t, k);
+    const dot = document.createElement("span");
+    dot.className = "dot"; dot.style.background = `var(${c.v})`;
+    chip.prepend(dot);
+    chip.dataset.color = c.v;
+    box.appendChild(chip);
+  });
+}
+function makeChip(label,val){
+  const b = document.createElement("button");
+  b.className = "chip cat"; b.textContent = label; b.dataset.val = val;
+  b.addEventListener("click",()=>{state.cat = val; render();});
+  return b;
+}
+
+document.querySelectorAll(".chip.st").forEach(b=>{
+  b.addEventListener("click",()=>{state.st = b.dataset.st; render();});
+});
+document.getElementById("search").addEventListener("input",e=>{
+  state.q = e.target.value.trim().toLowerCase(); render();
+});
+document.getElementById("reset").addEventListener("click",()=>{
+  if(done.size && !confirm("관찰 기록 "+done.size+"개를 모두 지울까요?")) return;
+  done = new Set(); saveDone(); render();
+});
+
+function toggleFilters(){
+  const c = document.getElementById("controls");
+  const open = c.classList.toggle("open");
+  document.getElementById("filtersToggle").setAttribute("aria-expanded", open);
+}
+
+// ─── Render ───────────────────────────────────────────────────────────────────
+function setActive(){
+  document.querySelectorAll(".chip.cat").forEach(b=>{
+    const on = b.dataset.val === state.cat;
+    b.classList.toggle("active", on);
+    if(on && b.dataset.color){ b.style.background = `var(${b.dataset.color})`; b.style.borderColor = `var(${b.dataset.color})`; }
+    else { b.style.background = ""; b.style.borderColor = ""; }
+  });
+  document.querySelectorAll(".chip.st").forEach(b=>b.classList.toggle("active", b.dataset.st === state.st));
+}
+
+function updateFilterCount(){
+  const n = (state.cat!=="all"?1:0) + (state.st!=="all"?1:0) + (state.q?1:0);
+  const fc = document.getElementById("filtersCount");
+  fc.hidden = n === 0;
+  fc.textContent = n;
+}
+
+function updateMeter(){
+  const d = done.size, total = ITEMS.length;
+  const p = Math.round(d / total * 100);
+  document.getElementById("bar").style.width = p + "%";
+  document.getElementById("pctText").textContent = p + "%";
+  document.getElementById("leftText").textContent = (total - d) + "개 남음";
+  document.getElementById("stDone").textContent = d;
+}
+
+function cardHTML(it){
+  const c = CATS[it.cat];
+  const isDone = done.has(it.n);
+  const ada = it.ada ? `<a class="badge-ada" href="${adaUrl(it.ada)}" title="ADA 아카이브에서 보기">★ ADA ${it.ada.y} ${it.ada.a}${it.ada.n?` · ${escapeHtml(it.ada.n)}`:""}</a>` : "";
+  return `<article class="card${isDone?" done":""}" style="--ac:var(${c.v})" data-n="${it.n}">
+    <div class="card-head">
+      <div class="num">${pad(it.n)}</div>
+      <div class="head-text">
+        <h3><a href="${storeUrl(it.name)}" target="_blank" rel="noopener">${escapeHtml(it.name)}</a></h3>
+        <div class="kws">${it.kw.map(k=>`<span class="kw">${escapeHtml(k)}</span>`).join("")}</div>
+      </div>
+    </div>
+    ${ada}
+    <div class="look"><span class="look-label">관찰 포인트</span>${it.look}</div>
+    <div class="card-foot">
+      <a class="dl" href="${storeUrl(it.name)}" target="_blank" rel="noopener">App Store
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg>
+      </a>
+      <button class="mark" data-mark="${it.n}" aria-pressed="${isDone}">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="m5 12 5 5L20 7"/></svg>
+        ${isDone?"관찰 완료":"관찰 표시"}
+      </button>
+    </div>
+  </article>`;
+}
+
+function render(){
+  setActive();
+  updateFilterCount();
+  updateMeter();
+
+  const rows = ITEMS.filter(it=>{
+    if(state.cat !== "all" && it.cat !== state.cat) return false;
+    if(state.st === "done" && !done.has(it.n)) return false;
+    if(state.st === "todo" && done.has(it.n)) return false;
+    if(state.st === "ada" && !it.ada) return false;
+    if(state.q){
+      const hay = (it.name + " " + it.kw.join(" ") + " " + it.look + " " + CATS[it.cat].t).toLowerCase();
+      if(!hay.includes(state.q)) return false;
+    }
+    return true;
+  });
+
+  const meta = document.getElementById("metaLine");
+  const doneN = rows.filter(r=>done.has(r.n)).length;
+  meta.innerHTML = `표시 중 <b>${rows.length}</b>개 — 관찰 완료 <b>${doneN}</b> · 남은 것 <b>${rows.length - doneN}</b>`;
+
+  const results = document.getElementById("results");
+  if(rows.length === 0){
+    results.innerHTML = `<div class="empty"><div class="big">결과가 없습니다</div><div class="sub">다른 필터 조합을 시도해 보세요.</div></div>`;
+    return;
+  }
+
+  const keys = CAT_ORDER.filter(k=>rows.some(r=>r.cat===k));
+  results.innerHTML = keys.map(k=>{
+    const c = CATS[k];
+    const items = rows.filter(r=>r.cat===k);
+    return `<section class="catgroup" style="--ac:var(${c.v})">
+      <div class="cathead">
+        <div class="catkey">${k}</div>
+        <div>
+          <h2>${escapeHtml(c.t)}</h2>
+          <span class="why">▸ ${escapeHtml(c.why)}</span>
+          <p class="desc">${escapeHtml(c.d)}</p>
+        </div>
+        <span class="cc">${items.length}개 앱</span>
+      </div>
+      <div class="grid">${items.map(cardHTML).join("")}</div>
+    </section>`;
+  }).join("");
+}
+
+// 카드 버튼은 위임으로 처리 (재렌더 후에도 유지)
+document.getElementById("results").addEventListener("click", e=>{
+  const btn = e.target.closest("[data-mark]");
+  if(!btn) return;
+  const n = Number(btn.dataset.mark);
+  done.has(n) ? done.delete(n) : done.add(n);
+  saveDone();
+  render();
+});
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
+document.getElementById("stAda").textContent = ITEMS.filter(i=>i.ada).length;
+loadDone();
+buildChips();
+render();
+</script>
+</body>
+</html>
