@@ -253,6 +253,12 @@
     text-transform:uppercase;color:var(--ac,var(--accent));margin-bottom:5px;
   }
   .look b{color:var(--text);font-weight:650}
+  .impact{
+    font-size:13px;line-height:1.55;color:var(--text);font-weight:600;letter-spacing:-.005em;
+    margin:0 0 8px;padding:11px 13px;background:var(--surface-hi);
+    border:1px solid var(--line);border-left:3px solid var(--ac,var(--accent));border-radius:11px;
+    font-variant-numeric:tabular-nums;
+  }
 
   .card-foot{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:14px}
   .dl{
@@ -369,14 +375,14 @@
 </div>
 
 <header>
-  <div class="eyebrow"><span class="eyebrow-dot"></span>Field Guide · 10 Taxa / 100 Specimens</div>
+  <div class="eyebrow"><span class="eyebrow-dot"></span>Field Guide · 10 Impact Types / 100 Specimens</div>
   <h1>앱 관찰 <span class="it">기록부</span></h1>
-  <p class="lede">사용자로 쓰는 게 아니라 <b>해부하려고</b> 쓰는 목록입니다. 앱마다 "무엇을 볼 것인가"가 하나씩 붙어 있어요. 열어보고, 그 한 가지만 확인하고, 관찰 완료로 표시하세요. ADA 수상작과 겹치는 앱에는 배지가 붙어 있고, 누르면 아카이브 탭에서 바로 확인할 수 있습니다.</p>
+  <p class="lede">기능이 아니라 <b>임팩트</b>로 고른 100개 앱입니다. 앱마다 <b>무엇이 바뀌었는지(측정 지표)</b>와 <b>그 변화를 만든 설계(관찰 포인트)</b>가 짝지어 있어요. 앱을 열어 그 설계를 직접 확인하고, 수치의 출처는 "상세 분석"에서 보세요. ADA 수상·파이널리스트 앱에는 배지가 붙어 있습니다.</p>
   <div class="stats">
     <div class="stat"><div class="n">100</div><div class="l">관찰 대상 앱</div></div>
-    <div class="stat"><div class="n">10</div><div class="l">개 카테고리</div></div>
+    <div class="stat"><div class="n">10</div><div class="l">개 임팩트 유형</div></div>
     <div class="stat"><div class="n" id="stDone">0</div><div class="l">관찰 완료</div></div>
-    <div class="stat"><div class="n" id="stAda">–</div><div class="l">ADA 수상작 중복</div></div>
+    <div class="stat"><div class="n" id="stAda">–</div><div class="l">ADA 수상·파이널리스트</div></div>
   </div>
   <div class="progress">
     <div class="progress-row"><span>관찰 진행률</span><span><b id="pctText">0%</b> · <span id="leftText">100개 남음</span></span></div>
@@ -402,10 +408,10 @@
         <button class="chip st active" data-st="all">전체</button>
         <button class="chip st" data-st="todo">미관찰</button>
         <button class="chip st" data-st="done">관찰 완료</button>
-        <button class="chip st" data-st="ada">ADA 수상작만</button>
+        <button class="chip st" data-st="ada">ADA 앱만</button>
         <div class="search-wrap">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-          <input id="search" type="text" autocomplete="off" placeholder="앱 이름 · 키워드 검색 (예: 위젯, 온보딩, 구독)">
+          <input id="search" type="text" autocomplete="off" placeholder="앱 · 지표 · 키워드 검색 (예: 구독, 접근성, MAU)">
         </div>
       </div>
     </div>
@@ -420,26 +426,26 @@
 <div class="protocol">
   <div class="protocol-inner">
     <span class="plabel">관찰 프로토콜</span>
-    <h3>한 앱을 30분에 해부하는 법</h3>
-    <p class="psub">타이머를 켜고, 아래 순서대로. 길게 쓰면 다음 앱을 못 봅니다.</p>
+    <h3>임팩트에서 설계를 거꾸로 찾는 30분</h3>
+    <p class="psub">결과(지표)를 먼저 읽고, 그 결과를 만든 화면을 찾아 들어갑니다. 기능 목록부터 보면 원인을 놓칩니다.</p>
     <div class="plist">
-      <div class="pitem"><span class="pn">0–5분</span><span class="pt">첫 실행은 딱 한 번뿐입니다</span>설치 직후 화면 기록을 켜고 여세요. 권한 요청 순서, 회원가입을 언제 요구하는지, 가치를 먼저 보여주는지 기록합니다.</div>
-      <div class="pitem"><span class="pn">5–10분</span><span class="pt">결제 벽까지 최단 경로</span>유료 화면에 몇 번 만에 도달하는지, 가격 표기·무료 체험·연간 기본값을 캡처합니다. 스크린샷은 앱별 폴더에 모으세요.</div>
-      <div class="pitem"><span class="pn">10–15분</span><span class="pt">빈 상태와 실패 상태</span>데이터 0개일 때, 비행기 모드일 때, 잘못 입력했을 때 무엇을 보여주는지. 여기서 완성도가 갈립니다.</div>
-      <div class="pitem"><span class="pn">15–20분</span><span class="pt">접근성 감사</span>VoiceOver 켜고 한 바퀴, 손쉬운 사용 → 텍스트 크기 최대로 한 바퀴. 깨지는 지점이 곧 그 팀의 우선순위표입니다.</div>
-      <div class="pitem"><span class="pn">20–25분</span><span class="pt">시스템 통합 표면</span>위젯·잠금화면·Live Activity·Shortcuts·공유 시트·Spotlight 지원 여부. 1인 개발자에게 가성비가 가장 높은 영역입니다.</div>
-      <div class="pitem"><span class="pn">25–30분</span><span class="pt">한 줄 결론</span>"이 앱이 나에게 훔칠 만한 것 하나"를 적고 끝냅니다.</div>
+      <div class="pitem"><span class="pn">0–5분</span><span class="pt">지표를 읽고 가설 하나</span>"상세 분석"에서 임팩트 지표와 출처·기준 시점을 확인하고, "이 숫자를 만든 건 ○○ 화면일 것"이라는 가설을 한 줄로 적습니다.</div>
+      <div class="pitem"><span class="pn">5–12분</span><span class="pt">첫 실행을 화면 기록으로</span>설치 직후를 녹화하세요. 가치를 처음 느끼는 순간까지 몇 번 탭했는지, 가입·권한·결제 요구가 그 앞인지 뒤인지 셉니다.</div>
+      <div class="pitem"><span class="pn">12–18분</span><span class="pt">되돌아오게 만드는 장치</span>알림·위젯·스트릭·공유·Live Activity 중 무엇이 다음 방문을 만드는지 찾습니다. 임팩트 유형 A·F라면 여기가 핵심입니다.</div>
+      <div class="pitem"><span class="pn">18–24분</span><span class="pt">돈과 신뢰의 경계</span>무료/유료 경계, 해지 흐름, 데이터·동의 안내를 봅니다. 성장 지표 옆에 적힌 소송·유출·논란이 이 화면에서 시작되는 경우가 많습니다.</div>
+      <div class="pitem"><span class="pn">24–28분</span><span class="pt">접근성으로 한 바퀴</span>VoiceOver와 가장 큰 텍스트 크기로 핵심 흐름을 다시 돕니다. 임팩트가 누구에게까지 닿는지 여기서 드러납니다.</div>
+      <div class="pitem"><span class="pn">28–30분</span><span class="pt">가설 판정과 한 줄 결론</span>처음 가설이 맞았는지 적고, "내 앱에 옮길 설계 하나"를 남깁니다.</div>
     </div>
     <p class="pnote">
-      <b>주 5개, 20주.</b> 100개를 한 번에 보면 아무것도 안 남습니다. 카테고리를 한 주에 하나씩 도세요.<br>
-      <b>App Store 페이지도 관찰 대상입니다.</b> 스크린샷 1번 컷의 카피, 프리뷰 영상 길이, 부제목, 업데이트 노트 톤을 함께 보세요. 다운로드 전에 이미 절반은 결정됩니다.<br>
-      <b>같은 앱을 6개월 뒤 다시.</b> 변경점이 그 팀이 배운 것입니다. 이게 이 기록부의 진짜 수익입니다.
+      <b>지표는 기준 시점과 함께 읽으세요.</b> 2021년 MAU와 2026년 MAU는 다른 이야기입니다. 성장 수치와 함께 적힌 감원·소송·유출도 같은 설계의 결과일 수 있습니다.<br>
+      <b>주 5개, 20주.</b> 임팩트 유형을 한 주에 하나씩 도세요. 같은 유형 안의 앱끼리 비교해야 패턴이 보입니다.<br>
+      <b>원조와 복제본을 나란히.</b> B 유형은 Snapchat↔Instagram처럼 두 앱을 동시에 열어야 무엇이 복제되고 무엇이 안 됐는지 보입니다.
     </p>
   </div>
 </div>
 
 <footer>
-  <span>관찰 기록은 이 브라우저(localStorage)에만 저장됩니다 · App Store 링크는 한국(KR) 스토어 검색 결과로 연결됩니다.</span>
+  <span>관찰 기록은 이 브라우저(localStorage)에만 저장됩니다 · 임팩트 지표는 "상세 분석"의 출처를 요약한 것이며 기준 시점이 서로 다릅니다 · App Store 링크는 한국(KR) 스토어 기준이고, 한국 스토어에 없는 앱은 미국 스토어로 연결됩니다.</span>
   <button class="reset" id="reset">전체 기록 지우기</button>
 </footer>
 
@@ -448,196 +454,192 @@
 <script src="install-data.js"></script>
 <script>
 // ─── Data ─────────────────────────────────────────────────────────────────────
+// 기능이 아니라 "임팩트 유형"으로 분류합니다. 앱마다 ① 무엇이 바뀌었는지(측정 지표)와
+// ② 그 임팩트를 만든 설계(관찰 포인트)를 짝지어 둡니다. 지표의 출처는 "상세 분석"에 있습니다.
 const CATS = {
-  A:{t:"온보딩 & 첫 실행",      why:"첫 90초가 리텐션의 대부분",        v:"--c-a",
-     d:"설치 직후 화면은 다시 볼 수 없습니다. 권한 요청 타이밍, 가입 강제 시점, 가치를 먼저 보여주는지를 봅니다."},
-  B:{t:"구독 · 수익화 구조",     why:"20개 앱 포트폴리오의 수익 곡선",    v:"--c-b",
-     d:"가격 화면 하나가 매출의 전부입니다. 티어 구성, 앵커링, 일회성 구매를 고수하는 앱의 논리를 봅니다."},
-  C:{t:"위젯 · Live Activity · Dynamic Island", why:"1인 개발자 가성비 최고 영역", v:"--c-c",
-     d:"앱을 열지 않아도 존재감을 만드는 표면. 갱신 주기, 정보 밀도, 탭 시 진입 지점을 봅니다."},
-  D:{t:"접근성 레퍼런스",        why:"워크숍·캠프 교보재",               v:"--c-d",
-     d:"VoiceOver를 켠 상태로 여세요. 잘 만든 앱은 소리만으로도 구조가 들립니다."},
-  E:{t:"제스처 · 인터랙션 · 모션", why:"SwiftUI 애니메이션 감각 훈련",     v:"--c-e",
-     d:"손가락을 떼기 전에 무엇이 반응하는지 보세요. 인터럽터블 애니메이션인지, 고무줄 저항이 있는지."},
-  F:{t:"정보구조 & 복잡도 관리",  why:"기능이 늘어도 안 무너지는 구조",    v:"--c-f",
-     d:"기능이 100개인데 첫 화면이 조용한 앱들. 무엇을 숨기고 무엇을 꺼냈는지가 핵심입니다."},
-  G:{t:"온디바이스 AI · ML",     why:"AI 라이브 코딩 세미나 소재",       v:"--c-g",
-     d:"응답 대기 시간을 어떻게 감추는지, 실패했을 때 뭐라고 말하는지가 이 카테고리의 전부입니다."},
-  H:{t:"로컬 퍼스트 & 동기화",    why:"CloudKit 설계 참고",              v:"--c-h",
-     d:"비행기 모드로 켜보세요. 충돌이 났을 때 사용자에게 무엇을 묻는지가 진짜 실력입니다."},
-  I:{t:"인디 · 단일 기능 유틸리티", why:"내 포트폴리오와 가장 가까운 층",   v:"--c-i",
-     d:"혼자 만들어 혼자 유지하는 앱들. 업데이트 노트와 지원 페이지까지 함께 관찰하세요."},
-  J:{t:"한국 시장 & 로컬라이제이션", why:"KR 스토어 감각 유지",            v:"--c-j",
-     d:"글로벌 문법이 통하지 않는 지점들. 본인인증, 결제, 카피 톤, 알림 밀도를 봅니다."},
+  A:{t:"새로운 일상 행동을 만든 앱", why:"측정: DAU·MAU · 하루 반복 횟수 · 연속 사용", v:"--c-a",
+     d:"전에는 없던 행동을 수억 명이 매일 하게 만든 앱들. 기능 목록보다 '다시 돌아오게 만드는 한 가지 장치'를 찾으세요."},
+  B:{t:"모두가 따라 한 인터페이스", why:"측정: 경쟁사·플랫폼의 모방 · 도달 규모", v:"--c-b",
+     d:"한 앱의 UI 패턴이 업계 표준이 된 사례. 원조와 복제본을 나란히 열고, 무엇이 복제됐고 무엇은 복제되지 못했는지 비교하세요."},
+  C:{t:"Apple 플랫폼을 바꾼 앱", why:"측정: Apple 인수 · 시스템 기능화 · API 대표 사례", v:"--c-c",
+     d:"Apple이 인수하거나, 시스템 기능으로 흡수하거나, 신기능의 기준으로 삼은 앱. 시스템 표면(위젯·Live Activity·단축어)을 어떻게 썼는지 보세요."},
+  D:{t:"산업과 비즈니스 모델을 바꾼 앱", why:"측정: 매출·기업가치 · 경쟁사 대응 · 가격 구조", v:"--c-d",
+     d:"한 앱의 가격·유통 방식이 시장 전체의 규칙을 바꾼 사례. 결제 화면과 무료/유료 경계가 그 규칙이 실제로 구현된 곳입니다."},
+  E:{t:"삶을 바꾼 접근성 앱", why:"측정: 도움받은 사람 수 · 혼자 해낸 일의 횟수", v:"--c-e",
+     d:"VoiceOver를 켠 채로 여세요. 이 앱들의 임팩트는 다운로드가 아니라 '누군가 혼자서 해낸 일'로 측정됩니다."},
+  F:{t:"몸과 마음의 행동을 바꾼 앱", why:"측정: 임상·효과 연구 · 유료 구독자 · 지속 사용", v:"--c-f",
+     d:"건강 행동은 효과를 증명해야 하고, 구독 설계는 선을 넘기 쉽습니다. 효과 근거와 결제 전환 방식을 함께 보세요."},
+  G:{t:"사회와 공공 영역을 바꾼 앱", why:"측정: 위기 때의 도달 · 커버리지 · 기부·제도 연계", v:"--c-g",
+     d:"시장 논리로는 잘 안 만들어지는 앱들. 누가 비용을 내는지(기부·기관·보험사)와 그 구조가 UI에 어떻게 드러나는지 보세요."},
+  H:{t:"작은 팀이 만든 큰 임팩트", why:"측정: 팀 규모 대비 사용자·매출 · 운영 기간", v:"--c-h",
+     d:"1~몇 명이 만든 앱이 거대 서비스와 겨룬 사례. 무엇을 하지 않기로 했는지와 가격표, 업데이트 노트까지 함께 관찰하세요."},
+  I:{t:"AI가 바꾼 일의 방식", why:"측정: 성장 속도 · 사용량·ARR · 신뢰 비용(소송·오류)", v:"--c-i",
+     d:"응답을 기다리는 시간을 어떻게 감추는지, 틀렸을 때 무엇을 보여 주는지, 출처와 동의를 어떻게 다루는지가 임팩트의 크기와 비용을 함께 결정합니다."},
+  J:{t:"한국 시장을 바꾼 앱", why:"측정: 국내 점유율·MAU · 생활 방식 변화", v:"--c-j",
+     d:"글로벌 문법이 통하지 않는 시장에서 기준을 새로 만든 앱들. 본인인증·결제·동네·배송처럼 한국에서만 보이는 설계를 보세요."},
 };
 const CAT_ORDER = ["A","B","C","D","E","F","G","H","I","J"];
 
-// ADA 아카이브 탭과 겹치는 앱 (연도 · 수상/파이널리스트 · 아카이브 검색어)
-const ADA = {
-  "Duolingo":          {y:2023, a:"수상",        q:"Duolingo"},
-  "Headspace":         {y:2023, a:"수상",        q:"Headspace"},
-  "Arc Search":        {y:2024, a:"파이널리스트", q:"Arc Search"},
-  "Craft":             {y:2021, a:"파이널리스트", q:"Craft"},
-  "Halide":            {y:2022, a:"수상",        q:"Halide", n:"Halide Mark II"},
-  "Procreate Pocket":  {y:2022, a:"수상",        q:"Procreate", n:"Procreate"},
-  "Flighty":           {y:2023, a:"수상",        q:"Flighty"},
-  "Carrot Weather":    {y:2021, a:"수상",        q:"Carrot", n:"CARROT Weather"},
-  "Structured":        {y:2026, a:"파이널리스트", q:"Structured"},
-  "Waterllama":        {y:2022, a:"파이널리스트", q:"Waterllama"},
-  "Gentler Streak":    {y:2024, a:"수상",        q:"Gentler Streak", n:"Gentler Streak Fitness Tracker"},
-  "Voice Dream Reader":{y:2021, a:"수상",        q:"Voice Dream"},
-  "Be My Eyes":        {y:2021, a:"수상",        q:"Be My Eyes"},
-  "Speechify":         {y:2025, a:"수상",        q:"Speechify"},
-  "Copilot Money":     {y:2024, a:"파이널리스트", q:"Copilot Money"},
-  "1Password":         {y:2021, a:"파이널리스트", q:"1Password"},
-};
-
+// [상세 분석 키, 표시 이름(없으면 키), 태그, 임팩트 지표, 관찰 포인트(이 임팩트를 만든 설계)]
 const SPECIMENS = {
 A:[
- ["Duolingo",["온보딩","게이미피케이션","스트릭"],"가입 <b>전에</b> 첫 학습을 끝내게 만드는 순서."],
- ["Headspace",["명상","호흡","오디오"],"호흡 애니메이션의 속도와 카피 — 숨돌리기와 직접 비교할 레퍼런스."],
- ["Noom",["설문형 온보딩","개인화"],"질문 20개를 지루하지 않게 만드는 진행 표시와 중간 요약."],
- ["Robinhood",["금융","신뢰","규제 카피"],"민감한 정보를 요구하기 직전에 신뢰를 쌓는 문구 배치."],
- ["Arc Search",["브라우저","AI","제스처"],"튜토리얼 없이 제스처를 가르치는 방식."],
- ["Bumble",["소셜","프로필 작성","단계 분할"],"긴 입력 폼을 한 화면 한 질문으로 쪼갠 리듬."],
- ["Peloton",["피트니스","구독","동기부여"],"무료 체험 제안을 어느 화면에 끼워 넣는가."],
- ["Blinkist",["요약","독서","체험"],"온보딩 마지막이 곧 결제 화면인 구조의 장단점."],
- ["Calm",["수면","사운드","무료 진입"],"첫 화면에서 소리를 즉시 들려주는 감각적 훅."],
- ["Strava",["운동","권한","위치"],"위치 권한을 요구하기 전에 이유를 설명하는 프리퍼미션 화면."]
+ ["Duolingo",null,["학습 습관","스트릭","게이미피케이션"],"MAU 1억 3,000만+, 365일 이상 연속 학습자 약 1,500만 명 (2025-12)","스트릭이 끊기기 직전의 알림·동결권·복구 화면 — 손실 회피로 매일 돌아오게 만드는 장치."],
+ ["NYT Games",null,["데일리 퍼즐","희소성","공유"],"2025년 한 해 퍼즐 112억 개 풀이, 그중 워들 42억 개 (2025)","하루 한 판 제한과 결과 공유 격자 — 적게 주는 것이 매일 오게 만드는 구조."],
+ ["Shazam",null,["음악 인식","한 번의 탭","시스템 통합"],"누적 곡 인식 1,000억 회, MAU 3억+ (2024-11)","앱을 열자마자 버튼 하나 — 인식까지의 탭 수와 제어 센터·액션 버튼 같은 진입점."],
+ ["Strava",null,["운동 기록","소셜 피드","세그먼트"],"운동선수 커뮤니티 1억 9,500만 명 (2026-06)","운동 기록이 '피드 게시물'이 되는 순간 — 응원(쿠도스)과 구간 순위가 혼자 하는 운동을 사회적 행동으로 바꾸는 방식. (미국 스토어)"],
+ ["Uber",null,["차량 호출","대기 경험","Live Activity"],"MAU 2억 200만+, 하루 약 4,200만 건 이동·배달 (2025)","호출 후 기다리는 시간의 설계 — 지도 위 차량 움직임, 도착 예정 시간, 잠금 화면 Live Activity."],
+ ["Google","Google (렌즈)",["시각 검색","카메라","검색 습관"],"Google 렌즈 월 약 200억 건 시각 검색, 18~24세 참여 최다 (2024-10)","검색창 옆 카메라 아이콘 — 입력 대신 '보여 주는' 검색으로 넘어가는 진입 동선."],
+ ["Spotify",null,["스트리밍","무료→유료","개인화"],"사용자 7억 7,700만, 유료 구독자 3억 명 (2026)","무료 사용자가 부딪히는 제한과 개인화 플레이리스트 — 소유 대신 접속을 습관으로 만든 장치."],
+ ["djay",null,["DJ 대중화","자동 믹스","메타포"],"모바일 다운로드 8,000만 회+ (2025-12)","턴테이블 메타포와 자동 믹스 — 장비 없는 초보자가 첫 믹스를 성공하게 만드는 첫 실행."],
+ ["Rooms",null,["창작","코딩 없이 만들기","공유"],"사용자가 만든 방 100만 개+ (2025-01)","빈 방에 첫 오브젝트를 놓기까지 — 코딩을 '만들기 놀이'로 감춘 편집 UI."],
+ ["Calm",null,["수면","Sleep Stories","밤 루틴"],"2017 Apple 올해의 앱, 유료 구독자 400만 명 (2022-11)","Sleep Stories — '잠들기 전 이야기 듣기'라는 새 밤 루틴을 만든 콘텐츠 포맷과 타이머."]
 ],
 B:[
- ["Bear",["노트","구독","테마"],"무료로 다 쓰게 두고 동기화·테마만 파는 경계선."],
- ["Ulysses",["집필","구독 전환","마이그레이션"],"매절→구독 전환 후 기존 사용자를 다룬 방식."],
- ["Things 3",["할일","일회성 구매","기기별 과금"],"구독 시대에 일회성 구매로 버티는 앱의 가격표."],
- ["Craft",["문서","협업","팀 티어"],"개인/팀 티어를 앱 안에서 구분해 보여주는 UI."],
- ["Fantastical",["캘린더","패밀리","연간 할인"],"패밀리 공유를 세일즈 포인트로 쓰는 문구."],
- ["Halide",["카메라","프로 사용자","평생 라이선스"],"구독 + 평생 옵션을 동시에 제시하는 화면 구성."],
- ["Streaks",["습관","일회성","위젯"],"저가 일회성 앱의 App Store 스크린샷 전략."],
- ["AllTrails",["아웃도어","지도","프리미엄 잠금"],"무료 사용 중 자연스럽게 유료 기능에 부딪히게 하는 지점."],
- ["Tinder",["소비재 IAP","소모성 아이템"],"구독과 소모성 아이템을 섞는 하이브리드 매출 구조."],
- ["Procreate Pocket",["크리에이티브","일회성","브랜드"],"구독 없이 브랜드 신뢰만으로 파는 사례."]
+ ["Snapchat",null,["스토리 원조","사라지는 게시물","카메라 우선"],"스토리 2013년 도입 → Instagram이 2016년 유사 기능 출시, MAU 9억 7,100만 (2026 Q2)","24시간 뒤 사라지는 게시물과 카메라로 시작하는 첫 화면 — 영구 피드의 부담을 없앤 포맷."],
+ ["Instagram",null,["스토리 확산","복제의 성공","트레이 UI"],"스토리 일간 사용자 5억 명 (2019-01), MAU 10억 돌파 (2018-06)","상단 원형 스토리 트레이·탭으로 넘기기·길게 눌러 멈춤 — 복제한 패턴이 원조보다 커진 이유를 Snapchat과 비교."],
+ ["TikTok",null,["세로 숏폼","추천 피드","스와이프"],"MAU 10억 돌파 (2021-09) — Reels·Shorts가 형식을 모방","팔로우 없이 시작하는 추천 피드 — 첫 실행 몇 번의 스와이프로 취향을 학습하는 흐름."],
+ ["Tinder",null,["스와이프","카드 스택","이진 결정"],"스와이프 UI가 채용·쇼핑 앱으로 확산, 유료 사용자 850만 명 (2026 Q2)","좌/우 스와이프 하나로 결정을 둘 중 하나로 줄인 카드 스택과 매치 순간의 피드백."],
+ ["Clear Todos",null,["제스처 전용 UI","당겨서 추가","소리 피드백"],"2012년 출시, Mac App Store 2위 — 스와이프 완료·당겨서 추가 패턴 확산","버튼 없는 UI — 당겨서 추가, 스와이프로 완료/삭제를 소리와 색으로 가르치는 방식."],
+ ["Pinterest",null,["메이슨리 그리드","탐색","저장"],"MAU 5억 5,300만 (2024), 사용자 중 Z세대 42%","높이가 제각각인 메이슨리 그리드 — 끝없는 탐색과 '저장' 동작의 마찰 없음."],
+ ["Notion",null,["블록","/ 명령","올인원"],"사용자 100만(2019) → 2,000만 (2021-10), 연 매출 5억 달러 (2025)","'/' 명령과 블록 — 빈 페이지가 문서·DB·보드가 되는 과정을 모바일에서 어떻게 줄였는지."],
+ ["Slack",null,["채널","스레드","업무 메신저"],"상장 신고 시 DAU 1,000만+, 조직 60만+ (2019-04) — Teams·Google Chat이 뒤따름","채널·스레드·멘션의 계층 — 이메일을 대체한 대화 구조와 세분화된 알림 설정."],
+ ["Figma",null,["멀티플레이어","실시간 협업","코멘트"],"상장 첫날 시가총액 563억 달러 (2025-07), 사용자 1,300만","여러 사람의 커서가 함께 움직이는 협업 — 모바일 앱에서는 무엇을 빼고 '보기·코멘트'만 남겼는지."],
+ ["Google Sheets",null,["링크 공유","동시 편집","파일 없는 협업"],"Workspace 유료 고객 900만+, 교육용 사용자 1억 7,000만+ (2021-10)","파일 첨부 대신 링크 하나 — 동시 편집자 표시와 모바일에서 허용한 편집 범위."]
 ],
 C:[
- ["Widgetsmith",["위젯","커스터마이즈","홈화면"],"위젯 하나로 시작해 카테고리를 만든 사례."],
- ["Flighty",["항공","Live Activity","실시간"],"Live Activity 정보 밀도의 사실상 교과서."],
- ["Uber",["이동","Dynamic Island","ETA"],"섬 축소 상태에서 남기는 최소 정보 선택."],
- ["Carrot Weather",["날씨","위젯 다양성","톤앤매너"],"같은 데이터를 크기별로 다르게 자르는 법."],
- ["Structured",["일정","타임라인","잠금화면"],"하루 타임라인을 잠금화면에 압축하는 방식."],
- ["Dark Noise",["사운드","재생 컨트롤","위젯"],"위젯에서 바로 재생/정지되는 인터랙티브 위젯 구현."],
- ["Sleep Cycle",["수면","백그라운드","알람"],"밤새 도는 앱의 배터리·권한 커뮤니케이션."],
- ["Timery for Toggl",["시간 추적","Shortcuts","위젯"],"Shortcuts 액션을 1급 기능으로 대우한 설계."],
- ["Waterllama",["습관","캐릭터","마이크로 인터랙션"],"기록 1회의 즉각적 보상 연출."],
- ["Gentler Streak",["운동","건강 데이터","링"],"HealthKit 데이터를 위젯 한 칸으로 요약하는 편집력."]
+ ["Shortcuts",null,["Workflow 인수","자동화","App Intents"],"Workflow 2015 ADA 수상 → 2017 Apple 인수 → iOS 13 기본 앱 (2019)","액션 블록을 쌓는 편집기 — 서드파티 앱이 App Intents로 자동화 재료가 되는 구조."],
+ ["Photomator",null,["Pixelmator 인수","온디바이스 ML","사진 편집"],"개발사 Pixelmator, Apple 인수 완료 (2025-02)","Neural Engine ML 보정(Super Resolution·Denoise)을 버튼 하나로 감춘 UI."],
+ ["Widgetsmith",null,["iOS 14 위젯","홈 화면 꾸미기","1인 개발"],"2020년 iOS 14 홈 화면 꾸미기 열풍의 중심 (정량 지표 비공개)","크기별 위젯 편집과 시간대별 위젯 교체 — 시스템 신기능 하나에 집중한 속도."],
+ ["Flighty",null,["Live Activity","Dynamic Island","알림"],"2023 ADA 인터랙션 수상, 사용자 300만+ (2026)","출발 전→탑승→착륙 단계별 Live Activity — 게이트 변경·지연을 항공사보다 먼저 알리는 알림 설계."],
+ ["Halide Mark II",null,["프로 카메라","RAW","Process Zero"],"2022 ADA 비주얼·그래픽 수상, 자매 앱들 올해의 iPhone 앱 수상","RAW·수동 초점 제스처와 Process Zero — 컴퓨테이셔널 포토그래피를 '끄는' 선택지를 제시하는 방식."],
+ ["Blackbox",null,["기기 자체가 입력","센서 퍼즐","visionOS"],"플레이어 1,400만+, ADA 2회 수상 (2017 iOS · 2024 visionOS)","화면 밖(밝기·충전·볼륨)으로 푸는 퍼즐 — 기기 자체를 인터페이스로 쓰는 발상."],
+ ["Darkroom",null,["사진 앱 통합","RAW","가져오기 없음"],"누적 2,000만 다운로드+, 2020 ADA 수상","사진 보관함을 그대로 쓰는 편집 흐름 — '가져오기' 단계를 없앤 시스템 통합."],
+ ["Scriptable",null,["스크립트 위젯","JavaScript","확장"],"무료, JavaScript로 홈·잠금 화면 위젯 제작 (정량 지표 비공개)","코드로 만드는 위젯 — Apple이 열어 두지 않은 커스터마이징을 스크립트로 여는 확장 모델."],
+ ["Procreate",null,["iPad 표준 툴","Apple Pencil","AI 미도입"],"2018 iPad 유료 앱 1위, 2022 ADA 포용성 수상, 2024 생성형 AI 미도입 선언","Apple Pencil 압력·제스처(두 손가락 탭 실행 취소)를 도구 자체로 만든 캔버스 UI."],
+ ["Working Copy",null,["Files 통합","Git","iPad 워크플로"],"Files 앱·단축어 도입 때마다 가장 먼저 대응한 1인 개발 앱 (정량 지표 비공개)","Git 저장소를 파일 앱에 노출하는 구조 — 다른 앱이 저장소를 직접 편집하게 만든 통합."]
 ],
 D:[
- ["Voice Dream Reader",["TTS","읽기 장애","커스텀"],"읽기 속도·음성·색상을 사용자에게 완전히 넘긴 설정 구조."],
- ["Be My Eyes",["시각장애","자원봉사","영상통화"],"저시력 사용자와 봉사자, 두 인터페이스를 한 앱에 담는 법."],
- ["Seeing AI",["카메라","OCR","실시간 설명"],"카메라 결과를 음성으로 전달하는 지연 시간과 표현."],
- ["Speechify",["TTS","생산성","웹 읽기"],"접근성 기능이 일반 사용자 시장으로 넘어간 사례."],
- ["Otter.ai",["전사","자막","회의"],"실시간 전사 UI의 오류 표시와 수정 흐름."],
- ["Proloquo2Go",["AAC","보완대체의사소통","심볼"],"비언어 사용자를 위한 그리드 UI 설계 원칙."],
- ["Ava",["청각장애","실시간 자막","다인 대화"],"화자 구분을 색과 위치로 표현하는 방법."],
- ["TapTapSee",["사물 인식","원탭","최소 UI"],"버튼 한 개짜리 화면이 가능한 이유."],
- ["Envision AI",["문서 인식","시각 보조","다국어"],"복잡한 기능을 VoiceOver 순서로만 정리한 IA."],
- ["Clips",["자동 자막","영상","Apple"],"Apple 자사 앱의 자막 기본값 처리."]
+ ["Robinhood",null,["수수료 0원","게임화 논란","금융 UX"],"수수료 무료 → 기존 증권사 수수료 폐지, 2025년 매출 44억 7,000만 달러","주문 확인 화면과 축하 연출 — '게임화' 문제로 750만 달러 합의(2024) 이후 무엇이 바뀌었는지."],
+ ["Apple Music",null,["무손실 무료 포함","가격 기준","공간 음향"],"2021년 추가 요금 없이 무손실·Dolby Atmos 제공 — 고음질 스트리밍 가격 기준 변경","무손실·Atmos 배지를 재생 화면에 드러내는 방식 — 기술 사양을 체감 가치로 번역."],
+ ["Linear",null,["크래프트 B2B","속도","키보드"],"ARR 1억 달러+, 고객사 4만+, 기업가치 25억 달러 (2026-08)","명령 메뉴 중심의 속도감을 모바일 인박스에서는 어떻게 유지했는지."],
+ ["Airtable",null,["노코드","뷰 전환","DB"],"기업 50만 곳·포춘 100대 기업 90% 사용 — 기업가치 110억(2021) → 13억 달러 인수(2026-08)","스프레드시트처럼 보이는 DB — 그리드·칸반·갤러리 뷰 전환으로 노코드를 설명하는 방식."],
+ ["Blinkist",null,["마이크로러닝","요약 구독","인수"],"요약 6,500권+ 라이브러리, 에듀테크 기업 Go1에 인수 (2023-05)","15분 요약이라는 포맷과, 온보딩 마지막이 곧 무료 체험·결제 화면인 구조."],
+ ["Peloton",null,["하드웨어+구독","팬데믹 붐","이탈"],"기업가치 약 500억 달러(2021-01) → 약 25억(2025-03), 구독 255만 건 (2026-08)","기기 없는 앱 구독자에게 먼저 보여 주는 것 — 하드웨어+구독 모델의 앱 쪽 퍼널. (미국 스토어)"],
+ ["1Password",null,["패스키","B2B 전환","보안"],"ARR 4억 달러+ (2025-11), 기업 고객 10만+ (2023)","패스키 저장·자동 입력 안내 — 비밀번호 없는 로그인으로 넘어가게 하는 흐름."],
+ ["AllTrails",null,["아웃도어","프리미엄 경계","카테고리 통합"],"2020년 신규 설치 870만(+89%), Permira 1억 5,000만 달러 투자 (2021)","무료로 코스를 찾다가 오프라인 지도·경로 이탈 알림에서 유료로 넘어가는 지점."],
+ ["Microsoft Excel",null,["모바일 퍼스트","밀도 축약","오피스"],"월 사용자 7억 5,000만~12억 추정(전 플랫폼), 2014년 iPad용 오피스 선출시","리본 메뉴를 터치 툴바로 접은 방식과 수식 입력용 키보드 행."],
+ ["Ulysses",null,["매절→구독","기존 사용자 대우","프로 앱"],"2017년 구독 전환, 기존 구매자 평생 50% 할인 — 인디 프로 앱 구독 전환의 대표 사례","구독 전환 때 기존 구매자를 대우한 방식 — 결제 화면 문구와 가격 비교."]
 ],
 E:[
- ["Instagram",["피드","전환","제스처"],"화면 전환이 손가락을 따라오는 정도(인터랙티브 트랜지션)."],
- ["Ivory",["타임라인","커스터마이즈","인디"],"인디 팀이 만든 대형 SNS 클라이언트의 세밀한 햅틱."],
- ["Clear Todos",["제스처 전용","스와이프","미니멀"],"버튼 없이 제스처만으로 전 기능을 쓰게 한 극단적 실험."],
- ["Spotify",["미디어","미니 플레이어","확장 전환"],"미니 플레이어 → 전체 화면 모프 애니메이션."],
- ["Pinterest",["그리드","공유 요소","로딩"],"셀에서 상세로 이어지는 이미지 연결 전환."],
- ["TikTok",["풀스크린","스크롤","프리로드"],"끊김 없는 세로 스크롤을 만드는 프리로드 체감."],
- ["Snapchat",["카메라 우선","방향 이동","숨은 화면"],"상하좌우로 화면을 배치한 비선형 내비게이션."],
- ["Overcast",["팟캐스트","커스텀 컨트롤","인디"],"손가락 크기에 맞춘 오디오 스크러버 설계."],
- ["Shazam",["단일 액션","대기 상태","결과 연출"],"버튼 하나짜리 앱의 대기·성공·실패 3상태 연출."],
- ["Apple Music",["시스템 앱","블러","계층"],"Apple 자신이 쓰는 머티리얼·블러 계층 규칙."]
+ ["Be My Eyes",null,["봉사자 연결","Be My AI","시각장애"],"봉사자 1,111만 명, 시각장애·저시력 사용자 110만 명, 180+ 언어 (2026-09)","통화 연결까지의 단계와 Be My AI — 사람 봉사자와 AI 중 무엇을 쓸지 고르게 하는 첫 화면."],
+ ["oko",null,["보행 신호 인식","온디바이스 ML","햅틱"],"시각장애 보행자의 교차로 횡단 100만 회 지원 (2023-08)","신호 상태를 소리·진동 패턴으로 전달 — 화면을 보지 않는 사용자를 위한 피드백."],
+ ["Seeing AI",null,["채널 전환","문서 읽기","음성 안내"],"2017년 iOS 출시, 2023년 Android·18개 언어로 확장","채널(텍스트·문서·사람·화폐) 전환과 문서 모서리 음성 안내 — VoiceOver로 따라가 보세요."],
+ ["Proloquo2Go",null,["AAC","심볼","전용 기기 대체"],"AssistiveWare AAC 앱 50만+ 다운로드, 140개국 — 2009년 iOS 최초의 완전한 AAC 앱","9~144개 버튼 레이아웃과 심볼 — 말 대신 누르는 인터페이스의 정보 밀도 조절."],
+ ["Speechify",null,["난독증","TTS","대중화"],"사용자 6,000만+, 약 200개국 (2026-05), 2025 ADA 포용성 수상","난독증 도구가 대중 생산성 앱이 된 지점 — 재생 속도와 따라 읽기 하이라이트."],
+ ["Voice Dream Reader",null,["TTS 리더","VoiceOver","전용 기기 대체"],"2021 ADA 포용성 수상, 30개 언어 200+ 음성 (정량 사용자 지표 비공개)","VoiceOver 사용자 기준의 문서 탐색 — 문장·단락 단위 이동."],
+ ["Tiimo",null,["신경다양성","시각 타이머","루틴"],"사용자 50만+(유료 5만) (2024-08), 2025 올해의 iPhone 앱","시간을 색 블록과 원으로 보여 주는 타이머 — 시간 감각이 다른 사용자를 위한 표현."],
+ ["Structured",null,["ADHD","타임라인","Foundation Models"],"누적 다운로드 1,500만+, Pro 구독자 50만+ (2026)","하루를 세로 타임라인 하나로 — '지금·다음 할 일'이 한눈에 보이는 가시성."],
+ ["TapTapSee",null,["카메라+음성","최소 조작","원형"],"AFB Access Award (2014), AppleVis iOS 명예의 전당 (2013)","더블 탭 한 번으로 촬영 → 음성 설명 — 조작 단계를 최소화한 원형."],
+ ["Land of Livia",null,["VoiceOver 게임","오디오 공간","포용 설계"],"다운로드 4만+, AppleVis 평균 평점 4.7 (2026)","VoiceOver를 1급 입력으로 설계한 RPG — 소리만으로 공간을 파악하게 하는 방식."]
 ],
 F:[
- ["Notion",["문서","블록","무한 중첩"],"모바일에서 무한 중첩을 다루는 뒤로가기 전략."],
- ["Obsidian",["로컬 마크다운","플러그인","그래프"],"확장성을 사용자에게 넘겼을 때 생기는 UI 부담."],
- ["Airtable",["데이터베이스","뷰 전환","모바일 축약"],"데스크톱 기능을 모바일에서 어디까지 잘라냈는가."],
- ["Linear",["이슈 트래커","속도","키보드"],"빠름 자체를 제품 특징으로 만든 인터랙션 예산."],
- ["Figma",["디자인","캔버스","확대축소"],"큰 캔버스를 작은 화면에서 다루는 내비게이션."],
- ["Slack",["메시징","채널","알림 설정"],"알림 설정처럼 복잡한 설정 화면의 계층 정리."],
- ["Microsoft Excel",["표","입력","리본 축약"],"극한의 밀도를 터치로 옮긴 입력 도구 설계."],
- ["Google Sheets",["협업","실시간","셀 편집"],"같은 문제를 다르게 푼 경쟁 사례와의 비교."],
- ["Reeder",["RSS","읽기","동기화"],"읽음/안읽음 하나로 전체 IA를 조직한 단순함."],
- ["Readwise Reader",["읽기 later","하이라이트","통합"],"수집–읽기–복습 3단계를 한 앱에 담은 탭 구성."]
+ ["Headspace",null,["명상","효과 연구","호흡"],"불안 32% 감소(PLOS ONE) 등 연구 발표, 다운로드 1억 500만+","호흡 애니메이션의 속도와 카피, 첫 세션까지 걸리는 시간."],
+ ["Noom",null,["행동 변화","설문형 온보딩","구독 소송"],"CDC 인정 최초의 모바일 헬스 앱(2017) — 자동 갱신 소송 6,200만 달러 합의(2022)","설문 → 개인화 플랜 → 결제 — 효과를 파는 설계와 공격적 구독 전환의 경계선."],
+ ["Sleep Cycle",null,["스마트 알람","수면 데이터","상장"],"수면 분석 30억 밤+, 2025년 EBIT 마진 26.6%","머리맡에 두는 설정 과정과 아침 그래프 — 매일 확인하게 만드는 수면 점수."],
+ ["Gentler Streak Fitness Tracker","Gentler Streak",["휴식도 기록","자기 연민","Apple Watch"],"2022 올해의 Apple Watch 앱, 2024 ADA 사회적 영향 수상","쉬는 날도 '성공'으로 표시 — 연속 기록의 압박을 뒤집은 활동 경로 시각화."],
+ ["Rise: Energy & Sleep Tracker","Rise",["수면 부채","일주기 리듬","에너지"],"사용자 1,000만+ (회사 발표, 2026)","수면 부채 숫자와 에너지 곡선 — 수면 과학을 오늘의 계획으로 번역하는 화면."],
+ ["Opal",null,["스크린 타임","학생","프리미엄"],"DAU 100만(약 3분의 2가 학생), ARR 1,000만 달러 (2026-04)","앱이 막히는 순간의 화면 — 좌절 대신 의도를 묻는 차단 UX와 넉넉한 무료 범위."],
+ ["Ahead: Emotions Coach","Ahead",["감정 지능","마이크로러닝","게이미피케이션"],"사용자 200만 명(개발사 발표), 100+개국 '오늘의 앱'","감정 지능 레슨을 게임식 짧은 학습으로 — 1회 학습 길이와 진행 표시."],
+ ["Evolve: Daily Self-Care Coach","Evolve",["LGBTQIA+","정신건강","문화적 맥락"],"사용자 200만+, 80개국 '오늘의 앱' (2026)","특정 커뮤니티를 위한 콘텐츠 톤과 개인화 질문 — 주류 웰니스 앱이 놓친 맥락."],
+ ["Train Fitness",null,["자동 운동 인식","Apple Watch","포용성"],"470종+ 운동 자동 인식, 웨이트 사용자 10만+ (개발사 주장)","Watch 센서로 세트·횟수를 자동 기록 — 손으로 입력하지 않는 운동 기록."],
+ ["Waterllama",null,["물 마시기","캐릭터 보상","1인 개발"],"2022 ADA 즐거움·재미 파이널리스트, 에디터의 선택 (정량 지표 비공개)","물 한 잔 기록마다 반응하는 캐릭터 — 사소한 행동에 보상을 붙이는 방식."]
 ],
 G:[
- ["ChatGPT",["대화","스트리밍","음성"],"스트리밍 출력 중 중단·재생성 컨트롤의 위치."],
- ["Claude",["대화","긴 문서","아티팩트"],"긴 응답을 모바일에서 읽게 만드는 타이포그래피."],
- ["Perplexity",["검색","출처 표시","후속 질문"],"출처를 본문에 녹이는 인용 UI."],
- ["Photomath",["카메라","수식 인식","단계 풀이"],"인식 실패 시 사용자에게 책임을 넘기지 않는 문구."],
- ["Google",["렌즈","멀티모달","즉시 인식"],"카메라 프리뷰 위에 실시간 오버레이를 얹는 밀도."],
- ["Adobe Lightroom",["사진","마스킹","AI 선택"],"AI 결과를 사용자가 수정할 수 있게 남겨두는 방식."],
- ["Photoroom",["배경 제거","템플릿","즉시성"],"단일 ML 기능을 제품 전체로 확장한 사례."],
- ["Just Press Record",["녹음","온디바이스 전사","단순"],"SFSpeechRecognizer 기반 앱의 UX 최소 형태."],
- ["Photomator",["사진 편집","온디바이스 처리","Apple 실리콘"],"무거운 연산 중 진행 표시와 취소 가능성."],
- ["Draw Things",["이미지 생성","온디바이스","고급 설정"],"전문가 설정을 초보자에게 숨기는 점진적 공개."]
+ ["Watch Duty: Wildfire Maps","Watch Duty",["재난 정보","비영리","실시간 지도"],"LA 산불 주간 다운로드 200만·순 사용자 1,400만 (2025-01), 사용자 2,000만+","공식 경보보다 빠른 확인된 정보 — 지도·대피 구역·알림의 우선순위. (미국 스토어)"],
+ ["Ground News",null,["미디어 편향","Blindspot","뉴스"],"5만+ 매체에서 하루 약 6만 건 기사 처리, 2025 ADA 사회적 영향 파이널리스트","같은 뉴스를 좌·중·우 막대로 보여 주는 편향 시각화."],
+ ["Empathy",null,["사별 지원","보험사 제공","체크리스트"],"보험 가입자 5,000만+·직원 900만+ 대상 제공, 누적 투자 1억 6,200만 달러","사별 직후의 사용자에게 할 일을 하나씩 — 감정 상태를 고려한 톤과 순서. (미국 스토어)"],
+ ["Transit",null,["대중교통","기관 파트너","크라우드소싱"],"1,200+ 도시, 교통 기관 파트너 220+ (2026-09)","앱을 열면 가까운 노선부터 — 검색 없이 시작하는 홈과 승객 제보 실시간 위치."],
+ ["Complete Anatomy 2024","Complete Anatomy",["의료 교육","포용적 표현","3D"],"전문가·교육자·학생 약 300만 명, Elsevier 4,470만 유로 인수 (2019)","다양한 피부색·표현형의 3D 인체 — 교육 도구의 포용적 기본값."],
+ ["Universe — Website Builder","Universe",["모바일 웹 제작","첫 창작자","그리드"],"만들어진 사이트 100만 개+, 활성 창작자 50만+ (2021)","휴대폰만으로 웹사이트 만들기 — 컴퓨터 없는 창작자를 위한 그리드 편집기."],
+ ["Rebel Girls",null,["여성 롤모델","아동 오디오","출판"],"책 800만 부+, 팟캐스트 다운로드 2,000만+ (2022)","실제 여성 이야기를 오디오 중심으로 — 아이가 혼자 쓰는 재생 화면."],
+ ["Pok Pok Playroom",null,["아동","과몰입 없음","광고 없음"],"2021 ADA·2023 App Store Award, 제작사 TIME100 기업 (2025)","점수·광고·알림이 없는 아동 앱 — 끝없이 놀 수 있지만 과몰입을 부르지 않는 장치."],
+ ["Art of Fauna",null,["보전 기부","스크린 리더","퍼즐"],"수익 20% 야생동물 보전 기부, 2025 ADA 포용성 수상","별도 모드 없이 스크린 리더로 푸는 퍼즐 — 접근성과 메시지를 함께 담은 설계."],
+ ["Sago Mini First Words",null,["언어치료","아동","보호자 안내"],"아동 약 50만 명을 지원하는 Otsimo와 공동 개발, 2023 ADA 사회적 영향 파이널리스트","언어치료 기법을 놀이로 — 보호자에게 보이는 안내와 아이에게 보이는 화면의 분리."]
 ],
 H:[
- ["Day One",["일기","암호화","동기화"],"암호화와 동기화를 동시에 설명하는 설정 카피."],
- ["Agenda",["노트","날짜 연결","프리미엄 잠금"],"기존 데이터는 지키면서 기능만 잠그는 모델."],
- ["GoodNotes",["필기","대용량 문서","클라우드"],"큰 파일 동기화 진행률과 부분 로딩."],
- ["Notability",["필기","오디오 싱크","백업"],"오디오+필기 동시 기록의 데이터 구조 힌트."],
- ["MindNode",["마인드맵","문서 기반","공유"],"문서 기반 앱의 파일 앱 통합 방식."],
- ["Drafts",["빠른 입력","액션","자동화"],"첫 화면이 항상 빈 입력창인 앱의 철학."],
- ["1Password",["보안","동기화","생체인증"],"보안 앱이 마찰을 설계에 일부러 남기는 지점."],
- ["Strongbox",["로컬 금고","오프라인","오픈 표준"],"클라우드 없이도 성립하는 동기화 UX."],
- ["Copilot Money",["가계부","연동","분류"],"자동 분류가 틀렸을 때 수정시키는 흐름."],
- ["Tot",["메모","7칸 제한","크로스 플랫폼"],"의도적 제약(7개)을 세일즈 포인트로 만든 카피."]
+ ["Slopes",null,["1인 개발","무투자","시즌 앱"],"650만 다운로드, 외부 투자 없이 ARR 100만 달러 (2022)","시즌이 끝나도 지우지 않게 하는 기록 아카이브와 유료 전환 시점."],
+ ["GoodNotes",null,["1인 프로젝트","필기","글로벌"],"2010년 1인 프로젝트 → MAU 2,400만+, 노트 18억 개","종이 같은 필기감 — 펜 지연·지우개·페이지 넘기기의 디테일."],
+ ["Obsidian",null,["로컬 퍼스트","플러그인","소규모 팀"],"사용자 약 100만 명 추정(2023), Discord 커뮤니티 11만+","노트는 내 기기의 마크다운 파일 — 동기화 유료화와 데이터 소유권의 균형."],
+ ["Things 3",null,["일회성 구매","장수","ADA 2회"],"누적 100만 카피 (2013-12), ADA 2회 수상, 구독 없이 유지","Magic Plus 버튼과 '오늘·언젠가' 구분 — 구독 없이 버티는 가격표."],
+ ["iA Writer",null,["미니멀 에디터","Authorship","장르 정의"],"2010년 이후 300만 카피+, 2025년 역대 최고 실적","포커스 모드와 사람/AI 텍스트를 구분하는 Authorship 표시."],
+ ["Overcast",null,["1인 운영","무투자","오디오"],"1인 개발·VC 투자 없음, The Verge 선정 iOS 최고 팟캐스트 앱 (2015)","Smart Speed·Voice Boost — 듣는 시간을 줄여 주는 기능을 어디에 두었는지."],
+ ["CARROT Weather",null,["1인 개발","성격 모드","차별화"],"1인 개발, 2021 ADA 인터랙션 수상 (정량 지표 비공개)","말투를 고르는 성격 모드 — 데이터가 같은 날씨 앱을 목소리로 차별화."],
+ ["Balatro",null,["1인 개발","유료 게임","인앱 결제 없음"],"1년 안에 500만 장, 모바일판 두 달 440만 달러 (2024)","인앱 결제 없는 유료 게임의 터치 조작 — 카드 드래그·정렬과 점수 연출."],
+ ["Drafts",null,["1인 개발","빠른 캡처","액션"],"MacStories 2025 올해의 앱·2022 평생 공로상 (정량 지표 비공개)","열면 바로 빈 텍스트 — 먼저 적고 나중에 '액션'으로 보내는 흐름."],
+ ["Is This Seat Taken?",null,["2인 스튜디오","데뷔작","코지 퍼즐"],"2026 ADA 즐거움과 재미 수상, BAFTA 게임 어워드 후보","좌석 배치라는 일상 규칙을 퍼즐로 — 첫 레벨에서 규칙을 가르치는 방식."]
 ],
 I:[
- ["PCalc",["계산기","장수 앱","커스터마이즈"],"15년 넘게 유지되는 유틸리티의 업데이트 리듬."],
- ["Deliveries",["배송 추적","위젯","알림"],"작은 문제 하나를 끝까지 판 앱의 기능 경계."],
- ["Hello Weather",["날씨","데이터 소스 선택","단순"],"레드오션에서 단순함으로 자리 잡은 포지셔닝."],
- ["Due",["리마인더","집요한 알림","반복"],"핵심 차별점(끈질긴 알림)을 이름과 아이콘까지 밀어붙인 사례."],
- ["Prompt",["SSH","니치","프로 도구"],"극소수 사용자용 앱의 가격 정책."],
- ["Working Copy",["Git","iOS 개발","파일 통합"],"iOS 파일 시스템 제약을 우회한 통합 설계."],
- ["Scriptable",["자동화","JS","위젯"],"위젯을 플랫폼처럼 개방한 확장 모델."],
- ["Shortcuts",["자동화","시스템","액션"],"내 앱이 노출할 App Intents 후보를 여기서 찾을 것."],
- ["Screens",["원격 데스크톱","니치","고가"],"고가 유틸리티의 스크린샷·설명 문구 톤."],
- ["Toolbox Pro",["Shortcuts 확장","개발자용","모듈"],"다른 앱의 확장으로 존재하는 제품의 생존 방식."]
+ ["ChatGPT",null,["대화형 AI","최단 성장","스트리밍 응답"],"출시 2개월 만에 MAU 1억, 주간 사용자 9억 (2026-02)","스트리밍 응답·정지·재생성 — 기다림을 감추는 AI 앱의 표준 UI."],
+ ["Claude",null,["긴 작업","파일 분석","아티팩트"],"iOS 앱 출시 (2024-05), Anthropic 기업가치 9,650억 달러 (2026-05)","긴 문서·파일 첨부와 아티팩트 — 긴 작업을 작은 화면에서 다루는 방식."],
+ ["Perplexity",null,["답변 엔진","출처 인용","저작권 갈등"],"기업가치 10억(2024-04) → 200억 달러 (2025-09), 언론사 저작권 소송","답변마다 붙는 출처 번호 — 신뢰를 UI로 만드는 인용 패턴."],
+ ["Otter.ai",null,["회의 전사","ARR","녹음 동의"],"누적 회의 전사 10억 건 (2023-02), ARR 1억 달러 (2025)","녹음 시작 전 동의 안내 — 2025년 집단소송이 드러낸 동의 UX의 무게."],
+ ["Photoroom",null,["배경 제거","흑자 AI","커머스"],"누적 투자 6,200만 달러·기업가치 5억 달러, 흑자 운영","촬영 즉시 배경 제거 — 단일 ML 기능을 돈 되는 결과물로 만드는 흐름."],
+ ["Moises",null,["음원 분리","음악가","AI 스튜디오"],"사용자 7,000만 명, 190개국 (2025-12)","분리된 트랙을 믹서 슬라이더로 — 전문 DSP 작업을 누구나 만질 수 있게."],
+ ["Arc Search",null,["Browse for Me","AI 요약","제스처"],"Browse for Me 출시 (2024-01), The Browser Company 6억 1,000만 달러에 인수 (2025-09)","검색 결과 대신 AI가 만든 페이지 — 링크를 누르지 않는 검색의 설계."],
+ ["Photomath",null,["카메라 풀이","단계별 설명","교육"],"누적 2억 2,000만 다운로드, 월 22억 문제 풀이 (2021), Google 인수 (2023)","찍는 순간 인식 → 단계별 풀이 — 답보다 과정을 먼저 보여 주는 화면."],
+ ["Draw Things",null,["온디바이스 생성","오프라인","Apple 실리콘"],"Apple M5 발표에서 온디바이스 생성 AI 사례로 언급 (2025-10)","모델 다운로드·용량·생성 시간 — 오프라인 AI의 기다림을 어떻게 안내하는지."],
+ ["Copilot Money",null,["ML 분류","금융 데이터","검토"],"ML 분류로 수동 재분류 50% 감소 (2024-03)","자동 분류 결과를 사람이 확인하는 흐름 — AI가 틀릴 수 있는 곳에 둔 확인 단계. (미국 스토어)"]
 ],
 J:[
- ["토스",["금융","마이크로카피","단계 분할"],"한 화면 한 질문 원칙과 본인인증 흐름의 마찰 제거."],
- ["당근",["로컬 커뮤니티","신뢰","위치"],"동네 인증이라는 제약을 신뢰 장치로 바꾼 설계."],
- ["카카오톡",["메신저","플랫폼","기능 과밀"],"기능이 계속 붙는 앱의 탭 구조 변천사."],
- ["배달의민족",["커머스","브랜드 폰트","프로모션"],"타이포그래피로 브랜드를 만든 국내 대표 사례."],
- ["네이버 지도",["지도","대중교통","밀도"],"한국형 지도 UI의 정보 밀도 기준선."],
- ["쿠팡",["커머스","속도","결제"],"결제까지의 단계 수를 줄이는 저장된 선택지 처리."],
- ["리멤버",["명함","OCR","B2B"],"OCR 결과 검수 UI — CalendarSnap과 직접 비교 대상."],
- ["인프런",["교육","강의 소비","진도"],"모바일에서 강의 진도를 관리하는 방식."],
- ["밀리의 서재",["구독","독서","오디오"],"국내 구독 서비스의 해지 방어 화면."],
- ["오늘의집",["커머스+콘텐츠","피드","태그"],"콘텐츠에서 상품으로 넘어가는 연결 UI."]
+ ["토스",null,["간편송금","단계 축소","금융 UX"],"국내 사용자 2,000만+ (2021), 기업가치 74억 달러 (2021-06)","송금 단계 수와 한 화면 한 질문 — 은행 앱들이 따라 한 흐름."],
+ ["카카오톡",null,["국민 메신저","플랫폼 확장","장애 리스크"],"MAU 4,800만+, 스마트폰 사용자 93% (2024) — 2022 데이터센터 화재로 최장 127시간 장애","메신저에서 송금·선물·결제로 이어지는 진입점, 2025년 친구 탭 개편 논란까지."],
+ ["배달의민족",null,["배달 플랫폼","브랜드 서체","B급 카피"],"딜리버리히어로의 약 40억 달러 인수 승인 (2020-12)","B급 카피와 무료 배포 서체 — 브랜드 톤이 UI 문구에 스며든 방식."],
+ ["당근",null,["동네 거래","신뢰 장치","하이퍼로컬"],"누적 가입자 4,000만+, MAU 2,000만+ (2025-01)","동네 인증과 매너온도 — 낯선 사람 간 거래의 신뢰를 만드는 장치."],
+ ["네이버 지도",null,["지도 1위","로컬 비즈니스","예약"],"MAU 2,650만, 국내 지도 점유율 약 70% (2025-02)","장소 → 리뷰 → 예약·주문 — 지도에서 가게로 이어지는 동선."],
+ ["쿠팡",null,["다음 날 도착","물류","보안 책임"],"2025년 매출 345억 달러, 로켓배송 주문 99.3% 하루 내 배송 (2020) — 2025년 고객 정보 3,370만 건 유출","도착 보장 날짜를 목록에서부터 보여 주는 방식과 저장된 결제 정보."],
+ ["리멤버",null,["명함 디지털화","채용 전환","사람이 입력"],"사용자 140만·명함 6,000만 장 (2016) → 채용 플랫폼, EQT 인수 (2025)","명함 촬영 후 기다리는 시간의 설계 — 쌓인 데이터가 채용으로 이어지는 지점."],
+ ["오늘의집",null,["콘텐츠 커머스","사진 태그","유니콘"],"누적 다운로드 1,000만 (2020-05), 국내 유니콘 지정 (2022-03)","사진 속 태그를 눌러 바로 구매 — 콘텐츠에서 상품으로 넘어가는 연결."],
+ ["밀리의 서재",null,["전자책 구독","번들","흑자"],"2023년 코스닥 상장, 2025년 매출 726억·영업이익 110억 원","통신·음악 번들로 들어온 사용자의 첫 화면과 해지 방어 화면."],
+ ["인프런",null,["IT 교육","커리어","모바일 학습"],"활성 학습자 140만 명, 강의 4,000개+ (2026-09)","모바일 강의 진도·배속·오프라인 다운로드 — 출퇴근 학습을 위한 설계."]
 ],
 };
 
-// 앱 아이콘: install-data.js(iTunes Lookup)에서 기록부 이름 → 아이콘 URL
-const ICONS = {};
-(window.INSTALL_DATA ? INSTALL_DATA.items : []).forEach(i=>{
-  if(i.fg && i.icon) ICONS[i.fn || i.k] = i.icon.replace("100x100bb", "200x200bb");
-});
+// 설치 데이터(iTunes Lookup): 아이콘 · 스토어 링크 · ADA 이력
+const INSTALL = {};
+(window.INSTALL_DATA ? INSTALL_DATA.items : []).forEach(i=>{ INSTALL[i.k] = i; });
+const CAT_KO = {delight:"즐거움과 재미",inclusivity:"포용성",innovation:"혁신",interaction:"인터랙션",social:"사회적 영향",visuals:"비주얼",spatial:"공간 컴퓨팅",uncat:""};
 
 // 평탄화 + 일련번호 부여
 const ITEMS = [];
 CAT_ORDER.forEach(k=>{
   SPECIMENS[k].forEach(a=>{
-    ITEMS.push({n:ITEMS.length+1, cat:k, name:a[0], kw:a[1], look:a[2], ada:ADA[a[0]]||null});
+    const inst = INSTALL[a[0]] || null;
+    let ada = null;
+    if(inst && inst.ada){
+      const e = inst.ada.reduce((x,y)=> y[0]>x[0] || (y[0]===x[0] && y[2]>x[2]) ? y : x);
+      ada = {y:e[0], a:e[2]?"수상":"파이널리스트", cat:CAT_KO[e[1]]||""};
+    }
+    ITEMS.push({n:ITEMS.length+1, cat:k, key:a[0], name:a[1]||a[0], kw:a[2], metric:a[3], look:a[4], inst, ada});
   });
 });
 
 // ─── State ────────────────────────────────────────────────────────────────────
-const KEY = "ada-field-guide-v1";
+// v2: 관찰 기록을 앱 키로 저장 (v1은 옛 목록의 일련번호였음 → 이름으로 옮겨 옴)
+const KEY = "ada-field-guide-v2";
+const KEY_V1 = "ada-field-guide-v1";
+const V1_ORDER = ["Duolingo","Headspace","Noom","Robinhood","Arc Search","Bumble","Peloton","Blinkist","Calm","Strava","Bear","Ulysses","Things 3","Craft","Fantastical","Halide Mark II","Streaks","AllTrails","Tinder","Procreate","Widgetsmith","Flighty","Uber","CARROT Weather","Structured","Dark Noise","Sleep Cycle","Timery for Toggl","Waterllama","Gentler Streak Fitness Tracker","Voice Dream Reader","Be My Eyes","Seeing AI","Speechify","Otter.ai","Proloquo2Go","Ava","TapTapSee","Envision AI","Clips","Instagram","Ivory","Clear Todos","Spotify","Pinterest","TikTok","Snapchat","Overcast","Shazam","Apple Music","Notion","Obsidian","Airtable","Linear","Figma","Slack","Microsoft Excel","Google Sheets","Reeder","Readwise Reader","ChatGPT","Claude","Perplexity","Photomath","Google","Adobe Lightroom","Photoroom","Just Press Record","Photomator","Draw Things","Day One","Agenda","GoodNotes","Notability","MindNode","Drafts","1Password","Strongbox","Copilot Money","Tot","PCalc","Deliveries","Hello Weather","Due","Prompt","Working Copy","Scriptable","Shortcuts","Screens","Toolbox Pro","토스","당근","카카오톡","배달의민족","네이버 지도","쿠팡","리멤버","인프런","밀리의 서재","오늘의집"];
 const state = {cat:"all", st:"all", q:""};
 let done = new Set();
 
 function loadDone(){
   try{
     const raw = localStorage.getItem(KEY);
-    if(raw) done = new Set(JSON.parse(raw));
+    if(raw){ done = new Set(JSON.parse(raw)); return; }
+    const old = localStorage.getItem(KEY_V1);
+    if(old){
+      done = new Set(JSON.parse(old).map(n=>V1_ORDER[n-1]).filter(Boolean));
+      saveDone();
+    }
   }catch(e){}
 }
 function saveDone(){
@@ -647,8 +649,13 @@ function saveDone(){
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 function escapeHtml(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
 function pad(i){return String(i).padStart(3,"0");}
-function storeUrl(name){return "https://apps.apple.com/kr/search?term="+encodeURIComponent(name);}
-function adaUrl(a){return "ada-archive.html?q="+encodeURIComponent(a.q);}
+function storeUrl(it){
+  const i = it.inst;
+  if(i && i.id && i.x!=="gone") return `https://apps.apple.com/${i.st||"kr"}/app/id${i.id}`;
+  return "https://apps.apple.com/kr/search?term="+encodeURIComponent(it.name);
+}
+function iconUrl(it){ return it.inst && it.inst.icon ? it.inst.icon.replace("100x100bb","200x200bb") : null; }
+function adaUrl(it){return "ada-archive.html?q="+encodeURIComponent(it.key);}
 
 // ─── Chips ────────────────────────────────────────────────────────────────────
 function buildChips(){
@@ -708,7 +715,7 @@ function updateFilterCount(){
 }
 
 function updateMeter(){
-  const d = done.size, total = ITEMS.length;
+  const d = ITEMS.filter(i=>done.has(i.key)).length, total = ITEMS.length;
   const p = Math.round(d / total * 100);
   document.getElementById("bar").style.width = p + "%";
   document.getElementById("pctText").textContent = p + "%";
@@ -718,26 +725,29 @@ function updateMeter(){
 
 function cardHTML(it){
   const c = CATS[it.cat];
-  const isDone = done.has(it.n);
-  const ada = it.ada ? `<a class="badge-ada" href="${adaUrl(it.ada)}" title="ADA 아카이브에서 보기">★ ADA ${it.ada.y} ${it.ada.a}${it.ada.n?` · ${escapeHtml(it.ada.n)}`:""}</a>` : "";
+  const isDone = done.has(it.key);
+  const icon = iconUrl(it);
+  const store = storeUrl(it);
+  const ada = it.ada ? `<a class="badge-ada" href="${adaUrl(it)}" title="ADA 아카이브에서 보기">${it.ada.a==="수상"?"★":"○"} ADA ${it.ada.y} ${escapeHtml(it.ada.cat)} ${it.ada.a}</a>` : "";
   return `<article class="card${isDone?" done":""}" style="--ac:var(${c.v})" data-n="${it.n}">
     <div class="card-head">
-      ${ICONS[it.name]
-        ? `<div class="app-icon"><img src="${ICONS[it.name]}" alt="" loading="lazy"><span class="num-badge">${pad(it.n)}</span></div>`
+      ${icon
+        ? `<div class="app-icon"><img src="${icon}" alt="" loading="lazy"><span class="num-badge">${pad(it.n)}</span></div>`
         : `<div class="num">${pad(it.n)}</div>`}
       <div class="head-text">
-        <h3><a href="${storeUrl(it.name)}" target="_blank" rel="noopener">${escapeHtml(it.name)}</a></h3>
+        <h3><a href="${store}" target="_blank" rel="noopener">${escapeHtml(it.name)}</a></h3>
         <div class="kws">${it.kw.map(k=>`<span class="kw">${escapeHtml(k)}</span>`).join("")}</div>
       </div>
     </div>
     ${ada}
-    <div class="look"><span class="look-label">관찰 포인트</span>${it.look}</div>
+    <div class="impact"><span class="look-label">임팩트 지표</span>${escapeHtml(it.metric)}</div>
+    <div class="look"><span class="look-label">관찰 포인트 · 이 임팩트를 만든 설계</span>${escapeHtml(it.look)}</div>
     <div class="card-foot">
-      <a class="dl" href="${storeUrl(it.name)}" target="_blank" rel="noopener">App Store
+      <a class="dl" href="${store}" target="_blank" rel="noopener">App Store
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg>
       </a>
-      ${window.Insights?Insights.button(it.name,"ko"):""}
-      <button class="mark" data-mark="${it.n}" aria-pressed="${isDone}">
+      ${window.Insights?Insights.button(it.key,"ko"):""}
+      <button class="mark" data-mark="${escapeHtml(it.key)}" aria-pressed="${isDone}">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="m5 12 5 5L20 7"/></svg>
         ${isDone?"관찰 완료":"관찰 표시"}
       </button>
@@ -752,18 +762,18 @@ function render(){
 
   const rows = ITEMS.filter(it=>{
     if(state.cat !== "all" && it.cat !== state.cat) return false;
-    if(state.st === "done" && !done.has(it.n)) return false;
-    if(state.st === "todo" && done.has(it.n)) return false;
+    if(state.st === "done" && !done.has(it.key)) return false;
+    if(state.st === "todo" && done.has(it.key)) return false;
     if(state.st === "ada" && !it.ada) return false;
     if(state.q){
-      const hay = (it.name + " " + it.kw.join(" ") + " " + it.look + " " + CATS[it.cat].t).toLowerCase();
+      const hay = (it.name + " " + it.key + " " + it.kw.join(" ") + " " + it.metric + " " + it.look + " " + CATS[it.cat].t).toLowerCase();
       if(!hay.includes(state.q)) return false;
     }
     return true;
   });
 
   const meta = document.getElementById("metaLine");
-  const doneN = rows.filter(r=>done.has(r.n)).length;
+  const doneN = rows.filter(r=>done.has(r.key)).length;
   meta.innerHTML = `표시 중 <b>${rows.length}</b>개 — 관찰 완료 <b>${doneN}</b> · 남은 것 <b>${rows.length - doneN}</b>`;
 
   const results = document.getElementById("results");
@@ -781,7 +791,7 @@ function render(){
         <div class="catkey">${k}</div>
         <div>
           <h2>${escapeHtml(c.t)}</h2>
-          <span class="why">▸ ${escapeHtml(c.why)}</span>
+          <span class="why">${escapeHtml(c.why)}</span>
           <p class="desc">${escapeHtml(c.d)}</p>
         </div>
         <span class="cc">${items.length}개 앱</span>
@@ -795,8 +805,8 @@ function render(){
 document.getElementById("results").addEventListener("click", e=>{
   const btn = e.target.closest("[data-mark]");
   if(!btn) return;
-  const n = Number(btn.dataset.mark);
-  done.has(n) ? done.delete(n) : done.add(n);
+  const k = btn.dataset.mark;
+  done.has(k) ? done.delete(k) : done.add(k);
   saveDone();
   render();
 });

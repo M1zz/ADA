@@ -38,15 +38,26 @@ All pages share the same header tab bar, so you can switch between them freely.
 
 ## App Field Guide (앱 관찰 기록부)
 
-A separate, unrelated-but-preserved list: 100 apps to tear down for study, grouped into
-10 observation categories (onboarding, monetization, widgets, accessibility, interaction,
-information architecture, on-device AI, sync, indie utilities, Korean market).
+100 apps grouped by **impact**, not by feature: 10 impact types × 10 apps.
 
-- Each app carries one "what to look for" note — observe that one thing, then mark it done
-- Progress is stored in the browser (`localStorage`), with per-category / status filters and search
-- 16 apps overlap with the ADA archive; those carry an ADA badge that links straight to the
-  matching entry in the archive tab (`ada-archive.html?q=<name>`)
-- A 30-minute teardown protocol is included at the bottom of the page
+| | Impact type | Measured by |
+|---|---|---|
+| A | Created a new daily behavior | DAU/MAU, daily repeats, streaks |
+| B | Interface everyone copied | Imitation by rivals/platforms, reach |
+| C | Changed the Apple platform | Apple acquisition, became a system feature, API showcase |
+| D | Changed an industry or business model | Revenue/valuation, competitor response, pricing |
+| E | Accessibility that changed lives | People helped, tasks done independently |
+| F | Changed health & wellbeing behavior | Efficacy studies, paid subscribers, retention |
+| G | Social & public impact | Reach in crises, coverage, donations/institutions |
+| H | Small team, big impact | Users/revenue per team size, longevity |
+| I | AI changed how work gets done | Growth speed, usage/ARR, trust costs (lawsuits, errors) |
+| J | Changed the Korean market | Domestic share/MAU, lifestyle change |
+
+- Each card pairs an **impact metric** (summarized from the sourced "Deep dive" evidence, with as-of dates)
+  with an **observation point**: the design decision that produced that impact
+- A 30-minute protocol works backward from the metric to the screens that caused it
+- Progress is stored in the browser (`localStorage`, key `ada-field-guide-v2`; v1 progress is migrated by app name)
+- 43 apps are ADA winners/finalists and link to the archive tab
 
 ## Data Source
 
