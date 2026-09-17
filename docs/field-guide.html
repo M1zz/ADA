@@ -213,6 +213,13 @@
     box-shadow:0 1px 4px rgba(0,0,0,.12);
     font-variant-numeric:tabular-nums;
   }
+  .app-icon{position:relative;width:54px;height:54px;flex-shrink:0}
+  .app-icon img{width:100%;height:100%;border-radius:14px;object-fit:cover;display:block;border:1px solid var(--line);background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+  .num-badge{
+    position:absolute;right:-6px;bottom:-6px;min-width:24px;height:20px;padding:0 5px;border-radius:999px;
+    font-size:10.5px;font-weight:800;line-height:18px;text-align:center;color:#fff;font-variant-numeric:tabular-nums;
+    background:var(--ac,var(--accent));border:1px solid #fff;
+  }
   .head-text{min-width:0;flex:1}
   .head-text h3{
     font-weight:700;font-size:16px;line-height:1.25;
@@ -438,6 +445,7 @@
 
 <script src="insights-data.js"></script>
 <script src="insights.js"></script>
+<script src="install-data.js"></script>
 <script>
 // ─── Data ─────────────────────────────────────────────────────────────────────
 const CATS = {
@@ -607,6 +615,12 @@ J:[
 ],
 };
 
+// 앱 아이콘: install-data.js(iTunes Lookup)에서 기록부 이름 → 아이콘 URL
+const ICONS = {};
+(window.INSTALL_DATA ? INSTALL_DATA.items : []).forEach(i=>{
+  if(i.fg && i.icon) ICONS[i.fn || i.k] = i.icon.replace("100x100bb", "200x200bb");
+});
+
 // 평탄화 + 일련번호 부여
 const ITEMS = [];
 CAT_ORDER.forEach(k=>{
@@ -708,7 +722,9 @@ function cardHTML(it){
   const ada = it.ada ? `<a class="badge-ada" href="${adaUrl(it.ada)}" title="ADA 아카이브에서 보기">★ ADA ${it.ada.y} ${it.ada.a}${it.ada.n?` · ${escapeHtml(it.ada.n)}`:""}</a>` : "";
   return `<article class="card${isDone?" done":""}" style="--ac:var(${c.v})" data-n="${it.n}">
     <div class="card-head">
-      <div class="num">${pad(it.n)}</div>
+      ${ICONS[it.name]
+        ? `<div class="app-icon"><img src="${ICONS[it.name]}" alt="" loading="lazy"><span class="num-badge">${pad(it.n)}</span></div>`
+        : `<div class="num">${pad(it.n)}</div>`}
       <div class="head-text">
         <h3><a href="${storeUrl(it.name)}" target="_blank" rel="noopener">${escapeHtml(it.name)}</a></h3>
         <div class="kws">${it.kw.map(k=>`<span class="kw">${escapeHtml(k)}</span>`).join("")}</div>
