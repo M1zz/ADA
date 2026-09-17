@@ -356,6 +356,7 @@
   <nav class="tabs" aria-label="Sections">
     <a class="tab active" href="ada-archive.html" aria-current="page" id="tabArchive"></a>
     <a class="tab" href="field-guide.html" id="tabGuide"></a>
+    <a class="tab" href="impact.html" id="tabImpact"></a>
     <a class="tab" href="install-queue.html" id="tabQueue"></a>
     <a class="tab" href="my-apps.html" id="tabMine"></a>
   </nav>
@@ -426,6 +427,7 @@ const STRINGS = {
   en: {
     tabArchive: 'ADA Archive',
     tabGuide: 'Field Guide',
+    tabImpact: 'Impact',
     tabQueue: 'Install Queue',
     tabMine: 'My Apps',
     title: 'ADA <span class="it">Winners</span><br>Archive',
@@ -462,6 +464,7 @@ App icons are loaded live from the Apple iTunes API (internet connection require
   ko: {
     tabArchive: 'ADA 아카이브',
     tabGuide: '앱 관찰 기록부',
+    tabImpact: '임팩트 레퍼런스',
     tabQueue: '다운로드 큐',
     tabMine: '내 앱',
     title: '역대 ADA <span class="it">수상작</span><br>아카이브',
@@ -516,6 +519,7 @@ function setLang(l){
 function applyLang(){
   document.getElementById('tabArchive').textContent = t('tabArchive');
   document.getElementById('tabGuide').textContent = t('tabGuide');
+  document.getElementById('tabImpact').textContent = t('tabImpact');
   document.getElementById('tabQueue').textContent = t('tabQueue');
   document.getElementById('tabMine').textContent = t('tabMine');
   document.getElementById('mainTitle').innerHTML = t('title');

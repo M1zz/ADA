@@ -11,6 +11,7 @@ Browse all Apple Design Awards winners and finalists from 2020 to 2026.
 | **[/](https://m1zz.github.io/ADA/)** (`docs/index.html`) | Redirects to the archive |
 | **[ADA Archive](https://m1zz.github.io/ADA/ada-archive.html)** (`docs/ada-archive.html`) | ADA winners & finalists, 2020–2026 · EN/KO |
 | **[App Field Guide](https://m1zz.github.io/ADA/field-guide.html)** (`docs/field-guide.html`) | 100-app teardown checklist in 10 categories · KO only |
+| **[Impact References](https://m1zz.github.io/ADA/impact.html)** (`docs/impact.html`) | Impact = reach × depth × duration × counterfactual; breadth / depth / structure / tool reference apps, impact vs. value, and how to talk to someone building a low-impact app · KO only |
 | **[Install Queue](https://m1zz.github.io/ADA/install-queue.html)** (`docs/install-queue.html`) | Install every app on iPhone one by one: Get → confirm → next · KO only |
 | **[My Apps](https://m1zz.github.io/ADA/my-apps.html)** (`docs/my-apps.html`) | The developer's own 46 App Store apps, evaluated with a 9-criterion rubric derived from the 291 reference apps · KO only |
 
@@ -59,6 +60,23 @@ All pages share the same header tab bar, so you can switch between them freely.
 - A 30-minute protocol works backward from the metric to the screens that caused it
 - Progress is stored in the browser (`localStorage`, key `ada-field-guide-v2`; v1 progress is migrated by app name)
 - 43 apps are ADA winners/finalists and link to the archive tab
+
+## Impact References (임팩트 레퍼런스)
+
+A reference page built around one formula: **impact = reach × depth × duration × counterfactual**.
+
+1. **Measuring impact** — each factor with practical proxies (D30/D90 retention, the "what would you use
+   if this disappeared tomorrow?" question, resources saved, behavior change, the Sean Ellis 40% test)
+2. **High-impact apps by type** — breadth (M-Pesa, WhatsApp, KakaoTalk, Signal, Toss, Watch Duty),
+   depth (Be My Eyes, oko, Proloquo2Go, Seeing AI, Voice Dream Reader, Tiimo), structure (Anki, Duolingo,
+   Strava, Photomath), tool (Figma, Obsidian, Slack, Google Sheets, Notion). Each app is rated on the four
+   factors (editorial judgment; counterfactual is inferred) with sourced evidence or a link to its deep dive
+3. **Is bigger impact more valuable?** — impact has a sign (mixed cases: Robinhood, Noom, Diablo Immortal,
+   Otter.ai; direction flipped by design: Opal, Gentler Streak), measurability bias, the aggregation trap,
+   and value to the maker
+4. **Talking to someone building a low-impact app** — triage (learning / wrong direction / sunk cost) and
+   tools: lower the cost of validation, self-set timeboxes, separate sunk cost, settle failure as assets,
+   lower the stakes instead of folding the game
 
 ## My Apps (내 앱 평가)
 
