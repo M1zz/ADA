@@ -80,7 +80,18 @@
     d.querySelector(".ins-body").innerHTML=bodyHTML(key,lang);
     d.querySelector(".ins-body").scrollTop=0;
     document.documentElement.classList.add("ins-lock");
-    d.showModal();
+    if(!d.open) d.showModal();
+  }
+  // Generic sheet for other pages (e.g. my-apps evaluation), same look as the deep dive.
+  function openCustom(title, eyebrow, html){
+    const d=ensureDialog();
+    d.querySelector(".ins-eyebrow").textContent=eyebrow||"";
+    d.querySelector(".ins-title").textContent=title;
+    d.querySelector(".ins-close").setAttribute("aria-label","닫기");
+    d.querySelector(".ins-body").innerHTML=html;
+    d.querySelector(".ins-body").scrollTop=0;
+    document.documentElement.classList.add("ins-lock");
+    if(!d.open) d.showModal();
   }
   document.addEventListener("click",e=>{
     const b=e.target.closest("[data-insight]"); if(!b) return;
@@ -128,5 +139,5 @@
   }`;
   const st=document.createElement("style"); st.textContent=css; document.head.appendChild(st);
 
-  window.Insights={button, open, has:n=>!!resolve(n)};
+  window.Insights={button, open, openCustom, has:n=>!!resolve(n)};
 })();

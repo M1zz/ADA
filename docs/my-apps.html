@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>내 앱 평가 · My Apps</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;1,14..32,300&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ffffff;
+    --surface:#ffffff;
+    --surface-hi:#f8fafc;
+    --line:#e2e8f0;
+    --line-soft:#f1f5f9;
+    --text:#0f172a;
+    --muted:#64748b;
+    --muted-dim:#94a3b8;
+    --accent:#0ea5e9;
+    --accent-dim:#0284c7;
+    --bar:#0284c7;
+    --bar-soft:#e0f2fe;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Inter",system-ui,-apple-system,"Apple SD Gothic Neo","Pretendard",sans-serif;
+    background:var(--bg);color:var(--text);line-height:1.5;
+    -webkit-font-smoothing:antialiased;min-height:100vh;
+    font-feature-settings:"cv02","cv03","cv04","cv11";
+  }
+  a{color:inherit;text-decoration:none}
+  button{font-family:inherit}
+
+  .topbar{max-width:1200px;margin:0 auto;padding:20px 32px 0;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .tabs{display:inline-flex;background:var(--line-soft);border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px;max-width:100%;overflow-x:auto;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{padding:7px 16px;border-radius:999px;font-size:13px;font-weight:600;color:var(--muted);transition:all .15s;white-space:nowrap}
+  .tab:hover{color:var(--text)}
+  .tab.active{background:#fff;color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+
+  header{max-width:1200px;margin:0 auto;padding:36px 32px 28px}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--line-soft);border:1px solid var(--line);border-radius:999px;padding:5px 12px;margin-bottom:28px}
+  .eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+  h1{font-size:clamp(40px,6.5vw,80px);font-weight:800;line-height:1;letter-spacing:-0.04em;margin-bottom:20px}
+  h1 .it{font-style:italic;font-weight:300;color:var(--accent);letter-spacing:-0.03em}
+  .lede{font-size:clamp(15px,1.6vw,17px);color:var(--muted);max-width:680px;line-height:1.75}
+  .lede b{color:var(--text);font-weight:600}
+  .stats{display:flex;flex-wrap:wrap;margin-top:32px;border:1px solid var(--line);border-radius:16px;overflow:hidden;width:fit-content}
+  .stat{padding:18px 28px;border-right:1px solid var(--line)}
+  .stat:last-child{border-right:none}
+  .stat .n{font-size:28px;font-weight:800;line-height:1;letter-spacing:-0.03em;font-variant-numeric:tabular-nums}
+  .stat .l{font-size:12px;color:var(--muted);margin-top:5px;font-weight:500}
+
+  section.block{max-width:1200px;margin:0 auto;padding:12px 32px 40px}
+  .sec-label{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-dim);margin-bottom:6px}
+  .sec-title{font-size:26px;font-weight:750;letter-spacing:-.03em;line-height:1.2;margin-bottom:8px}
+  .sec-sub{font-size:14px;color:var(--muted);max-width:760px;line-height:1.7;margin-bottom:22px}
+
+  /* ── Portfolio diagnosis ── */
+  .diag{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:16px}
+  .panel{border:1px solid var(--line);border-radius:18px;padding:20px 22px;background:#fff}
+  .panel h3{font-size:15px;font-weight:700;letter-spacing:-.01em;margin-bottom:4px}
+  .panel .psub{font-size:12.5px;color:var(--muted);margin-bottom:14px}
+  .bars{display:flex;flex-direction:column;gap:9px}
+  .bar-row{display:grid;grid-template-columns:132px minmax(0,1fr) 40px;align-items:center;gap:10px;font-size:13px;position:relative}
+  .bar-row .bl{color:var(--text);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bar-track{height:12px;background:var(--line-soft);border-radius:4px;position:relative;cursor:default}
+  .bar-fill{position:absolute;left:0;top:0;bottom:0;background:var(--bar);border-radius:0 4px 4px 0}
+  .bar-row .bv{font-weight:700;font-variant-numeric:tabular-nums;text-align:right;color:var(--text)}
+  .bar-row:hover .bar-fill{filter:brightness(1.12)}
+  .axis{display:grid;grid-template-columns:132px minmax(0,1fr) 40px;gap:10px;font-size:10.5px;color:var(--muted-dim);margin-top:6px}
+  .axis .ticks{display:flex;justify-content:space-between;font-variant-numeric:tabular-nums}
+  .tip{position:fixed;z-index:60;pointer-events:none;background:#0f172a;color:#fff;font-size:12px;line-height:1.5;padding:8px 10px;border-radius:9px;box-shadow:0 6px 20px rgba(15,23,42,.25);max-width:260px;opacity:0;transition:opacity .1s}
+  .tip.on{opacity:1}
+  .tip b{font-weight:700}
+  .list-plain{list-style:none;display:flex;flex-direction:column;gap:9px}
+  .list-plain li{font-size:13.5px;line-height:1.65;color:#334155;padding-left:16px;position:relative}
+  .list-plain li::before{content:"";position:absolute;left:3px;top:.62em;width:5px;height:5px;border-radius:50%;background:var(--muted-dim)}
+  .list-plain li b{color:var(--text);font-weight:650}
+  .actions-ol{counter-reset:a;list-style:none;display:flex;flex-direction:column;gap:10px}
+  .actions-ol li{counter-increment:a;position:relative;padding:12px 14px 12px 46px;border:1px solid var(--line);border-radius:13px;background:var(--surface-hi);font-size:13.5px;line-height:1.6;color:#334155}
+  .actions-ol li::before{content:counter(a);position:absolute;left:14px;top:12px;width:22px;height:22px;border-radius:50%;background:var(--text);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .actions-ol li b{display:block;color:var(--text);font-weight:700;margin-bottom:2px}
+  .span2{grid-column:1 / -1}
+
+  /* ── Rubric ── */
+  .rubric{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px}
+  .crit{border:1px solid var(--line);border-radius:16px;padding:16px 18px;background:#fff;display:flex;flex-direction:column;gap:8px}
+  .crit .cn{font-size:10.5px;font-weight:700;letter-spacing:.08em;color:var(--accent-dim)}
+  .crit h4{font-size:16px;font-weight:700;letter-spacing:-.01em}
+  .crit .cq{font-size:13.5px;color:var(--text);line-height:1.6}
+  .crit .learned{font-size:12.5px;color:#334155;line-height:1.65;background:var(--surface-hi);border:1px solid var(--line);border-radius:10px;padding:9px 11px}
+  .crit .learned span{display:block;font-size:9.5px;font-weight:700;letter-spacing:.09em;color:var(--muted);margin-bottom:3px}
+  .crit details{font-size:12.5px;color:#334155}
+  .crit summary{cursor:pointer;font-weight:600;color:var(--muted);font-size:12px;list-style:none}
+  .crit summary::-webkit-details-marker{display:none}
+  .crit summary::before{content:"▸ ";}
+  .crit details[open] summary::before{content:"▾ ";}
+  .anchors{margin-top:8px;display:flex;flex-direction:column;gap:6px}
+  .anchors div{display:grid;grid-template-columns:26px 1fr;gap:6px;line-height:1.55}
+  .anchors b{font-variant-numeric:tabular-nums;color:var(--text)}
+  .signals{margin-top:8px;color:var(--muted)}
+  .refs{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+  .refs .rl{font-size:11px;color:var(--muted);font-weight:600}
+  .ref-btn{font-size:11.5px;font-weight:600;color:var(--accent-dim);background:#f0f9ff;border:1px solid #bae6fd;border-radius:999px;padding:3px 9px;cursor:pointer}
+  .ref-btn:hover{background:var(--accent-dim);color:#fff;border-color:var(--accent-dim)}
+
+  /* ── Controls ── */
+  .controls{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.9);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line);border-top:1px solid var(--line);padding:12px 0}
+  .controls-inner{max-width:1200px;margin:0 auto;padding:0 32px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+  .chip{font-size:12.5px;font-weight:500;color:var(--muted);background:transparent;border:1px solid var(--line);border-radius:999px;padding:5px 12px;cursor:pointer;white-space:nowrap}
+  .chip:hover{color:var(--text);border-color:var(--muted-dim)}
+  .chip.active{color:#fff;background:var(--text);border-color:var(--text);font-weight:600}
+  select.sort{font-family:inherit;font-size:12.5px;color:var(--text);border:1px solid var(--line);border-radius:999px;padding:5px 10px;background:#fff}
+  .search-wrap{position:relative;margin-left:auto;flex-grow:1;max-width:240px;min-width:150px}
+  .search-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);opacity:.4}
+  #search{width:100%;font-family:inherit;font-size:13px;border:1px solid var(--line);border-radius:999px;padding:7px 14px 7px 34px;outline:none}
+  #search:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(14,165,233,.1)}
+
+  main{max-width:1200px;margin:0 auto;padding:22px 32px 48px}
+  .meta-line{font-size:12.5px;color:var(--muted-dim);margin-bottom:14px;font-weight:500}
+  .meta-line b{color:var(--text)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:12px}
+  .card{border:1px solid var(--line);border-radius:18px;padding:16px;background:#fff;display:flex;flex-direction:column;gap:10px;transition:border-color .15s,box-shadow .15s}
+  .card:hover{border-color:var(--muted-dim);box-shadow:0 4px 16px rgba(15,23,42,.06)}
+  .chead{display:flex;gap:12px;align-items:flex-start}
+  .icon{width:56px;height:56px;border-radius:13px;flex-shrink:0;border:1px solid var(--line);object-fit:cover;background:var(--line-soft)}
+  .ctext{flex:1;min-width:0}
+  .ctext h3{font-size:16px;font-weight:700;letter-spacing:-.01em;line-height:1.25;overflow-wrap:anywhere}
+  .ctext .sub{font-size:12px;color:var(--muted);margin-top:2px}
+  .total{text-align:right;flex-shrink:0}
+  .total .tv{font-size:24px;font-weight:800;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+  .total .tl{font-size:10.5px;color:var(--muted);font-weight:600}
+  .one{font-size:13px;color:#334155;line-height:1.6}
+  .badges{display:flex;flex-wrap:wrap;gap:5px}
+  .b{font-size:10.5px;font-weight:600;padding:2px 7px;border-radius:6px;white-space:nowrap;border:1px solid var(--line);color:var(--muted);background:var(--line-soft)}
+  .b.type{color:var(--accent-dim);background:#f0f9ff;border-color:#bae6fd}
+  .b.warn{color:#9a3412;background:#fff7ed;border-color:#fed7aa}
+  .spark{display:grid;grid-template-columns:repeat(9,1fr);gap:3px;align-items:end;height:38px;padding-top:2px}
+  .spark i{display:block;background:var(--bar);border-radius:3px 3px 0 0;min-height:3px}
+  .spark-l{display:grid;grid-template-columns:repeat(9,1fr);gap:3px;font-size:9px;color:var(--muted-dim);text-align:center;margin-top:-6px}
+  .cfoot{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
+  .btn{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:600;color:var(--text);background:#fff;border:1px solid var(--line);border-radius:8px;padding:6px 11px;cursor:pointer}
+  .btn:hover{border-color:var(--muted-dim)}
+  .btn.primary{color:#fff;background:var(--text);border-color:var(--text)}
+  .empty{text-align:center;padding:60px 20px;color:var(--muted-dim)}
+
+  /* ── Evaluation sheet (inside insights dialog) ── */
+  .ev-top{display:flex;gap:14px;align-items:center;margin-top:10px}
+  .ev-top .icon{width:64px;height:64px;border-radius:15px}
+  .ev-top .one{font-size:14px}
+  .ev-score{display:flex;flex-direction:column;gap:12px}
+  .ev-row{border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+  .ev-row .eh{display:flex;align-items:center;gap:10px;justify-content:space-between}
+  .ev-row .en{font-size:13.5px;font-weight:700}
+  .dots{display:inline-flex;gap:3px;align-items:center;font-size:12px;font-weight:700;font-variant-numeric:tabular-nums}
+  .dots i{width:10px;height:10px;border-radius:3px;background:var(--line);display:inline-block}
+  .dots i.on{background:var(--bar)}
+  .ev-row p{font-size:13px;color:#334155;line-height:1.6;margin-top:5px}
+  .ev-row ul{list-style:none;margin-top:5px;display:flex;flex-direction:column;gap:3px}
+  .ev-row li{font-size:11.5px;color:var(--muted);line-height:1.5;padding-left:10px;position:relative;overflow-wrap:anywhere}
+  .ev-row li::before{content:"–";position:absolute;left:0}
+  .back{font-size:12px;font-weight:600;color:var(--accent-dim);background:none;border:none;cursor:pointer;padding:6px 0 0}
+
+  footer{max-width:1200px;margin:0 auto;padding:24px 32px 64px;border-top:1px solid var(--line);color:var(--muted-dim);font-size:12px;line-height:1.9}
+
+  @media (max-width:760px){
+    .diag{grid-template-columns:1fr}
+  }
+  @media (max-width:600px){
+    .topbar{padding:16px 16px 0}
+    .tab{padding:7px 12px;font-size:12.5px}
+    header{padding:26px 16px 22px}
+    section.block,.controls-inner,main,footer{padding-left:16px;padding-right:16px}
+    .stats{width:100%;display:grid;grid-template-columns:1fr 1fr}
+    .stat{padding:14px 16px;border-right:none;border-bottom:1px solid var(--line)}
+    .stat:nth-child(odd){border-right:1px solid var(--line)}
+    .stat:nth-last-child(-n+2){border-bottom:none}
+    .stat .n{font-size:22px}
+    .sec-title{font-size:22px}
+    .panel{padding:16px}
+    .bar-row,.axis{grid-template-columns:104px minmax(0,1fr) 34px}
+    .rubric,.grid{grid-template-columns:1fr}
+    .search-wrap{max-width:none;margin-left:0}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <nav class="tabs" aria-label="섹션">
+    <a class="tab" href="ada-archive.html">ADA 아카이브</a>
+    <a class="tab" href="field-guide.html">앱 관찰 기록부</a>
+    <a class="tab" href="install-queue.html">다운로드 큐</a>
+    <a class="tab active" href="my-apps.html" aria-current="page">내 앱</a>
+  </nav>
+</div>
+
+<header>
+  <div class="eyebrow"><span class="eyebrow-dot"></span>My Apps · 9 Criteria from 291 Apps</div>
+  <h1>내 앱 <span class="it">평가</span></h1>
+  <p class="lede" id="lede"></p>
+  <div class="stats">
+    <div class="stat"><div class="n" id="stApps">–</div><div class="l">평가한 앱</div></div>
+    <div class="stat"><div class="n" id="stAvg">–</div><div class="l">평균 점수 (5점 만점)</div></div>
+    <div class="stat"><div class="n" id="stCode">–</div><div class="l">소스 코드까지 확인</div></div>
+    <div class="stat"><div class="n" id="stRatings">–</div><div class="l">전체 평점 수 (KR+US)</div></div>
+  </div>
+</header>
+
+<section class="block" id="diagnosis">
+  <span class="sec-label">포트폴리오 진단</span>
+  <h2 class="sec-title">전체 앱을 한 번에 보면</h2>
+  <p class="sec-sub" id="diagHeadline"></p>
+  <div class="diag">
+    <div class="panel">
+      <h3>기준별 평균 점수</h3>
+      <p class="psub">모든 앱의 점수 평균 (1~5). 막대에 올리면 점수 분포가 보입니다.</p>
+      <div class="bars" id="critBars"></div>
+      <div class="axis"><span></span><span class="ticks"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></span><span></span></div>
+    </div>
+    <div class="panel">
+      <h3>반복해서 보이는 강점</h3>
+      <p class="psub">여러 앱에서 공통으로 잘 된 점</p>
+      <ul class="list-plain" id="pStrengths"></ul>
+      <h3 style="margin-top:18px">반복해서 보이는 약점</h3>
+      <p class="psub">여러 앱에서 공통으로 부족한 점</p>
+      <ul class="list-plain" id="pGaps"></ul>
+    </div>
+    <div class="panel span2">
+      <h3>포트폴리오 전체에 효과가 큰 개선</h3>
+      <p class="psub">앱 하나가 아니라 여러 앱의 점수를 함께 올리는 순서대로</p>
+      <ol class="actions-ol" id="pActions"></ol>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="rubricSec">
+  <span class="sec-label">평가 기준</span>
+  <h2 class="sec-title">291개 앱을 보며 만든 9가지 기준</h2>
+  <p class="sec-sub" id="rubricSub"></p>
+  <div class="rubric" id="rubric"></div>
+</section>
+
+<div class="controls" id="controls">
+  <div class="controls-inner">
+    <select class="sort" id="sort" aria-label="정렬">
+      <option value="total">총점 높은 순</option>
+      <option value="low">총점 낮은 순</option>
+      <option value="updated">최근 업데이트 순</option>
+      <option value="name">이름순</option>
+    </select>
+    <select class="sort" id="critSort" aria-label="기준별 정렬">
+      <option value="">기준별 정렬…</option>
+    </select>
+    <span id="typeChips" style="display:contents"></span>
+    <div class="search-wrap">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="search" type="text" autocomplete="off" placeholder="앱 이름 · 평가 내용 검색">
+    </div>
+  </div>
+</div>
+
+<main>
+  <div class="meta-line" id="metaLine"></div>
+  <div id="results"></div>
+</main>
+
+<footer id="footer"></footer>
+<div class="tip" id="tip" role="tooltip"></div>
+
+<script src="insights-data.js"></script>
+<script src="insights.js"></script>
+<script src="my-apps-data.js"></script>
+<script>
+const D = window.MY_APPS;
+const R = D.rubric;
+const CRIT = R.criteria;
+const TYPES = R.impactTypes;
+const state = {sort:"total", crit:"", type:"all", q:""};
+
+function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+const total = a => CRIT.reduce((s,c)=>s+(a.scores[c.id]?.s||0),0)/CRIT.length;
+const fmt1 = n => n.toFixed(1);
+function refBtn(key, label){
+  return window.Insights && Insights.has(key)
+    ? `<button type="button" class="ref-btn" data-insight="${esc(key)}" data-lang="ko">${esc(label||key)}</button>`
+    : `<span class="b">${esc(label||key)}</span>`;
+}
+
+// ─── Header ──────────────────────────────────────────────────────────────────
+document.getElementById("lede").innerHTML =
+  `App Store에 출시한 <b>${D.apps.length}개 앱</b>을 ADA 수상작·임팩트 기록부 <b>291개 앱</b>을 조사하며 만든 <b>9가지 기준</b>으로 평가했습니다. 각 점수에는 근거(스토어 · 스크린샷 · 소스 코드)가 붙어 있고, 기준마다 비교할 레퍼런스 앱으로 바로 이동할 수 있습니다. 앱을 직접 실행하지는 않았으므로 실행해야만 보이는 부분은 평가에서 빠져 있습니다.`;
+document.getElementById("stApps").textContent = D.apps.length;
+document.getElementById("stAvg").textContent = fmt1(D.apps.reduce((s,a)=>s+total(a),0)/D.apps.length);
+document.getElementById("stCode").textContent = D.apps.filter(a=>a.sources?.code).length;
+document.getElementById("stRatings").textContent = D.apps.reduce((s,a)=>s+(a.ratingKR?.c||0)+(a.ratingUS?.c||0),0);
+
+// ─── Diagnosis ───────────────────────────────────────────────────────────────
+const S = D.summary;
+document.getElementById("diagHeadline").textContent = S.headline;
+document.getElementById("pStrengths").innerHTML = S.strengths.map(x=>`<li>${x}</li>`).join("");
+document.getElementById("pGaps").innerHTML = S.gaps.map(x=>`<li>${x}</li>`).join("");
+document.getElementById("pActions").innerHTML = S.actions.map(x=>`<li><b>${esc(x.title)}</b>${x.why}</li>`).join("");
+
+const critStats = CRIT.map(c=>{
+  const vals = D.apps.map(a=>a.scores[c.id]?.s||0);
+  const dist = [1,2,3,4,5].map(v=>vals.filter(x=>x===v).length);
+  return {c, avg: vals.reduce((s,v)=>s+v,0)/vals.length, dist};
+});
+document.getElementById("critBars").innerHTML = critStats.map((x,i)=>`
+  <div class="bar-row" data-i="${i}">
+    <span class="bl" title="${esc(x.c.name)}">${esc(x.c.short||x.c.name)}</span>
+    <span class="bar-track"><span class="bar-fill" style="width:${(x.avg-1)/4*100}%"></span></span>
+    <span class="bv">${fmt1(x.avg)}</span>
+  </div>`).join("");
+const tip = document.getElementById("tip");
+document.getElementById("critBars").addEventListener("mousemove", e=>{
+  const row = e.target.closest(".bar-row");
+  if(!row){ tip.classList.remove("on"); return; }
+  const x = critStats[+row.dataset.i];
+  tip.innerHTML = `<b>${esc(x.c.name)}</b> · 평균 ${fmt1(x.avg)}<br>` + x.dist.map((n,k)=>`${k+1}점 ${n}개`).join(" · ");
+  tip.style.left = Math.min(e.clientX+14, innerWidth-270)+"px";
+  tip.style.top = (e.clientY+14)+"px";
+  tip.classList.add("on");
+});
+document.getElementById("critBars").addEventListener("mouseleave", ()=>tip.classList.remove("on"));
+
+// ─── Rubric ──────────────────────────────────────────────────────────────────
+document.getElementById("rubricSub").textContent = R.scale;
+document.getElementById("rubric").innerHTML = CRIT.map((c,i)=>`
+  <article class="crit">
+    <span class="cn">기준 ${i+1}</span>
+    <h4>${esc(c.name)}</h4>
+    <p class="cq">${esc(c.q)}</p>
+    <div class="learned"><span>291개 앱에서 배운 것</span>${esc(c.learned)}</div>
+    <div class="refs"><span class="rl">레퍼런스</span>${c.refs.map(k=>refBtn(k)).join("")}</div>
+    <details>
+      <summary>점수 기준과 확인한 신호</summary>
+      <div class="anchors">${["5","3","1"].map(k=>`<div><b>${k}점</b><span>${esc(c.anchors[k])}</span></div>`).join("")}</div>
+      <p class="signals">확인한 신호: ${c.signals.map(esc).join(" · ")}</p>
+    </details>
+  </article>`).join("");
+
+// ─── Controls ────────────────────────────────────────────────────────────────
+document.getElementById("critSort").innerHTML += CRIT.map(c=>`<option value="${c.id}">${esc(c.name)} 높은 순</option>`).join("");
+const usedTypes = [...new Set(D.apps.map(a=>a.impactType))].sort();
+document.getElementById("typeChips").innerHTML =
+  `<button class="chip" data-type="all">전체</button>` +
+  usedTypes.map(t=>`<button class="chip" data-type="${t}">${t} · ${esc(TYPES[t])}</button>`).join("");
+
+// ─── Cards ───────────────────────────────────────────────────────────────────
+function cardHTML(a){
+  const t = total(a);
+  const kind = a.kind==="mac" ? `<span class="b">Mac</span>` : "";
+  const code = a.sources?.code ? `<span class="b">코드 확인</span>` : `<span class="b warn">스토어·스크린샷만</span>`;
+  const ratings = (a.ratingKR?.c||0)+(a.ratingUS?.c||0);
+  return `<article class="card">
+    <div class="chead">
+      <img class="icon" src="${esc(a.icon)}" alt="" loading="lazy">
+      <div class="ctext">
+        <h3>${esc(a.name)}</h3>
+        <div class="sub">${esc(a.genre)} · ${esc(a.price)} · 평점 ${ratings}개</div>
+      </div>
+      <div class="total"><div class="tv">${fmt1(t)}</div><div class="tl">/ 5</div></div>
+    </div>
+    <p class="one">${esc(a.oneLiner)}</p>
+    <div class="badges"><span class="b type">${a.impactType} · ${esc(TYPES[a.impactType])}</span>${kind}${code}</div>
+    <div>
+      <div class="spark" aria-label="기준별 점수">${CRIT.map(c=>`<i style="height:${(a.scores[c.id]?.s||0)/5*100}%" title="${esc(c.name)} ${a.scores[c.id]?.s}"></i>`).join("")}</div>
+      <div class="spark-l">${CRIT.map((c,i)=>`<span>${i+1}</span>`).join("")}</div>
+    </div>
+    <div class="cfoot">
+      <button class="btn primary" data-eval="${a.id}">평가 보기</button>
+      <a class="btn" href="${esc(a.url)}" target="_blank" rel="noopener">App Store ↗</a>
+    </div>
+  </article>`;
+}
+
+function render(){
+  document.querySelectorAll(".chip[data-type]").forEach(c=>c.classList.toggle("active", c.dataset.type===state.type));
+  let rows = D.apps.filter(a=>{
+    if(state.type!=="all" && a.impactType!==state.type) return false;
+    if(state.q){
+      const hay = (a.name+" "+a.oneLiner+" "+a.strengths.join(" ")+" "+a.gaps.join(" ")).toLowerCase();
+      if(!hay.includes(state.q)) return false;
+    }
+    return true;
+  });
+  if(state.crit) rows.sort((x,y)=>(y.scores[state.crit]?.s||0)-(x.scores[state.crit]?.s||0) || total(y)-total(x));
+  else if(state.sort==="total") rows.sort((x,y)=>total(y)-total(x));
+  else if(state.sort==="low") rows.sort((x,y)=>total(x)-total(y));
+  else if(state.sort==="updated") rows.sort((x,y)=>String(y.updated).localeCompare(String(x.updated)));
+  else rows.sort((x,y)=>x.name.localeCompare(y.name,"ko"));
+  document.getElementById("metaLine").innerHTML = `<b>${rows.length}</b>개 앱`;
+  document.getElementById("results").innerHTML = rows.length
+    ? `<div class="grid">${rows.map(cardHTML).join("")}</div>`
+    : `<div class="empty">조건에 맞는 앱이 없습니다.</div>`;
+}
+
+// ─── Evaluation sheet ────────────────────────────────────────────────────────
+let lastEval = null;
+function evalHTML(a){
+  const dots = s => `<span class="dots">${[1,2,3,4,5].map(v=>`<i class="${v<=s?"on":""}"></i>`).join("")}<span style="margin-left:5px">${s}</span></span>`;
+  const list = arr => `<ul class="ins-list">${arr.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`;
+  const src = a.sources||{};
+  return `
+    <div class="ev-top">
+      <img class="icon" src="${esc(a.icon)}" alt="">
+      <div><p class="one">${esc(a.oneLiner)}</p>
+        <div class="badges" style="margin-top:6px"><span class="b type">${a.impactType} · ${esc(TYPES[a.impactType])}</span><span class="b">총점 ${fmt1(total(a))} / 5</span><span class="b">출시 ${esc(a.released)} · 업데이트 ${esc(a.updated)}</span></div>
+      </div>
+    </div>
+    <section><h4>임팩트 유형</h4><p style="font-size:14px;color:#334155;line-height:1.65">${esc(a.impactWhy)}</p>
+      <div class="refs" style="margin-top:8px"><span class="rl">비교할 레퍼런스</span>${a.references.map(r=>refBtn(r.key)).join("")}</div>
+      <ul class="ins-list" style="margin-top:8px">${a.references.map(r=>`<li><b>${esc(r.key)}</b> — ${esc(r.why)}</li>`).join("")}</ul>
+    </section>
+    <section><h4>잘 된 점</h4>${list(a.strengths)}</section>
+    <section><h4>부족한 점</h4>${list(a.gaps)}</section>
+    <section><h4>가장 효과가 큰 개선 3가지</h4>
+      <ol class="actions-ol">${a.actions.map(x=>`<li><b>${esc(x.title)}</b>${esc(x.why)}${x.ref?`<div class="refs" style="margin-top:6px"><span class="rl">참고</span>${refBtn(x.ref)}</div>`:""}</li>`).join("")}</ol>
+    </section>
+    <section><h4>기준별 점수와 근거</h4>
+      <div class="ev-score">${CRIT.map(c=>{const sc=a.scores[c.id]||{};return `<div class="ev-row">
+        <div class="eh"><span class="en">${esc(c.name)}</span>${dots(sc.s||0)}</div>
+        <p>${esc(sc.why)}</p>
+        ${sc.evidence&&sc.evidence.length?`<ul>${sc.evidence.map(e=>`<li>${esc(e)}</li>`).join("")}</ul>`:""}
+      </div>`;}).join("")}</div>
+    </section>
+    <section><h4>평가 한계</h4>
+      <p class="ins-note" style="margin-top:0">${esc(a.limits)}</p>
+      <p class="ins-foot">확인한 자료: 스토어 ${src.store?"✓":"–"} · 스크린샷 ${src.screenshots||0}장 · 소스 코드 ${src.code?"✓":"–"} · 평가일 ${esc(D.evaluated)}</p>
+    </section>`;
+}
+function openEval(id){
+  const a = D.apps.find(x=>x.id===id); if(!a) return;
+  lastEval = id;
+  Insights.openCustom(a.name, "내 앱 평가", evalHTML(a));
+}
+document.addEventListener("click", e=>{
+  const ev = e.target.closest("[data-eval]");
+  if(ev){ openEval(ev.dataset.eval); return; }
+  const back = e.target.closest("[data-back]");
+  if(back){ openEval(back.dataset.back); return; }
+  const chip = e.target.closest(".chip[data-type]");
+  if(chip){ state.type = chip.dataset.type; render(); }
+});
+// A reference opened from inside an evaluation replaces the sheet (insights.js);
+// capture the click first so we can add a way back to the evaluation.
+document.addEventListener("click", e=>{
+  const ref = e.target.closest(".ins-dialog [data-insight]");
+  if(!ref || !lastEval) return;
+  const id = lastEval;
+  setTimeout(()=>{
+    const body = document.querySelector(".ins-dialog .ins-body");
+    if(body) body.insertAdjacentHTML("afterbegin", `<button class="back" data-back="${id}">← 내 앱 평가로 돌아가기</button>`);
+  }, 0);
+}, true);
+document.addEventListener("close", e=>{ if(e.target.classList && e.target.classList.contains("ins-dialog")) lastEval = null; }, true);
+document.getElementById("sort").addEventListener("change", e=>{ state.sort=e.target.value; state.crit=""; document.getElementById("critSort").value=""; render(); });
+document.getElementById("critSort").addEventListener("change", e=>{ state.crit=e.target.value; render(); });
+document.getElementById("search").addEventListener("input", e=>{ state.q=e.target.value.trim().toLowerCase(); render(); });
+
+document.getElementById("footer").innerHTML =
+  `평가일 ${esc(D.evaluated)} · 대상: App Store 개발자 “${esc(D.developer)}”의 출시 앱 (iTunes Lookup API 기준). 점수는 실행 없이 스토어 정보·스크린샷·로컬 소스 코드를 근거로 매겼으며, 레퍼런스 앱의 수치와 출처는 각 앱의 "상세 분석"에 있습니다.`;
+render();
+</script>
+</body>
+</html>

@@ -12,6 +12,7 @@ Browse all Apple Design Awards winners and finalists from 2020 to 2026.
 | **[ADA Archive](https://m1zz.github.io/ADA/ada-archive.html)** (`docs/ada-archive.html`) | ADA winners & finalists, 2020–2026 · EN/KO |
 | **[App Field Guide](https://m1zz.github.io/ADA/field-guide.html)** (`docs/field-guide.html`) | 100-app teardown checklist in 10 categories · KO only |
 | **[Install Queue](https://m1zz.github.io/ADA/install-queue.html)** (`docs/install-queue.html`) | Install every app on iPhone one by one: Get → confirm → next · KO only |
+| **[My Apps](https://m1zz.github.io/ADA/my-apps.html)** (`docs/my-apps.html`) | The developer's own 46 App Store apps, evaluated with a 9-criterion rubric derived from the 291 reference apps · KO only |
 
 All pages share the same header tab bar, so you can switch between them freely.
 
@@ -58,6 +59,21 @@ All pages share the same header tab bar, so you can switch between them freely.
 - A 30-minute protocol works backward from the metric to the screens that caused it
 - Progress is stored in the browser (`localStorage`, key `ada-field-guide-v2`; v1 progress is migrated by app name)
 - 43 apps are ADA winners/finalists and link to the archive tab
+
+## My Apps (내 앱 평가)
+
+All App Store apps by the developer account behind this repo, evaluated against a rubric built from
+the 291 researched reference apps.
+
+- **9 criteria**, each scored 1–5 with anchors: first value, return loop, craft, accessibility,
+  platform integration, trust & privacy, business model, store presence, impact evidence.
+  Each criterion states what the reference apps taught and links to exemplar apps' deep dives
+- Every score cites its evidence: App Store data, screenshots, and (for 37 apps) the local source code.
+  Apps were not run, so runtime-only behavior is out of scope
+- Per app: impact type, closest reference apps, strengths, gaps, and the 3 highest-impact fixes
+- Portfolio diagnosis: average per criterion, recurring strengths and gaps, and portfolio-wide actions
+- Security-sensitive specifics are redacted on this public page and were reported to the developer privately
+- Data in `docs/my-apps-data.js`
 
 ## Data Source
 
