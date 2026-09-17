@@ -46,6 +46,11 @@
 - [x] headless Chrome 검증: 아카이브 230/230·기록부 100/100 버튼, 모달 동작, 모바일 가로 스크롤 없음, JS 에러 0
 - [ ] (후속) 웹 검색 한도 소진으로 후반 조사분은 Wikipedia·공식 사이트 위주 — 근거가 얇은 앱 보강
 
-## 아이폰 일괄 다운로드 (제안 단계)
-- [ ] "다운로드 큐" 모드: itms-apps:// 받기 버튼 + 설치 완료 체크(localStorage) + 다음 앱 자동 정렬
-- [ ] iPhone 설치 가능 여부(Mac/Vision Pro 전용·스토어 삭제 앱 제외)·KR 스토어 유무·가격/Arcade 배지
+## 아이폰 다운로드 큐 ✅
+- [x] 291개 앱 iTunes Lookup 재수집: 아이폰 지원 기기·KR/US 스토어·가격·용량·아이콘
+- [x] Mac/Vision Pro/iPad 전용 목록은 같은 개발사의 아이폰 버전 자동 탐색 → 오매칭 3건(Cyberpunk→Roach Race, Procreate/Dreams→Pocket) 제외
+- [x] Apple Arcade 판별: Lookup 응답에 가격 필드 없음 (20개)
+- [x] `docs/install-queue.html` 신규 + 세 페이지 공통 탭 바에 "다운로드 큐" 추가 (EN 탭 라벨 축약해 모바일 잘림 해소)
+- [x] 흐름: 받기(iOS는 itms-apps://) → 복귀 시 "설치했나요?" → 설치함/건너뛰기 → 다음 앱이 상단 카드로
+- [x] 통계(남은 앱·설치함·남은 용량·남은 유료 합계)·진행률, 출처/가격/상태 필터, 정렬 4종, 설치 불가·US 전용 토글, 검색, 상세 분석 연결
+- [x] headless Chrome 검증: 마킹·건너뛰기·새로고침 유지, 필터 수치, iOS UA에서 itms-apps 링크, 세 페이지 모바일 가로 스크롤 없음, JS 에러 0

@@ -11,8 +11,9 @@ Browse all Apple Design Awards winners and finalists from 2020 to 2026.
 | **[/](https://m1zz.github.io/ADA/)** (`docs/index.html`) | Redirects to the archive |
 | **[ADA Archive](https://m1zz.github.io/ADA/ada-archive.html)** (`docs/ada-archive.html`) | ADA winners & finalists, 2020–2026 · EN/KO |
 | **[App Field Guide](https://m1zz.github.io/ADA/field-guide.html)** (`docs/field-guide.html`) | 100-app teardown checklist in 10 categories · KO only |
+| **[Install Queue](https://m1zz.github.io/ADA/install-queue.html)** (`docs/install-queue.html`) | Install every app on iPhone one by one: Get → confirm → next · KO only |
 
-Both pages share the same header tab bar, so you can switch between them freely.
+All pages share the same header tab bar, so you can switch between them freely.
 
 ## Features
 
@@ -52,3 +53,18 @@ information architecture, on-device AI, sync, indie utilities, Korean market).
 [Apple Design Awards](https://developer.apple.com/design/awards/) — Apple Developer official page.
 
 > App icons are fetched live from the Apple iTunes API. Download links point to the US App Store.
+
+## Install Queue (다운로드 큐)
+
+Work through all 291 apps from both tabs on an iPhone, one at a time.
+
+- **Get** opens the App Store app directly (`itms-apps://`); coming back to Safari asks
+  "did you install it?" and moves the next app to the top
+- Installed / skipped state is saved in the browser (`localStorage`), with a progress bar,
+  remaining download size, and total cost of remaining paid apps
+- Apps that can't be installed on iPhone are hidden by default: Mac-, iPad- and
+  Vision Pro-only listings, apps removed from the store, and US-storefront-only apps
+  (where an iPhone version exists under a different listing, that one is used)
+- Filters for source (ADA / winners only / field guide), price (free / Apple Arcade / paid)
+  and status; sort by recommended, size, name, or ADA year
+- Data in `docs/install-data.js` (iTunes Lookup API; a missing price field marks Apple Arcade)

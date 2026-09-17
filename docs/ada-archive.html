@@ -49,10 +49,11 @@
     padding:20px 32px 0;
     display:flex;align-items:center;gap:12px;flex-wrap:wrap;
   }
+  .tabs::-webkit-scrollbar{display:none}
   .tabs{
     display:inline-flex;background:var(--line-soft);
     border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px;
-  }
+  ;max-width:100%;overflow-x:auto;scrollbar-width:none}
   .tab{
     padding:7px 16px;border-radius:999px;
     font-size:13px;font-weight:600;color:var(--muted);
@@ -355,6 +356,7 @@
   <nav class="tabs" aria-label="Sections">
     <a class="tab active" href="ada-archive.html" aria-current="page" id="tabArchive"></a>
     <a class="tab" href="field-guide.html" id="tabGuide"></a>
+    <a class="tab" href="install-queue.html" id="tabQueue"></a>
   </nav>
   <div class="lang-toggle" aria-label="Language">
     <button class="lang-btn active" id="btnEn" onclick="setLang('en')">EN</button>
@@ -422,7 +424,8 @@
 const STRINGS = {
   en: {
     tabArchive: 'ADA Archive',
-    tabGuide: 'App Field Guide (KO)',
+    tabGuide: 'Field Guide',
+    tabQueue: 'Install Queue',
     title: 'ADA <span class="it">Winners</span><br>Archive',
     lede: 'The Apple Design Awards recognize apps and games that reflect excellence in design, innovation, and technology. Browse winners and finalists from 2020 to 2026 by category, year, and platform — each entry explains why it won, framed by its award category, with what to look for. App icons and App Store links are included.',
     statWin: 'Winners',
@@ -457,6 +460,7 @@ App icons are loaded live from the Apple iTunes API (internet connection require
   ko: {
     tabArchive: 'ADA 아카이브',
     tabGuide: '앱 관찰 기록부',
+    tabQueue: '다운로드 큐',
     title: '역대 ADA <span class="it">수상작</span><br>아카이브',
     lede: '애플이 매년 WWDC에서 디자인의 혁신성·독창성·기술적 성취를 인정해 선정하는 Apple Design Awards. 2020년부터 2026년까지의 수상작과 파이널리스트를 카테고리·연도·플랫폼별로 정리했으며, 각 작품마다 수상 카테고리 관점에서 "왜 상을 받았는지"와 관찰 포인트를 함께 설명합니다. 앱 아이콘과 App Store 다운로드 링크가 함께 제공됩니다.',
     statWin: '수상작 (Winners)',
@@ -509,6 +513,7 @@ function setLang(l){
 function applyLang(){
   document.getElementById('tabArchive').textContent = t('tabArchive');
   document.getElementById('tabGuide').textContent = t('tabGuide');
+  document.getElementById('tabQueue').textContent = t('tabQueue');
   document.getElementById('mainTitle').innerHTML = t('title');
   document.getElementById('mainLede').textContent = t('lede');
   document.getElementById('stWinLabel').textContent = t('statWin');
