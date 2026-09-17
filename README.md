@@ -67,10 +67,12 @@ A reference page built around one formula: **impact = reach × depth × duration
 
 1. **Measuring impact** — each factor with practical proxies (D30/D90 retention, the "what would you use
    if this disappeared tomorrow?" question, resources saved, behavior change, the Sean Ellis 40% test)
-2. **High-impact apps by type** — breadth (M-Pesa, WhatsApp, KakaoTalk, Signal, Toss, Watch Duty),
-   depth (Be My Eyes, oko, Proloquo2Go, Seeing AI, Voice Dream Reader, Tiimo), structure (Anki, Duolingo,
-   Strava, Photomath), tool (Figma, Obsidian, Slack, Google Sheets, Notion). Each app is scored 1–10 on the four
-   factors (editorial judgment; counterfactual is inferred) with an overall score = geometric mean of the four, with sourced evidence or a link to its deep dive
+2. **High-impact apps by type** — 159 reference apps across breadth (45), depth (34), structure (50) and
+   tool (30): payments & infrastructure, public safety, accessibility, health & therapy, education, social
+   practice, creative/work tools, AI, and the Korean market. Each is scored 1–10 on the four factors
+   (editorial judgment; counterfactual is inferred) with an overall score = geometric mean, a sign
+   (+ positive / ± mixed / − negative / ↺ flipped by design), sourced evidence, and filters for type, sign,
+   sort and search. Data in `docs/impact-data.js`; apps with little verifiable evidence are labeled
 3. **Is bigger impact more valuable?** — impact has a sign (mixed cases: Robinhood, Noom, Diablo Immortal,
    Otter.ai; direction flipped by design: Opal, Gentler Streak), measurability bias, the aggregation trap,
    and value to the maker

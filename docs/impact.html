@@ -80,8 +80,40 @@
   .type-head .unit{background:var(--surface-hi);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:13px;line-height:1.65;color:#334155}
   .type-head .unit span{display:block;font-size:10px;font-weight:700;letter-spacing:.09em;color:var(--muted);margin-bottom:4px}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:12px}
+  .controls{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:16px;padding:10px 12px;margin-bottom:14px;display:flex;flex-direction:column;gap:6px}
+  .crow{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+  .crow .cl{font-size:10.5px;font-weight:700;letter-spacing:.1em;color:var(--muted-dim);width:34px}
+  .chips{display:contents}
+  .controls .chip{font-size:12.5px;padding:5px 12px}
+  .sel{font-family:inherit;font-size:12.5px;border:1px solid var(--line);border-radius:999px;padding:5px 10px;background:#fff;color:var(--text)}
+  .search{font-family:inherit;font-size:13px;border:1px solid var(--line);border-radius:999px;padding:6px 12px;min-width:160px;flex:1;max-width:260px;outline:none}
+  .search:focus{border-color:var(--accent)}
+  .meta{font-size:12.5px;color:var(--muted-dim);margin:0 0 12px}
+  .meta b{color:var(--text)}
+  .type-legend{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px}
+  .tl{font-family:inherit;text-align:left;border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:var(--surface-hi);cursor:pointer;display:flex;flex-direction:column;gap:4px}
+  .tl:hover{border-color:var(--muted-dim)}
+  .tl b{font-size:14px}
+  .tl span{font-size:12px;color:var(--muted);line-height:1.55}
+  .ht{min-width:0;flex:1}
+  .badges{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+  .sgn,.tb{font-size:10.5px;font-weight:700;border-radius:6px;padding:2px 7px;border:1px solid var(--line);white-space:nowrap}
+  .tb{color:var(--muted);background:var(--line-soft);font-weight:600}
+  .tb.warn{color:#9a3412;background:#fff7ed;border-color:#fed7aa}
+  .sgn.pos{color:var(--pos);background:var(--pos-bg);border-color:var(--pos-line)}
+  .sgn.mix{color:#92400e;background:#fef3c7;border-color:#fde68a}
+  .sgn.neg{color:var(--neg);background:var(--neg-bg);border-color:var(--neg-line)}
+  .sgn.flip{color:var(--accent-dim);background:#f0f9ff;border-color:#bae6fd}
+  .why{font-size:13px;color:#334155;line-height:1.6}
+  .negline{font-size:12.5px;color:#7f1d1d;background:var(--neg-bg);border:1px solid var(--neg-line);border-radius:10px;padding:8px 10px;line-height:1.55}
+  .negline b{font-weight:700;margin-right:4px}
+  .evd summary{cursor:pointer;font-size:12px;font-weight:600;color:var(--muted);list-style:none}
+  .evd summary::-webkit-details-marker{display:none}
+  .evd summary::before{content:"▸ "}
+  .evd[open] summary::before{content:"▾ "}
+  .evd .ev{margin-top:8px}
   .card{border:1px solid var(--line);border-radius:18px;padding:16px;background:#fff;display:flex;flex-direction:column;gap:12px}
-  .chead{display:flex;gap:12px;align-items:center}
+  .chead{display:flex;gap:12px;align-items:flex-start}
   .icon{width:52px;height:52px;border-radius:12px;flex-shrink:0;border:1px solid var(--line);object-fit:cover;background:var(--line-soft);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--muted)}
   .chead h4{font-size:17px;font-weight:750;letter-spacing:-.02em;line-height:1.2}
   .chead .sub{font-size:12px;color:var(--muted);margin-top:2px}
@@ -154,6 +186,7 @@
     .factors{grid-template-columns:repeat(2,minmax(0,1fr))}
     .two,.cases{grid-template-columns:1fr}
     .type-head{grid-template-columns:1fr}
+    .type-legend{grid-template-columns:repeat(2,minmax(0,1fr))}
   }
   @media (max-width:600px){
     .topbar{padding:16px 16px 0}
@@ -163,6 +196,8 @@
     .sec-title{font-size:23px}
     .factors,.grid,.vec,.tools{grid-template-columns:1fr}
     .meter{grid-template-columns:56px 84px minmax(0,1fr)}
+    .controls{position:static}
+    .type-legend{grid-template-columns:1fr}
   }
 </style>
 </head>
@@ -181,7 +216,7 @@
 <header>
   <div class="eyebrow"><span class="eyebrow-dot"></span>Impact References · Reach × Depth × Duration × Counterfactual</div>
   <h1>임팩트 <span class="it">레퍼런스</span></h1>
-  <p class="lede">임팩트가 큰 앱을 <b>하나의 자로 재지 않기 위한</b> 페이지입니다. 임팩트를 네 요소로 나누고, 넓이·깊이·구조·도구 네 유형의 레퍼런스 앱을 요소별로 뜯어 봅니다. 그다음 <b>임팩트는 크기일 뿐 방향이 아니라는 것</b>, 그리고 임팩트 없는 걸 만들려는 사람과 어떻게 대화할지까지 정리했습니다.</p>
+  <p class="lede">임팩트가 큰 앱을 <b>하나의 자로 재지 않기 위한</b> 페이지입니다. 임팩트를 네 요소로 나누고, 넓이·깊이·구조·도구 네 유형의 레퍼런스 앱 <b>159개</b>를 요소별로 뜯어 봅니다. 그다음 <b>임팩트는 크기일 뿐 방향이 아니라는 것</b>, 그리고 임팩트 없는 걸 만들려는 사람과 어떻게 대화할지까지 정리했습니다.</p>
   <nav class="toc" aria-label="목차">
     <a href="#measure">1 · 임팩트 측정</a>
     <a href="#types">2 · 임팩트가 큰 앱들</a>
@@ -235,8 +270,20 @@
 <section class="block" id="types">
   <span class="sec-label">2 · 임팩트가 큰 앱들</span>
   <h2 class="sec-title">유형이 다르면 자도 달라야 합니다</h2>
-  <p class="sec-sub">각 앱을 네 요소별로 <b>10점 만점</b>으로 매기고, 네 점수의 <b>기하평균을 임팩트 종합 점수</b>로 표시했습니다. 공식이 곱셈이라 산술평균 대신 기하평균을 씁니다 — 한 요소가 낮으면 종합도 크게 떨어집니다. 깊이형 앱은 도달이 낮아 종합 점수가 낮게 나오는데, 그게 바로 3번에서 말하는 <b>총합의 함정</b>입니다. 요소 점수는 아래 근거를 바탕으로 한 <b>편집 판단</b>이고, 특히 반사실성은 공개 데이터로 잴 수 없어 추론입니다. 리텐션·Sean Ellis 같은 내부 지표는 대부분 비공개라 공개된 근거로 대신했습니다.</p>
-  <div class="type-nav" id="typeNav"></div>
+  <p class="sec-sub"><b id="appCount"></b>개 앱을 네 유형으로 나누고, 네 요소를 각각 <b>10점 만점</b>으로 매긴 뒤 <b>기하평균을 종합 점수</b>로 표시했습니다. 공식이 곱셈이라 산술평균 대신 기하평균을 씁니다 — 한 요소가 낮으면 종합도 크게 떨어집니다. 깊이형 앱은 도달이 낮아 종합 점수가 낮게 나오는데, 그게 바로 3번에서 말하는 <b>총합의 함정</b>입니다. 종합 점수는 <b>크기</b>이고 <b>방향</b>(+ · ± · − · ↺)은 따로 표시했습니다. 요소 점수는 근거를 바탕으로 한 <b>편집 판단</b>이고, 반사실성은 추론입니다. 검증 가능한 근거가 적은 앱에는 "근거 적음"을 붙였습니다.</p>
+  <div class="controls" id="controls">
+    <div class="crow"><span class="cl">유형</span><span id="typeNav" class="chips"></span></div>
+    <div class="crow"><span class="cl">방향</span><span id="signNav" class="chips"></span></div>
+    <div class="crow"><span class="cl">정렬</span>
+      <select id="sort" class="sel" aria-label="정렬">
+        <option value="g">종합 점수 높은 순</option><option value="reach">도달 높은 순</option><option value="depth">깊이 높은 순</option>
+        <option value="dur">지속 높은 순</option><option value="cf">반사실성 높은 순</option><option value="name">이름순</option>
+      </select>
+      <input id="q" class="search" type="search" placeholder="앱 · 근거 검색" autocomplete="off">
+    </div>
+  </div>
+  <div id="typeHead"></div>
+  <p class="meta" id="meta"></p>
   <div id="typeBody"></div>
 </section>
 
@@ -317,111 +364,32 @@
 </section>
 
 <footer>
-  요소별 10점 점수와 종합 점수는 공개 근거를 바탕으로 한 편집 판단이며, 반사실성은 추론입니다. 앱별 수치의 출처는 각 카드의 링크 또는 "상세 분석"에 있습니다. M-Pesa·WhatsApp·Signal·Anki의 근거는 2026-09-17에 확인한 Wikipedia와 Signal 블로그 기준입니다. 내 앱을 같은 관점으로 보려면 <a href="my-apps.html">내 앱 평가</a>를 참고하세요.
+  요소별 10점 점수와 종합 점수는 공개 근거를 바탕으로 한 편집 판단이며, 반사실성은 추론입니다. 각 카드의 "근거"는 2026-09-17에 직접 확인한 페이지(주로 Wikipedia·공식 사이트·보도자료·연구 페이지)이고, "상세 분석" 버튼이 있는 앱은 ADA 아카이브 조사 때 수집한 출처를 함께 볼 수 있습니다. 이번 조사는 웹 검색 없이 알려진 페이지를 직접 열어 확인했기 때문에, 사용자 수가 공개되지 않은 앱의 도달 점수는 추정입니다. 내 앱을 같은 관점으로 보려면 <a href="my-apps.html">내 앱 평가</a>를 참고하세요.
 </footer>
 
 <script src="insights-data.js"></script>
 <script src="insights.js"></script>
 <script src="install-data.js"></script>
+<script src="impact-data.js"></script>
 <script>
 // ─── Data ─────────────────────────────────────────────────────────────────────
 // lv: 요소별 1~10점 (편집 판단). 종합 = 네 점수의 기하평균. key: 상세 분석(insights) 키가 있으면 근거는 그쪽 출처를 따른다.
-const W = "https://en.wikipedia.org/wiki/";
-const EXTERNAL_ICONS = {
-  "M-Pesa":"https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/b8/4d/90/b84d9061-3a77-593e-0848-fea2fdfb5ea3/AppIcon-0-1x_U007emarketing-0-11-0-85-220-0.png/100x100bb.jpg",
-  "WhatsApp":"https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/cd/6e/2b/cd6e2b5b-13d7-ef7c-8b05-a617760620bb/AppIcon-0-0-1x_U007epad-0-0-0-1-0-0-sRGB-0-85-220.png/100x100bb.jpg",
-  "Signal":"https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/20/87/3d/20873d13-b924-5974-87dd-86214293df24/AppIcon-0-0-1x_U007epad-0-0-0-1-0-0-sRGB-0-85-220.png/100x100bb.jpg",
-  "Anki":"https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/30/6b/da/306bdac5-3088-c97f-c682-e4626bfc6b43/AppIcon-0-0-1x_U007emarketing-0-5-0-85-220.png/100x100bb.jpg"
-};
-
 const TYPES = [
  {id:"breadth", name:"넓이형", en:"Breadth",
   d:"한 사람당 변화는 작아도, 사회 전체의 기본값을 바꾼 앱. 사용 여부가 선택이 아니라 인프라가 됩니다.",
-  unit:"도달 수 × 대체 불가능성. 한 사람당 깊이는 '중간'이어도 충분합니다. 대신 의존도가 커질수록 장애·독점이라는 음의 임팩트도 같이 커집니다.",
-  apps:[
-   {name:"M-Pesa", sub:"Safaricom·Vodafone · 2007 · 케냐", sign:"pos",
-    lv:{reach:[8,"2011년 케냐에서만 가입자 1,700만"],depth:[7,"은행 계좌 없이 송금·저축 — 효과 크기는 논쟁 중"],dur:[9,"2007년부터 금융 인프라로 정착"],cf:[9,"당시 은행망이 닿지 않던 계층, 대체재가 없었음"]},
-    ev:[
-     ["2007년 Safaricom·Vodafone 출시, 2011년 12월 케냐 가입자 1,700만","2011-12",W+"M-Pesa","Wikipedia — M-Pesa"],
-     ["2014년 11개월간 거래액 KSh 2.1조 — 케냐 GDP의 약 절반","2014",W+"M-Pesa","Wikipedia — M-Pesa"],
-     ["Suri & Jack(Science, 2016): 1인당 소비 증가, 19만 4,000가구(케냐 가구의 2%) 빈곤 탈출 — 2019년 반론 논문이 오류를 지적","2016 · 2019",W+"M-Pesa","Wikipedia — M-Pesa"]
-    ]},
-   {name:"WhatsApp", sub:"Meta", sign:"pos",
-    lv:{reach:[10,"MAU 30억 (2025-05)"],depth:[5,"문자 요금 구조를 사실상 소멸"],dur:[9,"15년 넘게 기본 메신저"],cf:[5,"OTT 메신저 경쟁자가 많았음 — 내 몫은 속도와 규모"]},
-    ev:[
-     ["월간 활성 사용자 30억","2025-05",W+"WhatsApp","Wikipedia — WhatsApp"],
-     ["Forbes(2015) 전망: WhatsApp·Skype 같은 OTT 서비스로 통신사가 2012~2018년 3,860억 달러 손실","2015-04",W+"WhatsApp","Wikipedia — WhatsApp"],
-     ["2016년 4월 모든 대화에 Signal Protocol 종단간 암호화 완료 — 10억 명 이상","2016-04","https://signal.org/blog/whatsapp-complete/","Signal 블로그"]
-    ]},
-   {name:"카카오톡", key:"카카오톡", sub:"Kakao · 한국", sign:"pos",
-    lv:{reach:[8,"MAU 4,800만+, 스마트폰 사용자 93%"],depth:[6,"문자에서 송금·선물·결제까지 생활 인프라"],dur:[9,"10년 넘게 국민 메신저"],cf:[5,"메신저 경쟁은 있었지만 한국의 기본값을 선점"]},
-    note:"2022년 데이터센터 화재로 최장 127시간 장애 — 넓이형의 도달은 곧 의존도이고, 장애의 음의 임팩트도 같은 크기로 커집니다."},
-   {name:"Signal", sub:"Signal Messenger", sign:"pos",
-    lv:{reach:[7,"앱 자체보다 프로토콜로 닿음 (앱 사용자 수 공개 근거 없음)"],depth:[7,"대화 내용을 서비스 제공자도 못 읽게"],dur:[9,"업계 표준 암호화 프로토콜로 10년 이상"],cf:[9,"오픈 프로토콜이 경쟁 메신저의 기본값이 됨"]},
-    ev:[
-     ["WhatsApp(2016-04, 10억+), Facebook Messenger 비밀 대화(2016-10), Skype 비공개 대화(2018-01)가 Signal Protocol 채택","2016–2018",W+"Signal_Protocol","Wikipedia — Signal Protocol"],
-     ["Google Messages가 RCS 대화 기본 종단간 암호화에 Signal Protocol 사용 발표","2020-11",W+"Signal_Protocol","Wikipedia — Signal Protocol"]
-    ],
-    note:"앱의 사용자 수보다 '표준이 된 프로토콜'이 임팩트의 본체인 경우. 도달을 앱 설치 수로만 세면 크게 과소평가됩니다."},
-   {name:"토스", key:"토스", sub:"비바리퍼블리카 · 한국", sign:"pos",
-    lv:{reach:[7,"국내 사용자 2,000만+ (2021)"],depth:[6,"공인인증서 없이 몇 번의 탭으로 송금"],dur:[7,"은행·증권으로 확장"],cf:[5,"은행 앱들이 흐름을 따라 함 — 내 몫은 '먼저'였던 시간"]}},
-   {name:"Watch Duty", key:"Watch Duty: Wildfire Maps", sub:"비영리 · 미국", sign:"pos",
-    lv:{reach:[6,"사용자 2,000만+ (2026)"],depth:[9,"대피 판단이라는 생명과 직결된 결정"],dur:[5,"재난 시기에 집중되는 사용"],cf:[9,"공식 경보가 늦던 공백을 15명 팀이 메움"]}}
-  ]},
+  unit:"도달 수 × 대체 불가능성. 한 사람당 깊이는 '중간'이어도 충분합니다. 대신 의존도가 커질수록 장애·독점이라는 음의 임팩트도 같이 커집니다."},
  {id:"depth", name:"깊이형", en:"Depth",
   d:"사용자 수는 넓이형의 1/1000이지만 한 사람당 변화량이 압도적인 앱. '혼자 못 하던 일을 혼자 하게 됨'은 곱셈이 아니라 0에서 1로 가는 변화입니다.",
-  unit:"혼자 해낸 일의 횟수 · 대체하던 비용(전용 기기, 사람의 도움). 사용자 수로 재면 실패한 앱처럼 보입니다.",
-  apps:[
-   {name:"Be My Eyes", key:"Be My Eyes", sub:"Be My Eyes", sign:"pos",
-    lv:{reach:[5,"시각장애·저시력 사용자 110만, 봉사자 1,111만"],depth:[9,"보이지 않아 못 하던 일을 영상통화로 해결"],dur:[8,"10년 넘게 커지는 봉사자망"],cf:[6,"AI 비전 도구가 일부 대체 — 사람 연결망은 대체 어려움"]}},
-   {name:"oko", key:"oko", sub:"AYES · 2021", sign:"pos",
-    lv:{reach:[2,"사용자 수 비공개"],depth:[10,"음향 신호기 없는 교차로를 혼자 건넘"],dur:[5,"2025년 신호기 제조사에 인수돼 인프라와 통합"],cf:[9,"그 교차로에는 다른 방법이 없었음"]}},
-   {name:"Proloquo2Go", key:"Proloquo2Go", sub:"AssistiveWare · 2009", sign:"pos",
-    lv:{reach:[3,"회사 AAC 앱 전체 50만+ 다운로드"],depth:[10,"말 못 하던 아이가 말을 하게 됨"],dur:[9,"2009년부터 15년 이상"],cf:[7,"수천 달러짜리 전용 AAC 기기를 iPhone·iPad로 대체"]}},
-   {name:"Seeing AI", key:"Seeing AI", sub:"Microsoft · 2017", sign:"pos",
-    lv:{reach:[4,"사용자 수 비공개, 2023년 Android·18개 언어로 확장"],depth:[9,"우편물·메뉴·화폐를 혼자 읽음"],dur:[8,"2017년부터"],cf:[5,"카메라+음성 보조 앱의 선행 사례(TapTapSee 등) 존재"]}},
-   {name:"Voice Dream Reader", key:"Voice Dream Reader", sub:"Voice Dream · 2012", sign:"pos",
-    lv:{reach:[3,"사용자 수 비공개"],depth:[9,"시각장애·난독증 독자가 책·문서를 스스로 읽음"],dur:[8,"2012년부터 10년 이상"],cf:[6,"고가 전용 읽기 기기를 앱으로 대체"]}},
-   {name:"Tiimo", key:"Tiimo", sub:"Tiimo · 코펜하겐", sign:"pos",
-    lv:{reach:[4,"사용자 50만+ (유료 5만)"],depth:[7,"시간 감각이 다른 신경다양 사용자의 하루 구조화"],dur:[6,"루틴 도구로 매일 사용"],cf:[6,"일반 플래너는 많지만 이 사용자군을 위한 표현은 드묾"]}}
-  ]},
+  unit:"혼자 해낸 일의 횟수 · 대체하던 비용(전용 기기, 사람의 도움). 사용자 수로 재면 실패한 앱처럼 보입니다."},
  {id:"structure", name:"구조형", en:"Structure",
-  d:"개인이 아니라 관행을 바꾼 앱. 앱을 쓰지 않는 사람까지 그 방식으로 배우거나 기록하게 됩니다.",
-  unit:"바뀐 관행의 범위 — 특정 집단에서 그 방식이 '기본'이 된 비율. 앱 사용자 수보다 방식의 확산을 봅니다.",
-  apps:[
-   {name:"Anki", sub:"Anki · 2006 · 오픈소스", sign:"pos",
-    lv:{reach:[6,"전체 사용자 수 공개 근거 없음"],depth:[9,"의대생 공부 방식 자체를 간격 반복으로"],dur:[10,"2006년부터 20년"],cf:[6,"SuperMemo가 먼저였지만 무료·오픈소스로 대중화"]},
-    ev:[
-     ["2006년 10월 첫 출시, SuperMemo의 SM-2 알고리즘 기반 → 23.10부터 FSRS 내장","2006 · 2023",W+"Anki_(software)","Wikipedia — Anki"],
-     ["의학교육 설문(2015): 응답 학생 31%가 Anki 사용","2015",W+"Anki_(software)","Wikipedia — Anki"],
-     ["미국 의대생 연구(2024): 86.2%가 사용, 66.5%가 매일 사용","2024",W+"Anki_(software)","Wikipedia — Anki"]
-    ],
-    note:"31% → 86.2%. 한 집단 안에서 '기본 학습법'이 된 과정이 구조형 임팩트의 전형적인 측정 방식입니다."},
-   {name:"Duolingo", key:"Duolingo", sub:"Duolingo", sign:"pos",
-    lv:{reach:[9,"MAU 1억 3,000만+"],depth:[6,"코스 수료자의 읽기·듣기가 대학 4학기 수준(2022 연구)"],dur:[8,"365일 이상 연속 학습자 약 1,500만"],cf:[5,"언어 앱은 많았지만 스트릭 게이미피케이션을 학습 앱의 표준으로"]}},
-   {name:"Strava", key:"Strava", sub:"Strava", sign:"pos",
-    lv:{reach:[8,"운동선수 1억 9,500만"],depth:[5,"혼자 하는 운동을 기록·공유하는 사회적 행동으로"],dur:[8,"2020년까지 활동 30억 건"],cf:[5,"운동 기록 앱은 많았음 — 구간 순위·응원이라는 관행을 만듦"]},
-    note:"2018년 공개 히트맵으로 군사 기지 위치가 드러난 사건 — 관행을 바꾼 앱은 부작용도 관행 단위로 생깁니다."},
-   {name:"Photomath", key:"Photomath", sub:"Photomath → Google", sign:"pos",
-    lv:{reach:[9,"누적 2억 2,000만 다운로드, 월 22억 문제 (2021)"],depth:[5,"카메라로 찍으면 단계별 풀이"],dur:[6,"Google 인수 후 검색·렌즈 계열로"],cf:[3,"카메라 풀이 앱과 검색 기능이 빠르게 뒤따름"]},
-    note:"도달은 최상급인데 반사실성이 낮은 경우. 곱셈 공식에서는 이 한 항이 전체 임팩트를 크게 깎습니다."}
-  ]},
+  d:"개인이 아니라 관행을 바꾼 앱. 앱을 쓰지 않는 사람까지 그 방식으로 배우거나 기록하거나 만나게 됩니다.",
+  unit:"바뀐 관행의 범위 — 특정 집단에서 그 방식이 '기본'이 된 비율. 앱 사용자 수보다 방식의 확산을 봅니다."},
  {id:"tool", name:"도구형", en:"Tool",
   d:"일하는 방식의 기본 단위를 옮긴 앱. Figma는 협업 단위를 파일에서 링크로 옮겼습니다.",
-  unit:"작업의 기본 단위가 바뀌었는가(파일 → 링크, 이메일 → 채널, 앱 데이터 → 내 파일). 경쟁사가 그 단위를 따라 했는가.",
-  apps:[
-   {name:"Figma", key:"Figma", sub:"Figma", sign:"pos",
-    lv:{reach:[6,"사용자 1,300만 (2025)"],depth:[9,"협업 단위를 파일에서 링크로"],dur:[8,"디자인 업계 표준으로 상장(2025)"],cf:[6,"Adobe가 약 200억 달러에 사려 했을 만큼 대체가 어려웠음"]}},
-   {name:"Obsidian", key:"Obsidian", sub:"Dynalist · 2020", sign:"pos",
-    lv:{reach:[4,"사용자 약 100만 추정 (2023)"],depth:[7,"노트를 앱 데이터가 아닌 내 기기의 파일로"],dur:[8,"평문 마크다운은 앱보다 오래 감"],cf:[6,"로컬 마크다운 편집기는 있었지만 로컬 퍼스트 PKM 흐름을 대중화"]}},
-   {name:"Slack", key:"Slack", sub:"Slack → Salesforce · 2013", sign:"pos",
-    lv:{reach:[8,"DAU 1,000만+, 조직 60만+ (2019)"],depth:[6,"사내 소통을 이메일에서 채널로"],dur:[8,"277억 달러 인수 후에도 표준"],cf:[3,"Teams(2017)·Google Chat(2018)이 곧 따라옴 — 몫은 '먼저'였던 시간"]}},
-   {name:"Google Sheets", key:"Google Sheets", sub:"Google · 2006", sign:"pos",
-    lv:{reach:[9,"Workspace 유료 고객 900만+, 교육용 1억 7,000만+ (2021)"],depth:[5,"파일 첨부 대신 링크 하나로 동시 편집"],dur:[9,"20년 가까이"],cf:[5,"실시간 공동 편집을 대중화 — 이후 오피스 제품군이 모두 따름"]}},
-   {name:"Notion", key:"Notion", sub:"Notion", sign:"pos",
-    lv:{reach:[8,"사용자 2,000만 (2021)"],depth:[5,"블록·'/' 명령으로 문서·DB 경계를 허묾"],dur:[6,"캘린더·메일로 확장 중"],cf:[3,"블록 편집기는 빠르게 복제됨"]}}
-  ]}
+  unit:"작업의 기본 단위가 바뀌었는가(파일 → 링크, 이메일 → 채널, 앱 데이터 → 내 파일). 경쟁사가 그 단위를 따라 했는가."}
 ];
+const SIGNS = {pos:["+","양의 방향"], mix:["±","부호 혼합"], neg:["−","음의 방향"], flip:["↺","방향 전환"]};
+const DATA = (window.IMPACT_DATA||{apps:[]}).apps;
 
 // 크기는 크지만 방향이 섞인 사례 (+ / −), 그리고 방향을 설계로 뒤집은 사례 (↺)
 const VEC = [
@@ -436,12 +404,11 @@ const VEC = [
 // ─── Render ───────────────────────────────────────────────────────────────────
 const INSTALL = Object.fromEntries((window.INSTALL_DATA?INSTALL_DATA.items:[]).map(i=>[i.k,i]));
 function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
-function iconHTML(name, key){
-  const url = (key && INSTALL[key] && INSTALL[key].icon) || EXTERNAL_ICONS[name];
+function iconHTML(name, url){
   return url ? `<img class="icon" src="${esc(url)}" alt="" loading="lazy">` : `<div class="icon">${esc(name[0])}</div>`;
 }
-const gmean = lv => Math.pow(FACTORS.reduce((p,[k])=>p*lv[k][0],1), 1/4);
 const FACTORS = [["reach","도달"],["depth","깊이"],["dur","지속"],["cf","반사실성"]];
+const gmean = lv => Math.pow(FACTORS.reduce((p,[k])=>p*lv[k][0],1), 1/4);
 function meterHTML(k,label,[lv,note]){
   return `<div class="meter${k==="cf"?" cf":""}">
     <span class="mk">${label}</span>
@@ -450,39 +417,56 @@ function meterHTML(k,label,[lv,note]){
   </div>`;
 }
 function cardHTML(a){
-  const ev = a.ev ? `<ul class="ev">${a.ev.map(([t,d,u,s])=>`<li>${esc(t)}<span class="src">${esc(d)} · <a href="${esc(u)}" target="_blank" rel="noopener">${esc(s)}</a></span></li>`).join("")}</ul>` : "";
-  const deep = a.key && window.Insights ? Insights.button(a.key,"ko") : "";
+  const [sym,label] = SIGNS[a.s]||SIGNS.pos;
+  const ev = a.ev && a.ev.length ? `<details class="evd"><summary>근거 ${a.ev.length}개</summary><ul class="ev">${a.ev.map(([t,d,u,src])=>`<li>${esc(t)}<span class="src">${esc(d)} · <a href="${esc(u)}" target="_blank" rel="noopener">${esc(src)}</a></span></li>`).join("")}</ul></details>` : "";
+  const deep = a.k && window.Insights ? Insights.button(a.k,"ko") : "";
   return `<article class="card">
-    <div class="chead">${iconHTML(a.name,a.key)}<div><h4>${esc(a.name)}</h4><div class="sub">${esc(a.sub)}</div></div>
+    <div class="chead">${iconHTML(a.n,a.i)}<div class="ht"><h4>${esc(a.n)}</h4><div class="sub">${esc(a.sub)}${a.ko?` · ${esc(a.ko)}`:""}</div>
+      <div class="badges"><span class="sgn ${a.s}" title="${label}">${sym} ${label}</span><span class="tb">${esc((TYPES.find(t=>t.id===a.t)||{}).name||"")}</span>${a.thin?`<span class="tb warn" title="검증 가능한 근거가 적어 점수의 불확실성이 큽니다">근거 적음</span>`:""}</div></div>
       <span class="score" title="네 요소 점수의 기하평균"><b>${gmean(a.lv).toFixed(1)}</b><small>/ 10 종합</small></span></div>
+    ${a.w?`<p class="why">${esc(a.w)}</p>`:""}
     <div class="meters">${FACTORS.map(([k,l])=>meterHTML(k,l,a.lv[k])).join("")}</div>
-    ${ev}
+    ${a.x?`<p class="negline"><b>음의 임팩트</b> ${esc(a.x)}</p>`:""}
     ${a.note?`<p class="note">${esc(a.note)}</p>`:""}
+    ${ev}
     ${deep?`<div class="cfoot">${deep}</div>`:""}
   </article>`;
 }
-let current = TYPES[0].id;
+const st = {type:"all", sign:"all", sort:"g", q:""};
 function renderTypes(){
-  document.getElementById("typeNav").innerHTML = TYPES.map(t=>`<button class="chip${t.id===current?" active":""}" data-type="${t.id}">${esc(t.name)} · ${t.apps.length}</button>`).join("");
-  const t = TYPES.find(x=>x.id===current);
-  document.getElementById("typeBody").innerHTML = `
+  const cnt = f => DATA.filter(f).length;
+  document.getElementById("typeNav").innerHTML = [["all","전체",cnt(()=>true)],...TYPES.map(t=>[t.id,t.name,cnt(a=>a.t===t.id)])]
+    .map(([id,n,c])=>`<button class="chip${st.type===id?" active":""}" data-type="${id}">${n} · ${c}</button>`).join("");
+  document.getElementById("signNav").innerHTML = [["all","전체"],...Object.entries(SIGNS).map(([k,[sym,l]])=>[k,`${sym} ${l}`])]
+    .map(([id,n])=>`<button class="chip${st.sign===id?" active":""}" data-sign="${id}">${n} · ${id==="all"?DATA.length:cnt(a=>a.s===id)}</button>`).join("");
+  const t = TYPES.find(x=>x.id===st.type);
+  document.getElementById("typeHead").innerHTML = t ? `
     <div class="type-head">
       <div><h3>${esc(t.name)} <span style="color:var(--muted-dim);font-weight:400;font-size:15px">${t.en}</span></h3><p class="td">${esc(t.d)}</p></div>
       <div class="unit"><span>이 유형의 측정 단위</span>${esc(t.unit)}</div>
-    </div>
-    <div class="grid">${[...t.apps].sort((x,y)=>gmean(y.lv)-gmean(x.lv)).map(cardHTML).join("")}</div>`;
+    </div>` : `<div class="type-legend">${TYPES.map(t=>`<button class="tl" data-type="${t.id}"><b>${t.name}</b><span>${esc(t.d)}</span></button>`).join("")}</div>`;
+  let rows = DATA.filter(a=>(st.type==="all"||a.t===st.type)&&(st.sign==="all"||a.s===st.sign));
+  if(st.q){ rows = rows.filter(a=>(a.n+" "+(a.ko||"")+" "+a.sub+" "+(a.w||"")+" "+(a.x||"")+" "+a.ev.map(e=>e[0]).join(" ")).toLowerCase().includes(st.q)); }
+  if(st.sort==="name") rows.sort((x,y)=>x.n.localeCompare(y.n,"ko"));
+  else if(st.sort==="g") rows.sort((x,y)=>gmean(y.lv)-gmean(x.lv));
+  else rows.sort((x,y)=>y.lv[st.sort][0]-x.lv[st.sort][0] || gmean(y.lv)-gmean(x.lv));
+  document.getElementById("meta").innerHTML = `<b>${rows.length}</b>개 앱`;
+  document.getElementById("typeBody").innerHTML = rows.length ? `<div class="grid">${rows.map(cardHTML).join("")}</div>` : `<p class="meta">조건에 맞는 앱이 없습니다.</p>`;
 }
-document.getElementById("typeNav").addEventListener("click", e=>{
-  const c = e.target.closest("[data-type]"); if(!c) return;
-  current = c.dataset.type; renderTypes();
+document.getElementById("types").addEventListener("click", e=>{
+  const ty = e.target.closest("[data-type]"); if(ty){ st.type = ty.dataset.type; renderTypes(); return; }
+  const sg = e.target.closest("[data-sign]"); if(sg){ st.sign = sg.dataset.sign; renderTypes(); }
 });
+document.getElementById("sort").addEventListener("change", e=>{ st.sort=e.target.value; renderTypes(); });
+let qt; document.getElementById("q").addEventListener("input", e=>{ clearTimeout(qt); qt=setTimeout(()=>{ st.q=e.target.value.trim().toLowerCase(); renderTypes(); },120); });
+document.getElementById("appCount").textContent = DATA.length;
 renderTypes();
 
 document.getElementById("vec").innerHTML = VEC.map(v=>{
   const name = v.name || v.key;
   const flip = v.rows[0][0]==="q";
   return `<article class="vcard">
-    <div class="chead">${iconHTML(name,v.key)}<div><h4>${esc(name)}</h4><div class="sub">${flip?"방향을 설계로 뒤집은 사례":"크기는 크지만 부호가 섞인 사례"}</div></div>
+    <div class="chead">${iconHTML(name,(INSTALL[v.key]||{}).icon)}<div><h4>${esc(name)}</h4><div class="sub">${flip?"방향을 설계로 뒤집은 사례":"크기는 크지만 부호가 섞인 사례"}</div></div>
       <span class="sign ${flip?"pos":"mix"}">${flip?"↺ 방향 전환":"± 혼합"}</span></div>
     ${v.rows.map(([s,t])=>`<div class="vrow"><span class="s ${s}">${s==="p"?"+":s==="n"?"−":"↺"}</span><span>${esc(t)}</span></div>`).join("")}
     <div class="lesson">${esc(v.lesson)}</div>
