@@ -84,6 +84,49 @@
   .actions-ol li b{display:block;color:var(--text);font-weight:700;margin-bottom:2px}
   .span2{grid-column:1 / -1}
 
+  /* ── Impact ── */
+  .imp-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+  .imp-stat{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:var(--surface-hi)}
+  .imp-stat .n{font-size:26px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1}
+  .imp-stat .l{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.5}
+  .rank{list-style:none;counter-reset:r;display:flex;flex-direction:column;gap:8px}
+  .rank li{counter-increment:r;display:grid;grid-template-columns:22px 32px minmax(0,1fr) auto;gap:8px;align-items:center;font-size:13px}
+  .rank li::before{content:counter(r);font-weight:700;color:var(--muted-dim);text-align:right;font-variant-numeric:tabular-nums}
+  .rank img{width:32px;height:32px;border-radius:8px;border:1px solid var(--line)}
+  .rank .rn{font-weight:650;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .rank .rs{font-size:11.5px;color:var(--muted);display:block;font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .rank .rv{font-weight:800;font-variant-numeric:tabular-nums}
+  .imp-maker{font-size:13.5px;color:#334155;line-height:1.75}
+  .imp-maker b{color:var(--text)}
+  .imp-controls{display:flex;align-items:center;gap:8px;margin:18px 0 10px}
+  .imp-controls .rl{font-size:10.5px;font-weight:700;letter-spacing:.1em;color:var(--muted-dim)}
+  .imp-table{display:flex;flex-direction:column;gap:8px}
+  .imp-row{border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1.6fr) 150px;gap:14px;align-items:center;background:#fff}
+  .imp-row .who{display:flex;gap:10px;align-items:center;min-width:0}
+  .imp-row .who img{width:40px;height:40px;border-radius:10px;border:1px solid var(--line);flex-shrink:0}
+  .imp-row .who h4{font-size:14px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .imp-row .who .badges{margin-top:3px}
+  .fx{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+  .fx div{font-size:11px;color:var(--muted)}
+  .fx .fb{height:6px;background:var(--line-soft);border-radius:3px;margin:3px 0 2px;position:relative;overflow:hidden}
+  .fx .fb i{position:absolute;left:0;top:0;bottom:0;background:var(--bar);border-radius:0 3px 3px 0}
+  .fx .fb.cf i{background:#0369a1}
+  .fx b{color:var(--text);font-variant-numeric:tabular-nums}
+  .scores2{display:flex;gap:12px;justify-content:flex-end;align-items:baseline;font-variant-numeric:tabular-nums}
+  .scores2 div{text-align:right}
+  .scores2 b{display:block;font-size:20px;font-weight:800;letter-spacing:-.02em;line-height:1}
+  .scores2 small{font-size:10px;color:var(--muted);font-weight:600}
+  .scores2 .pot b{color:var(--accent-dim)}
+  .imp-row .measure{grid-column:1 / -1;font-size:12px;color:#334155;background:var(--surface-hi);border-radius:9px;padding:7px 10px;line-height:1.55}
+  .imp-row .measure span{font-weight:700;color:var(--muted);margin-right:6px}
+  .imp-row .negl{grid-column:1 / -1;font-size:12px;color:#7f1d1d;background:#fef2f2;border:1px solid #fecaca;border-radius:9px;padding:7px 10px}
+  .sgn{font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:6px;border:1px solid}
+  .sgn.pos{color:#047857;background:#ecfdf5;border-color:#a7f3d0}
+  .sgn.mix{color:#92400e;background:#fef3c7;border-color:#fde68a}
+  .sgn.flip{color:var(--accent-dim);background:#f0f9ff;border-color:#bae6fd}
+  .imp-inline{display:flex;gap:6px;align-items:baseline;font-size:12px;color:var(--muted)}
+  .imp-inline b{color:var(--text);font-variant-numeric:tabular-nums}
+
   /* ── Rubric ── */
   .rubric{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px}
   .crit{border:1px solid var(--line);border-radius:16px;padding:16px 18px;background:#fff;display:flex;flex-direction:column;gap:8px}
@@ -167,6 +210,8 @@
 
   @media (max-width:760px){
     .diag{grid-template-columns:1fr}
+    .imp-row{grid-template-columns:minmax(0,1fr) 150px}
+    .imp-row .fx{grid-column:1 / -1}
   }
   @media (max-width:600px){
     .topbar{padding:16px 16px 0}
@@ -182,6 +227,9 @@
     .panel{padding:16px}
     .bar-row,.axis{grid-template-columns:104px minmax(0,1fr) 34px}
     .rubric,.grid{grid-template-columns:1fr}
+    .imp-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .imp-row{grid-template-columns:1fr}
+    .scores2{justify-content:flex-start}
     .search-wrap{max-width:none;margin-left:0}
   }
 </style>
@@ -237,6 +285,28 @@
   </div>
 </section>
 
+<section class="block" id="impactSec">
+  <span class="sec-label">임팩트 측정</span>
+  <h2 class="sec-title">임팩트 레퍼런스와 같은 자로 재면</h2>
+  <p class="sec-sub"><a href="impact.html" style="color:var(--accent-dim);text-decoration:underline">임팩트 레퍼런스</a>의 159개 앱과 같은 공식 <b>도달 × 깊이 × 지속 × 반사실성</b>으로, 같은 10점 기준(도달 10 ≈ 수십억 명, 5 ≈ 수백만 명, 2 ≈ 수만 명)을 적용했습니다. 사용자 수가 공개되지 않아 도달은 평점 수로, 지속은 출시 기간과 업데이트 이력으로 추정했고 반사실성은 추론입니다. 그래서 두 값을 함께 봅니다 — <b>현재</b>는 지금의 도달로 계산한 종합, <b>잠재</b>는 목표 사용자에게 닿았을 때의 도달로 계산한 종합입니다.</p>
+  <div class="imp-stats" id="impStats"></div>
+  <div class="diag" style="margin-top:14px">
+    <div class="panel"><h3>잠재 임팩트가 큰 앱</h3><p class="psub">목표 사용자에게 닿으면 가장 크게 커지는 앱 — 판돈을 더 걸 후보</p><ol class="rank" id="rankPotential"></ol></div>
+    <div class="panel"><h3>반사실성이 높은 앱</h3><p class="psub">"내가 안 만들었으면 없었을" 앱 — 내가 만든 몫이 큰 곳</p><ol class="rank" id="rankCf"></ol></div>
+    <div class="panel"><h3>판돈을 줄일 후보</h3><p class="psub">깊이와 반사실성이 모두 낮은 앱 — 대체재가 많고 한 사람당 변화도 작음</p><ol class="rank" id="rankLow"></ol></div>
+    <div class="panel"><h3>만드는 행위의 임팩트</h3><p class="psub">앱의 임팩트와 따로 계산해야 하는 축</p>
+      <p class="imp-maker" id="impMaker"></p></div>
+  </div>
+  <div class="imp-controls">
+    <span class="rl">정렬</span>
+    <select class="sort" id="impSort" aria-label="임팩트 정렬">
+      <option value="potential">잠재 임팩트 높은 순</option><option value="current">현재 임팩트 높은 순</option>
+      <option value="depth">깊이 높은 순</option><option value="cf">반사실성 높은 순</option><option value="dur">지속 높은 순</option>
+    </select>
+  </div>
+  <div class="imp-table" id="impTable"></div>
+</section>
+
 <section class="block" id="rubricSec">
   <span class="sec-label">평가 기준</span>
   <h2 class="sec-title">291개 앱을 보며 만든 9가지 기준</h2>
@@ -249,6 +319,8 @@
     <select class="sort" id="sort" aria-label="정렬">
       <option value="total">총점 높은 순</option>
       <option value="low">총점 낮은 순</option>
+      <option value="potential">잠재 임팩트 높은 순</option>
+      <option value="current">현재 임팩트 높은 순</option>
       <option value="updated">최근 업데이트 순</option>
       <option value="name">이름순</option>
     </select>
@@ -328,6 +400,49 @@ document.getElementById("critBars").addEventListener("mousemove", e=>{
 });
 document.getElementById("critBars").addEventListener("mouseleave", ()=>tip.classList.remove("on"));
 
+// ─── Impact ─────────────────────────────────────────────────────────────────
+const IF = [["reach","도달"],["depth","깊이"],["dur","지속"],["cf","반사실성"]];
+const TYPE_KO = {breadth:"넓이형",depth:"깊이형",structure:"구조형",tool:"도구형"};
+const SIGN_KO = {pos:["+","양의 방향"],mix:["±","부호 혼합"],flip:["↺","방향 전환"],neg:["−","음의 방향"]};
+const gm = v => Math.pow(v.reduce((p,x)=>p*x,1),1/4);
+const impCurrent = a => gm(IF.map(([k])=>a.impact.lv[k][0]));
+const impPotential = a => gm([a.impact.potentialReach[0], a.impact.lv.depth[0], a.impact.lv.dur[0], a.impact.lv.cf[0]]);
+const avgOf = f => D.apps.reduce((t,a)=>t+f(a),0)/D.apps.length;
+document.getElementById("impStats").innerHTML = [
+  [fmt1(avgOf(impCurrent)),"현재 임팩트 평균 (10점)"],
+  [fmt1(avgOf(impPotential)),"잠재 임팩트 평균 — 목표 사용자에게 닿았을 때"],
+  [fmt1(avgOf(a=>a.impact.lv.depth[0])),"깊이 평균 — 한 사람당 변화"],
+  [fmt1(avgOf(a=>a.impact.lv.cf[0])),"반사실성 평균 — 내가 만든 몫"]
+].map(([n,l])=>`<div class="imp-stat"><div class="n">${n}</div><div class="l">${esc(l)}</div></div>`).join("");
+const rankRow = (a,v,sub) => `<li><img src="${esc(a.icon)}" alt="" loading="lazy"><span class="rn">${esc(a.name)}<span class="rs">${esc(sub)}</span></span><span class="rv">${v}</span></li>`;
+document.getElementById("rankPotential").innerHTML = [...D.apps].sort((x,y)=>impPotential(y)-impPotential(x)).slice(0,6)
+  .map(a=>rankRow(a, fmt1(impPotential(a)), `현재 ${fmt1(impCurrent(a))} → 잠재 · ${a.impact.lv.depth[1]}`)).join("");
+document.getElementById("rankCf").innerHTML = [...D.apps].sort((x,y)=>y.impact.lv.cf[0]-x.impact.lv.cf[0] || y.impact.lv.depth[0]-x.impact.lv.depth[0]).slice(0,6)
+  .map(a=>rankRow(a, a.impact.lv.cf[0], a.impact.lv.cf[1])).join("");
+document.getElementById("rankLow").innerHTML = [...D.apps].filter(a=>a.impact.lv.cf[0]<=2 && a.impact.lv.depth[0]<=4)
+  .sort((x,y)=>(x.impact.lv.cf[0]+x.impact.lv.depth[0])-(y.impact.lv.cf[0]+y.impact.lv.depth[0])).slice(0,8)
+  .map(a=>rankRow(a, `${a.impact.lv.depth[0]}·${a.impact.lv.cf[0]}`, `깊이·반사실성 · ${a.impact.lv.cf[1]}`)).join("");
+const years = Math.round((Date.parse(D.evaluated) - Math.min(...D.apps.map(a=>Date.parse(a.released))))/31557600000);
+document.getElementById("impMaker").innerHTML = `${D.apps.length}개 앱을 약 ${years}년에 걸쳐 끝까지 출시했습니다. 앱 하나하나의 현재 임팩트는 작지만, 이 완주 경험이 <b>공통 모듈·배포 흐름·설계 원칙</b>으로 쌓였고 점수에도 흔적이 있습니다 — 2025년 9월 이후 출시한 39개 앱은 이전 7개보다 신뢰 점수 평균이 높습니다(5.7 → 6.6). 다만 전체 평균은 거의 같아서, 쌓인 역량이 아직 스토어·도달로 이어지지는 않았습니다. 이건 앱의 임팩트가 아니라 <b>만드는 행위의 임팩트</b>이고, 다음 앱에서 환전됩니다. 다만 <a href="impact.html#persuade" style="color:var(--accent-dim);text-decoration:underline">판돈</a>은 점검할 때입니다: 새 앱을 여는 비용보다, 잠재 임팩트 상위 앱에 도달을 붙이는 비용이 훨씬 쌉니다.`;
+function impRowHTML(a){
+  const m=a.impact, [sym,sl]=SIGN_KO[m.sign]||SIGN_KO.pos;
+  return `<article class="imp-row">
+    <div class="who"><img src="${esc(a.icon)}" alt="" loading="lazy"><div style="min-width:0"><h4>${esc(a.name)}</h4>
+      <div class="badges"><span class="sgn ${m.sign}">${sym} ${sl}</span><span class="b">${TYPE_KO[m.type]}</span></div></div></div>
+    <div class="fx">${IF.map(([k,l])=>`<div title="${esc(m.lv[k][1])}">${l} <b>${m.lv[k][0]}</b><div class="fb${k==="cf"?" cf":""}"><i style="width:${m.lv[k][0]*10}%"></i></div>${esc(m.lv[k][1])}</div>`).join("")}</div>
+    <div class="scores2"><div><b>${fmt1(impCurrent(a))}</b><small>현재</small></div><div class="pot"><b>${fmt1(impPotential(a))}</b><small>잠재 · 도달 ${m.potentialReach[0]}</small></div></div>
+    ${m.neg?`<p class="negl"><b>음의 방향</b> ${esc(m.neg)}</p>`:""}
+    <p class="measure"><span>먼저 잴 것</span>${esc(m.measure)}</p>
+  </article>`;
+}
+function renderImpact(){
+  const k=document.getElementById("impSort").value;
+  const f = k==="potential"?impPotential : k==="current"?impCurrent : (a=>a.impact.lv[k][0]);
+  document.getElementById("impTable").innerHTML=[...D.apps].sort((x,y)=>f(y)-f(x) || impPotential(y)-impPotential(x)).map(impRowHTML).join("");
+}
+document.getElementById("impSort").addEventListener("change", renderImpact);
+renderImpact();
+
 // ─── Rubric ──────────────────────────────────────────────────────────────────
 document.getElementById("rubricSub").textContent = R.scale;
 document.getElementById("rubric").innerHTML = CRIT.map((c,i)=>`
@@ -367,6 +482,7 @@ function cardHTML(a){
       <div class="total"><div class="tv">${fmt1(t)}</div><div class="tl">/ 10</div></div>
     </div>
     <p class="one">${esc(a.oneLiner)}</p>
+    <div class="imp-inline">임팩트 현재 <b>${fmt1(impCurrent(a))}</b> → 잠재 <b>${fmt1(impPotential(a))}</b> · 반사실성 <b>${a.impact.lv.cf[0]}</b></div>
     <div class="badges"><span class="b type">${a.impactType} · ${esc(TYPES[a.impactType])}</span>${kind}${code}</div>
     <div>
       <div class="spark" aria-label="기준별 점수">${CRIT.map(c=>`<i style="height:${(a.scores[c.id]?.s||0)/10*100}%" title="${esc(c.name)} ${a.scores[c.id]?.s}"></i>`).join("")}</div>
@@ -392,6 +508,8 @@ function render(){
   if(state.crit) rows.sort((x,y)=>(y.scores[state.crit]?.s||0)-(x.scores[state.crit]?.s||0) || total(y)-total(x));
   else if(state.sort==="total") rows.sort((x,y)=>total(y)-total(x));
   else if(state.sort==="low") rows.sort((x,y)=>total(x)-total(y));
+  else if(state.sort==="potential") rows.sort((x,y)=>impPotential(y)-impPotential(x));
+  else if(state.sort==="current") rows.sort((x,y)=>impCurrent(y)-impCurrent(x));
   else if(state.sort==="updated") rows.sort((x,y)=>String(y.updated).localeCompare(String(x.updated)));
   else rows.sort((x,y)=>x.name.localeCompare(y.name,"ko"));
   document.getElementById("metaLine").innerHTML = `<b>${rows.length}</b>개 앱`;
@@ -416,6 +534,9 @@ function evalHTML(a){
     <section><h4>임팩트 유형</h4><p style="font-size:14px;color:#334155;line-height:1.65">${esc(a.impactWhy)}</p>
       <div class="refs" style="margin-top:8px"><span class="rl">비교할 레퍼런스</span>${a.references.map(r=>refBtn(r.key)).join("")}</div>
       <ul class="ins-list" style="margin-top:8px">${a.references.map(r=>`<li><b>${esc(r.key)}</b> — ${esc(r.why)}</li>`).join("")}</ul>
+    </section>
+    <section><h4>임팩트 측정</h4>
+      <div class="imp-table" style="margin-top:4px">${impRowHTML(a)}</div>
     </section>
     <section><h4>잘 된 점</h4>${list(a.strengths)}</section>
     <section><h4>부족한 점</h4>${list(a.gaps)}</section>

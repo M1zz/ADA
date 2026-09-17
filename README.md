@@ -92,6 +92,10 @@ the 291 researched reference apps.
   Apps were not run, so runtime-only behavior is out of scope
 - Per app: impact type, closest reference apps, strengths, gaps, and the 3 highest-impact fixes
 - Portfolio diagnosis: average per criterion, recurring strengths and gaps, and portfolio-wide actions
+- **Impact measurement** with the same formula and 10-point anchors as Impact References: reach (estimated
+  from ratings — usage isn't public), depth, duration (from release history), counterfactual (inferred),
+  shown as current vs. potential impact (reach if the app reached its target users), rankings for
+  highest potential / highest counterfactual / lower-the-stakes candidates, and a "measure this first" metric per app
 - Security-sensitive specifics are redacted on this public page and were reported to the developer privately
 - Data in `docs/my-apps-data.js`
 
