@@ -89,7 +89,14 @@
   .sign.pos{color:var(--pos);background:var(--pos-bg);border-color:var(--pos-line)}
   .sign.mix{color:#92400e;background:#fef3c7;border-color:#fde68a}
   .meters{display:grid;grid-template-columns:1fr;gap:7px}
-  .meter{display:grid;grid-template-columns:62px 46px minmax(0,1fr);gap:8px;align-items:baseline;font-size:12.5px}
+  .meter{display:grid;grid-template-columns:62px 92px minmax(0,1fr);gap:8px;align-items:baseline;font-size:12.5px}
+  .bar{position:relative;align-self:center;height:8px;background:var(--line-soft);border-radius:4px;margin-right:22px}
+  .bar i{position:absolute;left:0;top:0;bottom:0;background:var(--lvl);border-radius:0 4px 4px 0}
+  .bar b{position:absolute;right:-22px;top:50%;transform:translateY(-50%);font-size:12px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--text)}
+  .meter.cf .bar i{background:#0369a1}
+  .score{margin-left:auto;text-align:right;line-height:1}
+  .score b{display:block;font-size:24px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+  .score small{font-size:10.5px;color:var(--muted);font-weight:600}
   .meter .mk{font-weight:650;color:var(--text)}
   .meter.cf .mk{color:var(--accent-dim)}
   .dots{display:inline-flex;gap:3px;align-self:center}
@@ -155,7 +162,7 @@
     section.block,footer{padding-left:16px;padding-right:16px}
     .sec-title{font-size:23px}
     .factors,.grid,.vec,.tools{grid-template-columns:1fr}
-    .meter{grid-template-columns:56px 44px minmax(0,1fr)}
+    .meter{grid-template-columns:56px 84px minmax(0,1fr)}
   }
 </style>
 </head>
@@ -228,7 +235,7 @@
 <section class="block" id="types">
   <span class="sec-label">2 · 임팩트가 큰 앱들</span>
   <h2 class="sec-title">유형이 다르면 자도 달라야 합니다</h2>
-  <p class="sec-sub">각 앱을 네 요소로 나눠 <b>막대 3칸 높음 · 2칸 중간 · 1칸 낮음</b>으로 표시했습니다. 요소 점수는 아래 근거를 바탕으로 한 <b>편집 판단</b>이고, 특히 반사실성은 공개 데이터로 잴 수 없어 추론입니다. 리텐션·Sean Ellis 같은 내부 지표는 대부분 비공개라 공개된 근거로 대신했습니다.</p>
+  <p class="sec-sub">각 앱을 네 요소별로 <b>10점 만점</b>으로 매기고, 네 점수의 <b>기하평균을 임팩트 종합 점수</b>로 표시했습니다. 공식이 곱셈이라 산술평균 대신 기하평균을 씁니다 — 한 요소가 낮으면 종합도 크게 떨어집니다. 깊이형 앱은 도달이 낮아 종합 점수가 낮게 나오는데, 그게 바로 3번에서 말하는 <b>총합의 함정</b>입니다. 요소 점수는 아래 근거를 바탕으로 한 <b>편집 판단</b>이고, 특히 반사실성은 공개 데이터로 잴 수 없어 추론입니다. 리텐션·Sean Ellis 같은 내부 지표는 대부분 비공개라 공개된 근거로 대신했습니다.</p>
   <div class="type-nav" id="typeNav"></div>
   <div id="typeBody"></div>
 </section>
@@ -310,7 +317,7 @@
 </section>
 
 <footer>
-  요소별 막대 표시는 공개 근거를 바탕으로 한 편집 판단이며, 반사실성은 추론입니다. 앱별 수치의 출처는 각 카드의 링크 또는 "상세 분석"에 있습니다. M-Pesa·WhatsApp·Signal·Anki의 근거는 2026-09-17에 확인한 Wikipedia와 Signal 블로그 기준입니다. 내 앱을 같은 관점으로 보려면 <a href="my-apps.html">내 앱 평가</a>를 참고하세요.
+  요소별 10점 점수와 종합 점수는 공개 근거를 바탕으로 한 편집 판단이며, 반사실성은 추론입니다. 앱별 수치의 출처는 각 카드의 링크 또는 "상세 분석"에 있습니다. M-Pesa·WhatsApp·Signal·Anki의 근거는 2026-09-17에 확인한 Wikipedia와 Signal 블로그 기준입니다. 내 앱을 같은 관점으로 보려면 <a href="my-apps.html">내 앱 평가</a>를 참고하세요.
 </footer>
 
 <script src="insights-data.js"></script>
@@ -318,7 +325,7 @@
 <script src="install-data.js"></script>
 <script>
 // ─── Data ─────────────────────────────────────────────────────────────────────
-// lv: 1 낮음 · 2 중간 · 3 높음 (편집 판단). key: 상세 분석(insights) 키가 있으면 근거는 그쪽 출처를 따른다.
+// lv: 요소별 1~10점 (편집 판단). 종합 = 네 점수의 기하평균. key: 상세 분석(insights) 키가 있으면 근거는 그쪽 출처를 따른다.
 const W = "https://en.wikipedia.org/wiki/";
 const EXTERNAL_ICONS = {
   "M-Pesa":"https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/b8/4d/90/b84d9061-3a77-593e-0848-fea2fdfb5ea3/AppIcon-0-1x_U007emarketing-0-11-0-85-220-0.png/100x100bb.jpg",
@@ -333,57 +340,57 @@ const TYPES = [
   unit:"도달 수 × 대체 불가능성. 한 사람당 깊이는 '중간'이어도 충분합니다. 대신 의존도가 커질수록 장애·독점이라는 음의 임팩트도 같이 커집니다.",
   apps:[
    {name:"M-Pesa", sub:"Safaricom·Vodafone · 2007 · 케냐", sign:"pos",
-    lv:{reach:[3,"2011년 케냐에서만 가입자 1,700만"],depth:[2,"은행 계좌 없이 송금·저축 — 효과 크기는 논쟁 중"],dur:[3,"2007년부터 금융 인프라로 정착"],cf:[3,"당시 은행망이 닿지 않던 계층, 대체재가 없었음"]},
+    lv:{reach:[8,"2011년 케냐에서만 가입자 1,700만"],depth:[7,"은행 계좌 없이 송금·저축 — 효과 크기는 논쟁 중"],dur:[9,"2007년부터 금융 인프라로 정착"],cf:[9,"당시 은행망이 닿지 않던 계층, 대체재가 없었음"]},
     ev:[
      ["2007년 Safaricom·Vodafone 출시, 2011년 12월 케냐 가입자 1,700만","2011-12",W+"M-Pesa","Wikipedia — M-Pesa"],
      ["2014년 11개월간 거래액 KSh 2.1조 — 케냐 GDP의 약 절반","2014",W+"M-Pesa","Wikipedia — M-Pesa"],
      ["Suri & Jack(Science, 2016): 1인당 소비 증가, 19만 4,000가구(케냐 가구의 2%) 빈곤 탈출 — 2019년 반론 논문이 오류를 지적","2016 · 2019",W+"M-Pesa","Wikipedia — M-Pesa"]
     ]},
    {name:"WhatsApp", sub:"Meta", sign:"pos",
-    lv:{reach:[3,"MAU 30억 (2025-05)"],depth:[2,"문자 요금 구조를 사실상 소멸"],dur:[3,"15년 넘게 기본 메신저"],cf:[2,"OTT 메신저 경쟁자가 많았음 — 내 몫은 속도와 규모"]},
+    lv:{reach:[10,"MAU 30억 (2025-05)"],depth:[5,"문자 요금 구조를 사실상 소멸"],dur:[9,"15년 넘게 기본 메신저"],cf:[5,"OTT 메신저 경쟁자가 많았음 — 내 몫은 속도와 규모"]},
     ev:[
      ["월간 활성 사용자 30억","2025-05",W+"WhatsApp","Wikipedia — WhatsApp"],
      ["Forbes(2015) 전망: WhatsApp·Skype 같은 OTT 서비스로 통신사가 2012~2018년 3,860억 달러 손실","2015-04",W+"WhatsApp","Wikipedia — WhatsApp"],
      ["2016년 4월 모든 대화에 Signal Protocol 종단간 암호화 완료 — 10억 명 이상","2016-04","https://signal.org/blog/whatsapp-complete/","Signal 블로그"]
     ]},
    {name:"카카오톡", key:"카카오톡", sub:"Kakao · 한국", sign:"pos",
-    lv:{reach:[3,"MAU 4,800만+, 스마트폰 사용자 93%"],depth:[2,"문자에서 송금·선물·결제까지 생활 인프라"],dur:[3,"10년 넘게 국민 메신저"],cf:[2,"메신저 경쟁은 있었지만 한국의 기본값을 선점"]},
+    lv:{reach:[8,"MAU 4,800만+, 스마트폰 사용자 93%"],depth:[6,"문자에서 송금·선물·결제까지 생활 인프라"],dur:[9,"10년 넘게 국민 메신저"],cf:[5,"메신저 경쟁은 있었지만 한국의 기본값을 선점"]},
     note:"2022년 데이터센터 화재로 최장 127시간 장애 — 넓이형의 도달은 곧 의존도이고, 장애의 음의 임팩트도 같은 크기로 커집니다."},
    {name:"Signal", sub:"Signal Messenger", sign:"pos",
-    lv:{reach:[2,"앱 자체보다 프로토콜로 닿음 (앱 사용자 수 공개 근거 없음)"],depth:[2,"대화 내용을 서비스 제공자도 못 읽게"],dur:[3,"업계 표준 암호화 프로토콜로 10년 이상"],cf:[3,"오픈 프로토콜이 경쟁 메신저의 기본값이 됨"]},
+    lv:{reach:[7,"앱 자체보다 프로토콜로 닿음 (앱 사용자 수 공개 근거 없음)"],depth:[7,"대화 내용을 서비스 제공자도 못 읽게"],dur:[9,"업계 표준 암호화 프로토콜로 10년 이상"],cf:[9,"오픈 프로토콜이 경쟁 메신저의 기본값이 됨"]},
     ev:[
      ["WhatsApp(2016-04, 10억+), Facebook Messenger 비밀 대화(2016-10), Skype 비공개 대화(2018-01)가 Signal Protocol 채택","2016–2018",W+"Signal_Protocol","Wikipedia — Signal Protocol"],
      ["Google Messages가 RCS 대화 기본 종단간 암호화에 Signal Protocol 사용 발표","2020-11",W+"Signal_Protocol","Wikipedia — Signal Protocol"]
     ],
     note:"앱의 사용자 수보다 '표준이 된 프로토콜'이 임팩트의 본체인 경우. 도달을 앱 설치 수로만 세면 크게 과소평가됩니다."},
    {name:"토스", key:"토스", sub:"비바리퍼블리카 · 한국", sign:"pos",
-    lv:{reach:[3,"국내 사용자 2,000만+ (2021)"],depth:[2,"공인인증서 없이 몇 번의 탭으로 송금"],dur:[3,"은행·증권으로 확장"],cf:[2,"은행 앱들이 흐름을 따라 함 — 내 몫은 '먼저'였던 시간"]}},
+    lv:{reach:[7,"국내 사용자 2,000만+ (2021)"],depth:[6,"공인인증서 없이 몇 번의 탭으로 송금"],dur:[7,"은행·증권으로 확장"],cf:[5,"은행 앱들이 흐름을 따라 함 — 내 몫은 '먼저'였던 시간"]}},
    {name:"Watch Duty", key:"Watch Duty: Wildfire Maps", sub:"비영리 · 미국", sign:"pos",
-    lv:{reach:[2,"사용자 2,000만+ (2026)"],depth:[3,"대피 판단이라는 생명과 직결된 결정"],dur:[2,"재난 시기에 집중되는 사용"],cf:[3,"공식 경보가 늦던 공백을 15명 팀이 메움"]}}
+    lv:{reach:[6,"사용자 2,000만+ (2026)"],depth:[9,"대피 판단이라는 생명과 직결된 결정"],dur:[5,"재난 시기에 집중되는 사용"],cf:[9,"공식 경보가 늦던 공백을 15명 팀이 메움"]}}
   ]},
  {id:"depth", name:"깊이형", en:"Depth",
   d:"사용자 수는 넓이형의 1/1000이지만 한 사람당 변화량이 압도적인 앱. '혼자 못 하던 일을 혼자 하게 됨'은 곱셈이 아니라 0에서 1로 가는 변화입니다.",
   unit:"혼자 해낸 일의 횟수 · 대체하던 비용(전용 기기, 사람의 도움). 사용자 수로 재면 실패한 앱처럼 보입니다.",
   apps:[
    {name:"Be My Eyes", key:"Be My Eyes", sub:"Be My Eyes", sign:"pos",
-    lv:{reach:[2,"시각장애·저시력 사용자 110만, 봉사자 1,111만"],depth:[3,"보이지 않아 못 하던 일을 영상통화로 해결"],dur:[3,"10년 넘게 커지는 봉사자망"],cf:[2,"AI 비전 도구가 일부 대체 — 사람 연결망은 대체 어려움"]}},
+    lv:{reach:[5,"시각장애·저시력 사용자 110만, 봉사자 1,111만"],depth:[9,"보이지 않아 못 하던 일을 영상통화로 해결"],dur:[8,"10년 넘게 커지는 봉사자망"],cf:[6,"AI 비전 도구가 일부 대체 — 사람 연결망은 대체 어려움"]}},
    {name:"oko", key:"oko", sub:"AYES · 2021", sign:"pos",
-    lv:{reach:[1,"사용자 수 비공개"],depth:[3,"음향 신호기 없는 교차로를 혼자 건넘"],dur:[2,"2025년 신호기 제조사에 인수돼 인프라와 통합"],cf:[3,"그 교차로에는 다른 방법이 없었음"]}},
+    lv:{reach:[2,"사용자 수 비공개"],depth:[10,"음향 신호기 없는 교차로를 혼자 건넘"],dur:[5,"2025년 신호기 제조사에 인수돼 인프라와 통합"],cf:[9,"그 교차로에는 다른 방법이 없었음"]}},
    {name:"Proloquo2Go", key:"Proloquo2Go", sub:"AssistiveWare · 2009", sign:"pos",
-    lv:{reach:[1,"회사 AAC 앱 전체 50만+ 다운로드"],depth:[3,"말 못 하던 아이가 말을 하게 됨"],dur:[3,"2009년부터 15년 이상"],cf:[2,"수천 달러짜리 전용 AAC 기기를 iPhone·iPad로 대체"]}},
+    lv:{reach:[3,"회사 AAC 앱 전체 50만+ 다운로드"],depth:[10,"말 못 하던 아이가 말을 하게 됨"],dur:[9,"2009년부터 15년 이상"],cf:[7,"수천 달러짜리 전용 AAC 기기를 iPhone·iPad로 대체"]}},
    {name:"Seeing AI", key:"Seeing AI", sub:"Microsoft · 2017", sign:"pos",
-    lv:{reach:[2,"사용자 수 비공개, 2023년 Android·18개 언어로 확장"],depth:[3,"우편물·메뉴·화폐를 혼자 읽음"],dur:[3,"2017년부터"],cf:[2,"카메라+음성 보조 앱의 선행 사례(TapTapSee 등) 존재"]}},
+    lv:{reach:[4,"사용자 수 비공개, 2023년 Android·18개 언어로 확장"],depth:[9,"우편물·메뉴·화폐를 혼자 읽음"],dur:[8,"2017년부터"],cf:[5,"카메라+음성 보조 앱의 선행 사례(TapTapSee 등) 존재"]}},
    {name:"Voice Dream Reader", key:"Voice Dream Reader", sub:"Voice Dream · 2012", sign:"pos",
-    lv:{reach:[1,"사용자 수 비공개"],depth:[3,"시각장애·난독증 독자가 책·문서를 스스로 읽음"],dur:[3,"2012년부터 10년 이상"],cf:[2,"고가 전용 읽기 기기를 앱으로 대체"]}},
+    lv:{reach:[3,"사용자 수 비공개"],depth:[9,"시각장애·난독증 독자가 책·문서를 스스로 읽음"],dur:[8,"2012년부터 10년 이상"],cf:[6,"고가 전용 읽기 기기를 앱으로 대체"]}},
    {name:"Tiimo", key:"Tiimo", sub:"Tiimo · 코펜하겐", sign:"pos",
-    lv:{reach:[2,"사용자 50만+ (유료 5만)"],depth:[2,"시간 감각이 다른 신경다양 사용자의 하루 구조화"],dur:[2,"루틴 도구로 매일 사용"],cf:[2,"일반 플래너는 많지만 이 사용자군을 위한 표현은 드묾"]}}
+    lv:{reach:[4,"사용자 50만+ (유료 5만)"],depth:[7,"시간 감각이 다른 신경다양 사용자의 하루 구조화"],dur:[6,"루틴 도구로 매일 사용"],cf:[6,"일반 플래너는 많지만 이 사용자군을 위한 표현은 드묾"]}}
   ]},
  {id:"structure", name:"구조형", en:"Structure",
   d:"개인이 아니라 관행을 바꾼 앱. 앱을 쓰지 않는 사람까지 그 방식으로 배우거나 기록하게 됩니다.",
   unit:"바뀐 관행의 범위 — 특정 집단에서 그 방식이 '기본'이 된 비율. 앱 사용자 수보다 방식의 확산을 봅니다.",
   apps:[
    {name:"Anki", sub:"Anki · 2006 · 오픈소스", sign:"pos",
-    lv:{reach:[2,"전체 사용자 수 공개 근거 없음"],depth:[3,"의대생 공부 방식 자체를 간격 반복으로"],dur:[3,"2006년부터 20년"],cf:[2,"SuperMemo가 먼저였지만 무료·오픈소스로 대중화"]},
+    lv:{reach:[6,"전체 사용자 수 공개 근거 없음"],depth:[9,"의대생 공부 방식 자체를 간격 반복으로"],dur:[10,"2006년부터 20년"],cf:[6,"SuperMemo가 먼저였지만 무료·오픈소스로 대중화"]},
     ev:[
      ["2006년 10월 첫 출시, SuperMemo의 SM-2 알고리즘 기반 → 23.10부터 FSRS 내장","2006 · 2023",W+"Anki_(software)","Wikipedia — Anki"],
      ["의학교육 설문(2015): 응답 학생 31%가 Anki 사용","2015",W+"Anki_(software)","Wikipedia — Anki"],
@@ -391,12 +398,12 @@ const TYPES = [
     ],
     note:"31% → 86.2%. 한 집단 안에서 '기본 학습법'이 된 과정이 구조형 임팩트의 전형적인 측정 방식입니다."},
    {name:"Duolingo", key:"Duolingo", sub:"Duolingo", sign:"pos",
-    lv:{reach:[3,"MAU 1억 3,000만+"],depth:[2,"코스 수료자의 읽기·듣기가 대학 4학기 수준(2022 연구)"],dur:[3,"365일 이상 연속 학습자 약 1,500만"],cf:[2,"언어 앱은 많았지만 스트릭 게이미피케이션을 학습 앱의 표준으로"]}},
+    lv:{reach:[9,"MAU 1억 3,000만+"],depth:[6,"코스 수료자의 읽기·듣기가 대학 4학기 수준(2022 연구)"],dur:[8,"365일 이상 연속 학습자 약 1,500만"],cf:[5,"언어 앱은 많았지만 스트릭 게이미피케이션을 학습 앱의 표준으로"]}},
    {name:"Strava", key:"Strava", sub:"Strava", sign:"pos",
-    lv:{reach:[3,"운동선수 1억 9,500만"],depth:[2,"혼자 하는 운동을 기록·공유하는 사회적 행동으로"],dur:[3,"2020년까지 활동 30억 건"],cf:[2,"운동 기록 앱은 많았음 — 구간 순위·응원이라는 관행을 만듦"]},
+    lv:{reach:[8,"운동선수 1억 9,500만"],depth:[5,"혼자 하는 운동을 기록·공유하는 사회적 행동으로"],dur:[8,"2020년까지 활동 30억 건"],cf:[5,"운동 기록 앱은 많았음 — 구간 순위·응원이라는 관행을 만듦"]},
     note:"2018년 공개 히트맵으로 군사 기지 위치가 드러난 사건 — 관행을 바꾼 앱은 부작용도 관행 단위로 생깁니다."},
    {name:"Photomath", key:"Photomath", sub:"Photomath → Google", sign:"pos",
-    lv:{reach:[3,"누적 2억 2,000만 다운로드, 월 22억 문제 (2021)"],depth:[2,"카메라로 찍으면 단계별 풀이"],dur:[2,"Google 인수 후 검색·렌즈 계열로"],cf:[1,"카메라 풀이 앱과 검색 기능이 빠르게 뒤따름"]},
+    lv:{reach:[9,"누적 2억 2,000만 다운로드, 월 22억 문제 (2021)"],depth:[5,"카메라로 찍으면 단계별 풀이"],dur:[6,"Google 인수 후 검색·렌즈 계열로"],cf:[3,"카메라 풀이 앱과 검색 기능이 빠르게 뒤따름"]},
     note:"도달은 최상급인데 반사실성이 낮은 경우. 곱셈 공식에서는 이 한 항이 전체 임팩트를 크게 깎습니다."}
   ]},
  {id:"tool", name:"도구형", en:"Tool",
@@ -404,15 +411,15 @@ const TYPES = [
   unit:"작업의 기본 단위가 바뀌었는가(파일 → 링크, 이메일 → 채널, 앱 데이터 → 내 파일). 경쟁사가 그 단위를 따라 했는가.",
   apps:[
    {name:"Figma", key:"Figma", sub:"Figma", sign:"pos",
-    lv:{reach:[2,"사용자 1,300만 (2025)"],depth:[3,"협업 단위를 파일에서 링크로"],dur:[3,"디자인 업계 표준으로 상장(2025)"],cf:[2,"Adobe가 약 200억 달러에 사려 했을 만큼 대체가 어려웠음"]}},
+    lv:{reach:[6,"사용자 1,300만 (2025)"],depth:[9,"협업 단위를 파일에서 링크로"],dur:[8,"디자인 업계 표준으로 상장(2025)"],cf:[6,"Adobe가 약 200억 달러에 사려 했을 만큼 대체가 어려웠음"]}},
    {name:"Obsidian", key:"Obsidian", sub:"Dynalist · 2020", sign:"pos",
-    lv:{reach:[1,"사용자 약 100만 추정 (2023)"],depth:[2,"노트를 앱 데이터가 아닌 내 기기의 파일로"],dur:[3,"평문 마크다운은 앱보다 오래 감"],cf:[2,"로컬 마크다운 편집기는 있었지만 로컬 퍼스트 PKM 흐름을 대중화"]}},
+    lv:{reach:[4,"사용자 약 100만 추정 (2023)"],depth:[7,"노트를 앱 데이터가 아닌 내 기기의 파일로"],dur:[8,"평문 마크다운은 앱보다 오래 감"],cf:[6,"로컬 마크다운 편집기는 있었지만 로컬 퍼스트 PKM 흐름을 대중화"]}},
    {name:"Slack", key:"Slack", sub:"Slack → Salesforce · 2013", sign:"pos",
-    lv:{reach:[3,"DAU 1,000만+, 조직 60만+ (2019)"],depth:[2,"사내 소통을 이메일에서 채널로"],dur:[3,"277억 달러 인수 후에도 표준"],cf:[1,"Teams(2017)·Google Chat(2018)이 곧 따라옴 — 몫은 '먼저'였던 시간"]}},
+    lv:{reach:[8,"DAU 1,000만+, 조직 60만+ (2019)"],depth:[6,"사내 소통을 이메일에서 채널로"],dur:[8,"277억 달러 인수 후에도 표준"],cf:[3,"Teams(2017)·Google Chat(2018)이 곧 따라옴 — 몫은 '먼저'였던 시간"]}},
    {name:"Google Sheets", key:"Google Sheets", sub:"Google · 2006", sign:"pos",
-    lv:{reach:[3,"Workspace 유료 고객 900만+, 교육용 1억 7,000만+ (2021)"],depth:[2,"파일 첨부 대신 링크 하나로 동시 편집"],dur:[3,"20년 가까이"],cf:[2,"실시간 공동 편집을 대중화 — 이후 오피스 제품군이 모두 따름"]}},
+    lv:{reach:[9,"Workspace 유료 고객 900만+, 교육용 1억 7,000만+ (2021)"],depth:[5,"파일 첨부 대신 링크 하나로 동시 편집"],dur:[9,"20년 가까이"],cf:[5,"실시간 공동 편집을 대중화 — 이후 오피스 제품군이 모두 따름"]}},
    {name:"Notion", key:"Notion", sub:"Notion", sign:"pos",
-    lv:{reach:[3,"사용자 2,000만 (2021)"],depth:[2,"블록·'/' 명령으로 문서·DB 경계를 허묾"],dur:[2,"캘린더·메일로 확장 중"],cf:[1,"블록 편집기는 빠르게 복제됨"]}}
+    lv:{reach:[8,"사용자 2,000만 (2021)"],depth:[5,"블록·'/' 명령으로 문서·DB 경계를 허묾"],dur:[6,"캘린더·메일로 확장 중"],cf:[3,"블록 편집기는 빠르게 복제됨"]}}
   ]}
 ];
 
@@ -433,12 +440,12 @@ function iconHTML(name, key){
   const url = (key && INSTALL[key] && INSTALL[key].icon) || EXTERNAL_ICONS[name];
   return url ? `<img class="icon" src="${esc(url)}" alt="" loading="lazy">` : `<div class="icon">${esc(name[0])}</div>`;
 }
-const LEVEL = ["","낮음","중간","높음"];
+const gmean = lv => Math.pow(FACTORS.reduce((p,[k])=>p*lv[k][0],1), 1/4);
 const FACTORS = [["reach","도달"],["depth","깊이"],["dur","지속"],["cf","반사실성"]];
 function meterHTML(k,label,[lv,note]){
   return `<div class="meter${k==="cf"?" cf":""}">
     <span class="mk">${label}</span>
-    <span class="dots" role="img" aria-label="${label} ${LEVEL[lv]}">${[1,2,3].map(v=>`<i class="${v<=lv?"on":""}"></i>`).join("")}</span>
+    <span class="bar" role="img" aria-label="${label} ${lv}점 / 10"><i style="width:${lv*10}%"></i><b>${lv}</b></span>
     <span class="mn">${esc(note)}</span>
   </div>`;
 }
@@ -447,7 +454,7 @@ function cardHTML(a){
   const deep = a.key && window.Insights ? Insights.button(a.key,"ko") : "";
   return `<article class="card">
     <div class="chead">${iconHTML(a.name,a.key)}<div><h4>${esc(a.name)}</h4><div class="sub">${esc(a.sub)}</div></div>
-      <span class="sign pos" title="임팩트의 방향">+ 방향</span></div>
+      <span class="score" title="네 요소 점수의 기하평균"><b>${gmean(a.lv).toFixed(1)}</b><small>/ 10 종합</small></span></div>
     <div class="meters">${FACTORS.map(([k,l])=>meterHTML(k,l,a.lv[k])).join("")}</div>
     ${ev}
     ${a.note?`<p class="note">${esc(a.note)}</p>`:""}
@@ -463,7 +470,7 @@ function renderTypes(){
       <div><h3>${esc(t.name)} <span style="color:var(--muted-dim);font-weight:400;font-size:15px">${t.en}</span></h3><p class="td">${esc(t.d)}</p></div>
       <div class="unit"><span>이 유형의 측정 단위</span>${esc(t.unit)}</div>
     </div>
-    <div class="grid">${t.apps.map(cardHTML).join("")}</div>`;
+    <div class="grid">${[...t.apps].sort((x,y)=>gmean(y.lv)-gmean(x.lv)).map(cardHTML).join("")}</div>`;
 }
 document.getElementById("typeNav").addEventListener("click", e=>{
   const c = e.target.closest("[data-type]"); if(!c) return;

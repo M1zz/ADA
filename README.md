@@ -69,8 +69,8 @@ A reference page built around one formula: **impact = reach × depth × duration
    if this disappeared tomorrow?" question, resources saved, behavior change, the Sean Ellis 40% test)
 2. **High-impact apps by type** — breadth (M-Pesa, WhatsApp, KakaoTalk, Signal, Toss, Watch Duty),
    depth (Be My Eyes, oko, Proloquo2Go, Seeing AI, Voice Dream Reader, Tiimo), structure (Anki, Duolingo,
-   Strava, Photomath), tool (Figma, Obsidian, Slack, Google Sheets, Notion). Each app is rated on the four
-   factors (editorial judgment; counterfactual is inferred) with sourced evidence or a link to its deep dive
+   Strava, Photomath), tool (Figma, Obsidian, Slack, Google Sheets, Notion). Each app is scored 1–10 on the four
+   factors (editorial judgment; counterfactual is inferred) with an overall score = geometric mean of the four, with sourced evidence or a link to its deep dive
 3. **Is bigger impact more valuable?** — impact has a sign (mixed cases: Robinhood, Noom, Diablo Immortal,
    Otter.ai; direction flipped by design: Opal, Gentler Streak), measurability bias, the aggregation trap,
    and value to the maker
@@ -83,7 +83,7 @@ A reference page built around one formula: **impact = reach × depth × duration
 All App Store apps by the developer account behind this repo, evaluated against a rubric built from
 the 291 researched reference apps.
 
-- **9 criteria**, each scored 1–5 with anchors: first value, return loop, craft, accessibility,
+- **9 criteria**, each scored 1–10 with anchors (9–10 / 5–6 / 1–2): first value, return loop, craft, accessibility,
   platform integration, trust & privacy, business model, store presence, impact evidence.
   Each criterion states what the reference apps taught and links to exemplar apps' deep dives
 - Every score cites its evidence: App Store data, screenshots, and (for 37 apps) the local source code.

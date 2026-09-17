@@ -98,7 +98,7 @@
   .crit summary::before{content:"▸ ";}
   .crit details[open] summary::before{content:"▾ ";}
   .anchors{margin-top:8px;display:flex;flex-direction:column;gap:6px}
-  .anchors div{display:grid;grid-template-columns:26px 1fr;gap:6px;line-height:1.55}
+  .anchors div{display:grid;grid-template-columns:52px 1fr;gap:6px;line-height:1.55}
   .anchors b{font-variant-numeric:tabular-nums;color:var(--text)}
   .signals{margin-top:8px;color:var(--muted)}
   .refs{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
@@ -155,7 +155,7 @@
   .ev-row .eh{display:flex;align-items:center;gap:10px;justify-content:space-between}
   .ev-row .en{font-size:13.5px;font-weight:700}
   .dots{display:inline-flex;gap:3px;align-items:center;font-size:12px;font-weight:700;font-variant-numeric:tabular-nums}
-  .dots i{width:10px;height:10px;border-radius:3px;background:var(--line);display:inline-block}
+  .dots i{width:7px;height:10px;border-radius:2px;background:var(--line);display:inline-block}
   .dots i.on{background:var(--bar)}
   .ev-row p{font-size:13px;color:#334155;line-height:1.6;margin-top:5px}
   .ev-row ul{list-style:none;margin-top:5px;display:flex;flex-direction:column;gap:3px}
@@ -204,7 +204,7 @@
   <p class="lede" id="lede"></p>
   <div class="stats">
     <div class="stat"><div class="n" id="stApps">–</div><div class="l">평가한 앱</div></div>
-    <div class="stat"><div class="n" id="stAvg">–</div><div class="l">평균 점수 (5점 만점)</div></div>
+    <div class="stat"><div class="n" id="stAvg">–</div><div class="l">평균 점수 (10점 만점)</div></div>
     <div class="stat"><div class="n" id="stCode">–</div><div class="l">소스 코드까지 확인</div></div>
     <div class="stat"><div class="n" id="stRatings">–</div><div class="l">전체 평점 수 (KR+US)</div></div>
   </div>
@@ -217,9 +217,9 @@
   <div class="diag">
     <div class="panel">
       <h3>기준별 평균 점수</h3>
-      <p class="psub">모든 앱의 점수 평균 (1~5). 막대에 올리면 점수 분포가 보입니다.</p>
+      <p class="psub">모든 앱의 점수 평균 (10점 만점). 막대에 올리면 점수 분포가 보입니다.</p>
       <div class="bars" id="critBars"></div>
-      <div class="axis"><span></span><span class="ticks"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></span><span></span></div>
+      <div class="axis"><span></span><span class="ticks"><span>0</span><span>2</span><span>4</span><span>6</span><span>8</span><span>10</span></span><span></span></div>
     </div>
     <div class="panel">
       <h3>반복해서 보이는 강점</h3>
@@ -307,13 +307,13 @@ document.getElementById("pActions").innerHTML = S.actions.map(x=>`<li><b>${esc(x
 
 const critStats = CRIT.map(c=>{
   const vals = D.apps.map(a=>a.scores[c.id]?.s||0);
-  const dist = [1,2,3,4,5].map(v=>vals.filter(x=>x===v).length);
+  const dist = [[1,2],[3,4],[5,6],[7,8],[9,10]].map(([lo,hi])=>vals.filter(x=>x>=lo&&x<=hi).length);
   return {c, avg: vals.reduce((s,v)=>s+v,0)/vals.length, dist};
 });
 document.getElementById("critBars").innerHTML = critStats.map((x,i)=>`
   <div class="bar-row" data-i="${i}">
     <span class="bl" title="${esc(x.c.name)}">${esc(x.c.short||x.c.name)}</span>
-    <span class="bar-track"><span class="bar-fill" style="width:${(x.avg-1)/4*100}%"></span></span>
+    <span class="bar-track"><span class="bar-fill" style="width:${x.avg/10*100}%"></span></span>
     <span class="bv">${fmt1(x.avg)}</span>
   </div>`).join("");
 const tip = document.getElementById("tip");
@@ -321,7 +321,7 @@ document.getElementById("critBars").addEventListener("mousemove", e=>{
   const row = e.target.closest(".bar-row");
   if(!row){ tip.classList.remove("on"); return; }
   const x = critStats[+row.dataset.i];
-  tip.innerHTML = `<b>${esc(x.c.name)}</b> · 평균 ${fmt1(x.avg)}<br>` + x.dist.map((n,k)=>`${k+1}점 ${n}개`).join(" · ");
+  tip.innerHTML = `<b>${esc(x.c.name)}</b> · 평균 ${fmt1(x.avg)}<br>` + x.dist.map((n,k)=>`${k*2+1}~${k*2+2}점 ${n}개`).join(" · ");
   tip.style.left = Math.min(e.clientX+14, innerWidth-270)+"px";
   tip.style.top = (e.clientY+14)+"px";
   tip.classList.add("on");
@@ -339,7 +339,7 @@ document.getElementById("rubric").innerHTML = CRIT.map((c,i)=>`
     <div class="refs"><span class="rl">레퍼런스</span>${c.refs.map(k=>refBtn(k)).join("")}</div>
     <details>
       <summary>점수 기준과 확인한 신호</summary>
-      <div class="anchors">${["5","3","1"].map(k=>`<div><b>${k}점</b><span>${esc(c.anchors[k])}</span></div>`).join("")}</div>
+      <div class="anchors">${Object.entries(c.anchors).map(([k,v])=>`<div><b>${k}점</b><span>${esc(v)}</span></div>`).join("")}</div>
       <p class="signals">확인한 신호: ${c.signals.map(esc).join(" · ")}</p>
     </details>
   </article>`).join("");
@@ -364,12 +364,12 @@ function cardHTML(a){
         <h3>${esc(a.name)}</h3>
         <div class="sub">${esc(a.genre)} · ${esc(a.price)} · 평점 ${ratings}개</div>
       </div>
-      <div class="total"><div class="tv">${fmt1(t)}</div><div class="tl">/ 5</div></div>
+      <div class="total"><div class="tv">${fmt1(t)}</div><div class="tl">/ 10</div></div>
     </div>
     <p class="one">${esc(a.oneLiner)}</p>
     <div class="badges"><span class="b type">${a.impactType} · ${esc(TYPES[a.impactType])}</span>${kind}${code}</div>
     <div>
-      <div class="spark" aria-label="기준별 점수">${CRIT.map(c=>`<i style="height:${(a.scores[c.id]?.s||0)/5*100}%" title="${esc(c.name)} ${a.scores[c.id]?.s}"></i>`).join("")}</div>
+      <div class="spark" aria-label="기준별 점수">${CRIT.map(c=>`<i style="height:${(a.scores[c.id]?.s||0)/10*100}%" title="${esc(c.name)} ${a.scores[c.id]?.s}"></i>`).join("")}</div>
       <div class="spark-l">${CRIT.map((c,i)=>`<span>${i+1}</span>`).join("")}</div>
     </div>
     <div class="cfoot">
@@ -403,14 +403,14 @@ function render(){
 // ─── Evaluation sheet ────────────────────────────────────────────────────────
 let lastEval = null;
 function evalHTML(a){
-  const dots = s => `<span class="dots">${[1,2,3,4,5].map(v=>`<i class="${v<=s?"on":""}"></i>`).join("")}<span style="margin-left:5px">${s}</span></span>`;
+  const dots = s => `<span class="dots" aria-label="${s}점 / 10">${[1,2,3,4,5,6,7,8,9,10].map(v=>`<i class="${v<=s?"on":""}"></i>`).join("")}<span style="margin-left:5px">${s}<span style="color:var(--muted-dim);font-weight:500"> / 10</span></span></span>`;
   const list = arr => `<ul class="ins-list">${arr.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`;
   const src = a.sources||{};
   return `
     <div class="ev-top">
       <img class="icon" src="${esc(a.icon)}" alt="">
       <div><p class="one">${esc(a.oneLiner)}</p>
-        <div class="badges" style="margin-top:6px"><span class="b type">${a.impactType} · ${esc(TYPES[a.impactType])}</span><span class="b">총점 ${fmt1(total(a))} / 5</span><span class="b">출시 ${esc(a.released)} · 업데이트 ${esc(a.updated)}</span></div>
+        <div class="badges" style="margin-top:6px"><span class="b type">${a.impactType} · ${esc(TYPES[a.impactType])}</span><span class="b">총점 ${fmt1(total(a))} / 10</span><span class="b">출시 ${esc(a.released)} · 업데이트 ${esc(a.updated)}</span></div>
       </div>
     </div>
     <section><h4>임팩트 유형</h4><p style="font-size:14px;color:#334155;line-height:1.65">${esc(a.impactWhy)}</p>
