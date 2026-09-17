@@ -13,7 +13,7 @@ Browse all Apple Design Awards winners and finalists from 2020 to 2026.
 | **[App Field Guide](https://m1zz.github.io/ADA/field-guide.html)** (`docs/field-guide.html`) | 100-app teardown checklist in 10 categories · KO only |
 | **[Impact References](https://m1zz.github.io/ADA/impact.html)** (`docs/impact.html`) | Impact = reach × depth × duration × counterfactual; breadth / depth / structure / tool reference apps, impact vs. value, and how to talk to someone building a low-impact app · KO only |
 | **[Install Queue](https://m1zz.github.io/ADA/install-queue.html)** (`docs/install-queue.html`) | Install every app on iPhone one by one: Get → confirm → next · KO only |
-| **[Impact Plan](https://m1zz.github.io/ADA/impact-plan.html)** (`docs/impact-plan.html`) | 12-week improvement plan for the 6 own apps with the highest potential impact, in the Impact References card format · KO only |
+| **[Impact Plan](https://m1zz.github.io/ADA/impact-plan.html)** (`docs/impact-plan.html`) | 12-week plans for all 46 own apps: detailed plans for the top 6 by potential impact, and a track (invest / maintain / merge / reduce / fold) with a right-sized plan for the other 40 · KO only |
 | **[My Apps](https://m1zz.github.io/ADA/my-apps.html)** (`docs/my-apps.html`) | The developer's own 46 App Store apps, evaluated with a 9-criterion rubric derived from the 291 reference apps · KO only |
 
 All pages share the same header tab bar, so you can switch between them freely.
@@ -114,6 +114,10 @@ A 12-week plan for the six apps with the highest potential impact on the My Apps
 - Per app: impact hypothesis, 0–2 / 2–6 / 6–12 week initiatives tagged by the factor they raise, each tied to
   signals from the app's evaluation and a reference app; a self-set stakes contract (saved in localStorage);
   and what remains reusable if the app is folded
+- **Remaining 40 apps:** each is assigned a track from its evaluation evidence (sunk cost excluded) — invest 8,
+  maintain 12, merge 5, reduce 6, fold 9 — with a plan sized to that track, the same card / phases / stakes
+  contract, and a merge target where relevant. Track filters and sorting (track, potential, 12-week gain, name).
+  Data in `docs/impact-plan-data.js`; security-related items stay generic on this public page
 
 ## Data Source
 
