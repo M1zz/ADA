@@ -21,6 +21,7 @@ Both pages share the same header tab bar, so you can switch between them freely.
 - Search by app name or developer
 - Live app icons from the iTunes API
 - **English / Korean** language toggle
+- **Deep dive** per app (both tabs): what makes it good, its impact, and evidence — App Store ratings measured via the iTunes Lookup API plus sourced metrics (users, revenue, funding, awards) with links and as-of dates (`docs/insights.js`, data in `docs/insights-data.js`)
 
 ## Categories
 

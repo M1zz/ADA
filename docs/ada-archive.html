@@ -296,6 +296,8 @@
     align-self:flex-start;transition:all .14s;
     background:#fff;
   }
+  .card-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .card-actions .dl{margin-top:0}
   .card .dl:hover{background:var(--text);color:#fff;border-color:var(--text)}
   .dl svg{transition:transform .14s}
   .card .dl:hover svg{transform:translate(1px,-1px)}
@@ -413,6 +415,8 @@
 
 <footer id="mainFooter"></footer>
 
+<script src="insights-data.js"></script>
+<script src="insights.js"></script>
 <script>
 // ─── i18n ────────────────────────────────────────────────────────────────────
 const STRINGS = {
@@ -1160,9 +1164,12 @@ function cardHTML(d){
     </div>
     ${(()=>{const wy=whyText(d.name);return wy?`<div class="why"><span class="why-label">${t('whyLabel')}</span>${escapeHtml(wy)}</div>`:"";})()}
     <div class="plats">${escapeHtml(d.plats)}</div>
-    <a class="dl" href="${d.url}" target="_blank" rel="noopener">${t('dlBtn')}
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg>
-    </a>
+    <div class="card-actions">
+      <a class="dl" href="${d.url}" target="_blank" rel="noopener">${t('dlBtn')}
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg>
+      </a>
+      ${window.Insights?Insights.button(d.name,lang):""}
+    </div>
   </article>`;
 }
 

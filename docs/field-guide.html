@@ -246,7 +246,7 @@
   }
   .look b{color:var(--text);font-weight:650}
 
-  .card-foot{display:flex;gap:8px;margin-top:auto;padding-top:14px}
+  .card-foot{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:14px}
   .dl{
     display:inline-flex;align-items:center;gap:5px;
     font-size:12px;font-weight:600;color:var(--text);
@@ -434,6 +434,8 @@
   <button class="reset" id="reset">전체 기록 지우기</button>
 </footer>
 
+<script src="insights-data.js"></script>
+<script src="insights.js"></script>
 <script>
 // ─── Data ─────────────────────────────────────────────────────────────────────
 const CATS = {
@@ -716,6 +718,7 @@ function cardHTML(it){
       <a class="dl" href="${storeUrl(it.name)}" target="_blank" rel="noopener">App Store
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg>
       </a>
+      ${window.Insights?Insights.button(it.name,"ko"):""}
       <button class="mark" data-mark="${it.n}" aria-pressed="${isDone}">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="m5 12 5 5L20 7"/></svg>
         ${isDone?"관찰 완료":"관찰 표시"}
