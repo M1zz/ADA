@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>임팩트 개선 계획 · Impact Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;1,14..32,300&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ffffff;
+    --surface:#ffffff;
+    --surface-hi:#f8fafc;
+    --line:#e2e8f0;
+    --line-soft:#f1f5f9;
+    --text:#0f172a;
+    --muted:#64748b;
+    --muted-dim:#94a3b8;
+    --accent:#0ea5e9;
+    --accent-dim:#0284c7;
+    --lvl:#0284c7;
+    --lvl-now:#bae6fd;
+    --pos:#047857; --pos-bg:#ecfdf5; --pos-line:#a7f3d0;
+    --neg:#b91c1c; --neg-bg:#fef2f2; --neg-line:#fecaca;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Inter",system-ui,-apple-system,"Apple SD Gothic Neo","Pretendard",sans-serif;background:var(--bg);color:var(--text);line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh;font-feature-settings:"cv02","cv03","cv04","cv11"}
+  a{color:inherit;text-decoration:none}
+  button,input,select{font-family:inherit}
+
+  .topbar{max-width:1200px;margin:0 auto;padding:20px 32px 0;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .tabs{display:inline-flex;background:var(--line-soft);border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px;max-width:100%;overflow-x:auto;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{padding:7px 16px;border-radius:999px;font-size:13px;font-weight:600;color:var(--muted);transition:all .15s;white-space:nowrap}
+  .tab:hover{color:var(--text)}
+  .tab.active{background:#fff;color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+
+  header{max-width:1200px;margin:0 auto;padding:36px 32px 24px}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--line-soft);border:1px solid var(--line);border-radius:999px;padding:5px 12px;margin-bottom:28px}
+  .eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+  h1{font-size:clamp(40px,6.5vw,80px);font-weight:800;line-height:1;letter-spacing:-0.04em;margin-bottom:20px}
+  h1 .it{font-style:italic;font-weight:300;color:var(--accent);letter-spacing:-0.03em}
+  .lede{font-size:clamp(15px,1.6vw,17px);color:var(--muted);max-width:720px;line-height:1.75}
+  .lede b{color:var(--text);font-weight:600}
+  .toc{display:flex;flex-wrap:wrap;gap:6px;margin-top:24px}
+  .toc a{font-size:12.5px;font-weight:600;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:6px 12px}
+  .toc a:hover{color:var(--text);border-color:var(--muted-dim)}
+
+  section.block{max-width:1200px;margin:0 auto;padding:36px 32px 12px;scroll-margin-top:12px}
+  .sec-label{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-dim);margin-bottom:6px}
+  .sec-title{font-size:28px;font-weight:750;letter-spacing:-.03em;line-height:1.2;margin-bottom:10px}
+  .sec-sub{font-size:14.5px;color:#334155;max-width:800px;line-height:1.75;margin-bottom:22px}
+  .sec-sub b{color:var(--text)}
+
+  /* ── Principles ── */
+  .principles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+  .principle{border:1px solid var(--line);border-radius:16px;padding:16px 18px;background:#fff}
+  .principle .pn{font-size:10.5px;font-weight:700;letter-spacing:.08em;color:var(--accent-dim)}
+  .principle h3{font-size:16px;font-weight:750;letter-spacing:-.02em;margin:3px 0 6px}
+  .principle p{font-size:13px;color:#334155;line-height:1.7}
+  .principle p b{color:var(--text)}
+
+  /* ── Sequence ── */
+  .seq{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+  .stage{border:1px solid var(--line);border-radius:18px;padding:16px 18px;background:var(--surface-hi);display:flex;flex-direction:column;gap:10px}
+  .stage .when{font-size:10.5px;font-weight:700;letter-spacing:.1em;color:var(--accent-dim)}
+  .stage h3{font-size:17px;font-weight:750;letter-spacing:-.02em}
+  .stage p{font-size:13px;color:#334155;line-height:1.7}
+  .stage .apps{display:flex;flex-wrap:wrap;gap:6px}
+  .mini{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px 10px 3px 3px}
+  .mini img{width:22px;height:22px;border-radius:6px}
+
+  /* ── Plans ── */
+  .plan{border:1px solid var(--line);border-radius:22px;padding:18px;margin-bottom:16px;display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:18px;scroll-margin-top:12px}
+  .card{border:1px solid var(--line);border-radius:18px;padding:16px;background:#fff;display:flex;flex-direction:column;gap:12px;align-self:start}
+  .chead{display:flex;gap:12px;align-items:flex-start}
+  .icon{width:52px;height:52px;border-radius:12px;flex-shrink:0;border:1px solid var(--line);object-fit:cover;background:var(--line-soft)}
+  .chead h4{font-size:17px;font-weight:750;letter-spacing:-.02em;line-height:1.2}
+  .chead .sub{font-size:12px;color:var(--muted);margin-top:2px}
+  .ht{min-width:0;flex:1}
+  .badges{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+  .sgn,.tb{font-size:10.5px;font-weight:700;border-radius:6px;padding:2px 7px;border:1px solid var(--line);white-space:nowrap}
+  .tb{color:var(--muted);background:var(--line-soft);font-weight:600}
+  .sgn.pos{color:var(--pos);background:var(--pos-bg);border-color:var(--pos-line)}
+  .sgn.flip{color:var(--accent-dim);background:#f0f9ff;border-color:#bae6fd}
+  .score3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;border:1px solid var(--line);border-radius:12px;padding:10px;background:var(--surface-hi)}
+  .score3 div{text-align:center}
+  .score3 b{display:block;font-size:22px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1.1}
+  .score3 small{font-size:10.5px;color:var(--muted);font-weight:600}
+  .score3 .tg b{color:var(--accent-dim)}
+  .score3 .pt b{color:var(--muted)}
+  .why{font-size:13px;color:#334155;line-height:1.65}
+  .why b{color:var(--text)}
+  .meters{display:grid;gap:9px}
+  .meter{display:grid;grid-template-columns:58px 140px minmax(0,1fr);gap:8px;align-items:baseline;font-size:12.5px}
+  .meter .mk{font-weight:650}
+  .meter.cf .mk{color:var(--accent-dim)}
+  .bar{position:relative;align-self:center;height:8px;background:var(--line-soft);border-radius:4px;margin-right:44px}
+  .bar .now{position:absolute;left:0;top:0;bottom:0;background:var(--lvl-now);border-radius:0 4px 4px 0}
+  .bar .tgt{position:absolute;left:0;top:0;bottom:0;background:var(--lvl);border-radius:0 4px 4px 0;opacity:.95}
+  .bar b{position:absolute;right:-44px;top:50%;transform:translateY(-50%);font-size:11.5px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .meter .mn{color:#334155;line-height:1.5}
+  .legend{display:flex;gap:12px;font-size:11px;color:var(--muted)}
+  .legend i{display:inline-block;width:14px;height:8px;border-radius:2px;margin-right:4px;vertical-align:middle}
+  .refs{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+  .refs .rl{font-size:11px;color:var(--muted);font-weight:600}
+  .ref{font-size:11.5px;font-weight:600;color:var(--accent-dim);background:#f0f9ff;border:1px solid #bae6fd;border-radius:999px;padding:3px 9px;cursor:pointer}
+  .ref:hover{background:var(--accent-dim);color:#fff;border-color:var(--accent-dim)}
+
+  .phases{display:flex;flex-direction:column;gap:12px}
+  .hyp{border-left:3px solid var(--accent);background:#f0f9ff;border-radius:0 12px 12px 0;padding:10px 14px;font-size:13.5px;line-height:1.7;color:#0c4a6e}
+  .hyp b{color:#082f49}
+  .phase{border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .phase-h{display:flex;align-items:baseline;gap:10px;padding:10px 14px;background:var(--surface-hi);border-bottom:1px solid var(--line)}
+  .phase-h .pw{font-size:10.5px;font-weight:700;letter-spacing:.08em;color:var(--accent-dim);white-space:nowrap}
+  .phase-h h5{font-size:14px;font-weight:750;letter-spacing:-.01em}
+  .items{list-style:none}
+  .items li{display:grid;grid-template-columns:78px minmax(0,1fr);gap:10px;padding:10px 14px;border-top:1px solid var(--line-soft);font-size:13px;line-height:1.6;color:#334155}
+  .items li:first-child{border-top:none}
+  .fac{font-size:10.5px;font-weight:700;border-radius:6px;padding:2px 6px;text-align:center;align-self:start;white-space:nowrap}
+  .fac.reach{color:#0369a1;background:#e0f2fe}
+  .fac.depth{color:#6d28d9;background:#ede9fe}
+  .fac.dur{color:#047857;background:#d1fae5}
+  .fac.cf{color:#b45309;background:#fef3c7}
+  .fac.measure{color:#334155;background:var(--line-soft)}
+  .items b{color:var(--text)}
+  .items .ev{display:block;font-size:11.5px;color:var(--muted);margin-top:2px}
+  .items .ev .ref{margin-left:4px}
+
+  .contract{border:1px dashed var(--muted-dim);border-radius:14px;padding:12px 14px;background:#fff}
+  .contract h5{font-size:13px;font-weight:750;margin-bottom:4px}
+  .contract p.hint{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:8px}
+  .contract .line{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:13px;color:#334155;line-height:2}
+  .contract input,.contract select{font-size:13px;border:1px solid var(--line);border-radius:8px;padding:4px 8px;background:var(--surface-hi);color:var(--text)}
+  .contract input.num{width:64px;text-align:right}
+  .contract input.txt{min-width:170px;flex:1}
+  .contract .saved{font-size:11px;color:var(--pos);margin-left:auto}
+  .keep{font-size:12.5px;color:#334155;background:var(--surface-hi);border-radius:12px;padding:10px 14px;line-height:1.65}
+  .keep b{color:var(--text)}
+
+  .btn{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:600;color:var(--text);background:#fff;border:1px solid var(--line);border-radius:8px;padding:6px 11px;cursor:pointer}
+  footer{max-width:1200px;margin:24px auto 0;padding:24px 32px 64px;border-top:1px solid var(--line);color:var(--muted-dim);font-size:12px;line-height:1.9}
+  footer a{color:var(--accent-dim);text-decoration:underline;text-underline-offset:2px}
+
+  @media (max-width:980px){
+    .principles{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .seq{grid-template-columns:1fr}
+    .plan{grid-template-columns:1fr}
+  }
+  @media (max-width:600px){
+    .topbar{padding:16px 16px 0}
+    .tab{padding:7px 12px;font-size:12.5px}
+    header{padding:26px 16px 18px}
+    section.block,footer{padding-left:16px;padding-right:16px}
+    .sec-title{font-size:23px}
+    .principles{grid-template-columns:1fr}
+    .plan{padding:12px;border-radius:18px}
+    .meter{grid-template-columns:54px 120px minmax(0,1fr)}
+    .items li{grid-template-columns:1fr;gap:4px}
+    .fac{justify-self:start}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <nav class="tabs" aria-label="섹션">
+    <a class="tab" href="ada-archive.html">ADA 아카이브</a>
+    <a class="tab" href="field-guide.html">앱 관찰 기록부</a>
+    <a class="tab" href="impact.html">임팩트 레퍼런스</a>
+    <a class="tab" href="install-queue.html">다운로드 큐</a>
+    <a class="tab" href="my-apps.html">내 앱</a>
+    <a class="tab active" href="impact-plan.html" aria-current="page">개선 계획</a>
+  </nav>
+</div>
+
+<header>
+  <div class="eyebrow"><span class="eyebrow-dot"></span>Impact Plan · Top 6 by Potential Impact · 12 Weeks</div>
+  <h1>임팩트 <span class="it">개선 계획</span></h1>
+  <p class="lede"><a href="my-apps.html#impactSec" style="color:var(--accent-dim);text-decoration:underline">내 앱 임팩트 측정</a>에서 <b>잠재 임팩트가 가장 큰 6개 앱</b>의 12주 계획입니다. 카드는 <a href="impact.html" style="color:var(--accent-dim);text-decoration:underline">임팩트 레퍼런스</a>와 같은 네 요소로 나눠, 지금 점수(옅은 막대)와 12주 목표(진한 막대)를 함께 보여 줍니다. 계획은 기능을 더하는 것보다 <b>이미 만든 가치를 사람에게 닿게 하고, 그 변화를 재는 것</b>에서 시작합니다.</p>
+  <nav class="toc" aria-label="목차">
+    <a href="#principles">원칙</a>
+    <a href="#sequence">순서</a>
+    <a href="#plans">앱별 계획</a>
+  </nav>
+</header>
+
+<section class="block" id="principles">
+  <span class="sec-label">원칙</span>
+  <h2 class="sec-title">6개 앱 모두에 적용하는 네 가지</h2>
+  <div class="principles">
+    <div class="principle"><span class="pn">1 · 먼저 잰다</span><h3>측정이 없으면 도달도 깊이도 추정입니다</h3><p>지금 점수의 도달은 평점 수, 지속은 출시 이력으로 추정한 값입니다. 앱마다 <b>깊이를 보여 주는 지표 하나</b>를 기기 안에서 집계해 사용자에게 먼저 돌려주고(“이번 주 12분 아꼈어요”), 그 숫자로 점수를 갱신합니다.</p></div>
+    <div class="principle"><span class="pn">2 · 검증 비용을 낮춘다</span><h3>기능보다 스토어가 먼저</h3><p>6개 중 5개가 스토어 설명 1~3문장입니다. 스토어 문장과 첫 스크린샷을 바꾸는 데 드는 비용은 며칠이고, 이게 도달의 전제입니다. 새 기능은 스토어를 바꾼 뒤에도 도달이 안 움직일 때 만듭니다.</p></div>
+    <div class="principle"><span class="pn">3 · 반사실성을 앞에 둔다</span><h3>"내가 안 만들었으면 없었을 부분"을 첫 장에</h3><p>대체재가 많은 기능(메모, 타이머, 가계부)이 아니라 이 앱에만 있는 순간 — 안내방송 인식, 충동의 순간 개입, 작업 밀도 격자 — 을 스토어 첫 장과 첫 실행의 맨 앞에 둡니다.</p></div>
+    <div class="principle"><span class="pn">4 · 판돈은 본인이 정한다</span><h3>숫자는 제가 드리지 않습니다</h3><p>각 계획 아래에 <b>"N주 뒤 [지표]가 [숫자] 미만이면 판돈을 줄인다"</b> 칸이 있습니다. 기준을 남이 정하면 반발이 되고, 본인이 정하면 계약이 됩니다. 입력한 값은 이 브라우저에만 저장됩니다.</p></div>
+  </div>
+</section>
+
+<section class="block" id="sequence">
+  <span class="sec-label">순서</span>
+  <h2 class="sec-title">6개를 동시에 하지 않습니다</h2>
+  <p class="sec-sub">공통 작업(스토어·계측)은 한 번에 끝내고, 그다음은 <b>제품은 이미 준비됐고 발견이 병목인 앱</b>부터 판돈을 겁니다. 사용자 조사가 먼저 필요한 깊이형 앱은 인터뷰로 방향을 확인한 뒤에 겁니다.</p>
+  <div class="seq" id="seq"></div>
+</section>
+
+<section class="block" id="plans">
+  <span class="sec-label">앱별 계획</span>
+  <h2 class="sec-title">잠재 임팩트 상위 6개</h2>
+  <p class="sec-sub">막대는 <b>옅은 색 = 지금</b>, <b>진한 색 = 12주 목표</b>입니다. 도달은 12주 안에 크게 바뀌기 어려워 목표를 보수적으로 잡았고, 계측이 붙으면 실제 수치로 다시 매깁니다. 항목 옆 색 태그는 그 일이 올리는 요소입니다 — <span class="fac reach">도달</span> <span class="fac depth">깊이</span> <span class="fac dur">지속</span> <span class="fac cf">반사실성</span> <span class="fac measure">측정</span></p>
+  <div id="planList"></div>
+</section>
+
+<footer>
+  지금 점수는 <a href="my-apps.html#impactSec">내 앱 임팩트 측정</a>과 같은 값이고(도달은 평점 수, 지속은 출시·업데이트 이력 기반 추정, 반사실성은 추론), 목표 점수는 이 계획을 12주 동안 실행했을 때의 편집 판단입니다. 계획 항목의 근거는 각 앱 평가에서 확인한 스토어·스크린샷·코드 신호이며, 레퍼런스 버튼은 ADA 아카이브의 상세 분석 또는 임팩트 레퍼런스로 연결됩니다. 판돈 계약 칸의 입력은 서버로 보내지 않고 이 브라우저(localStorage)에만 저장됩니다.
+</footer>
+
+<script src="insights-data.js"></script>
+<script src="insights.js"></script>
+<script src="my-apps-data.js"></script>
+<script>
+// ─── Plan data ────────────────────────────────────────────────────────────────
+// target: 12주 목표 점수 [reach, depth, dur, cf]. ref: insights 키(상세 분석) 또는 impact:이름(임팩트 레퍼런스).
+const PLANS = [
+ {id:"6752551268", stage:1, target:[1,5,5,5],
+  hyp:"<b>제품은 이미 레퍼런스 수준인데(플랫폼 통합 10점) 발견되지 않고 있다.</b> 앱을 열지 않고 '끝나기 전에' 알림을 받는 순간을 첫 장에 두고, 완주 직후를 증거가 쌓이는 순간으로 바꾸면 도달의 전제가 생긴다.",
+  why:"발표·회의·운동처럼 끝나는 시각이 중요한 사람에게, 끝난 뒤가 아니라 끝나기 전에 준비할 시간을 준다.",
+  refs:["Flighty","Structured","Timery for Toggl"],
+  phases:[
+   ["0–2주","발견의 병목부터",[
+     ["measure","세션 완주 직후 1문항: '예비 알림 덕에 제시간에 끝냈나요?' — 예/아니오를 기기에 집계해 기록 화면에 보여 주기","깊이를 추정이 아닌 수치로"],
+     ["reach","첫 스크린샷을 '잠금 화면 Live Activity + 5분 전 알림 배너' 한 장면으로 교체","지금은 기울어진 목업 속 작은 다이얼 — 가장 강한 차별점이 안 보임",["Flighty"]],
+     ["reach","완주 직후에만 리뷰 요청(SKStoreReviewController), 설정에 '익명 사용 통계 보내기' 토글","가치 경험 직후가 리뷰의 적기, 옵트아웃은 신뢰 조건",["Structured"]]
+   ]],
+   ["2–6주","한 사람당 변화를 보이게",[
+     ["depth","세션 기록에 '예정 대비 ±분'을 남기고 주간 요약('이번 주 발표 4번 중 3번 제시간')","발표 시간 관리가 실제로 나아지는지를 사용자가 확인"],
+     ["cf","스토어 설명에 '일반 타이머와 다른 점' 한 단락 + 무료/Pro 경계 표","예비 알림은 기본 타이머로 흉내 낼 수 있음 — 다른 점을 말로 못 하면 반사실성이 0",["Timery for Toggl"]]
+   ]],
+   ["6–12주","설치 없는 체험으로 넓히기",[
+     ["reach","강사·코치용 템플릿 공유 링크 → 이미 있는 App Clip으로 '이 템플릿으로 바로 시작'","설치 전에 가치를 경험하는 경로, 받는 사람이 곧 다음 사용자"],
+     ["dur","'다음 발표 언제세요?' 전날 알림을 템플릿과 연결해 반복 사용을 만들기","긴 주기 사용자의 재방문 장치(이미 있는 NextOccasionReminder 확장)"]
+   ]]
+  ],
+  metric:"완주 세션 중 '제시간에 끝냈다' 비율", keep:"Live Activity·AlarmKit·Watch·App Clip 통합 경험, 온보딩 60배속 체험 패턴 — 다른 타이머형 앱에 그대로 재사용"},
+
+ {id:"1543660502", stage:1, target:[2,5,7,4],
+  hyp:"<b>5년간 쌓인 가장 오래된 사용자 기반이 있지만, 한 사람당 무엇이 달라지는지가 보이지 않는다.</b> 절약된 입력 시간을 사용자에게 먼저 돌려주고, iOS 텍스트 대치가 못 하는 것을 전면에 두면 깊이와 반사실성이 함께 오른다.",
+  why:"같은 문장을 반복해서 치는 사람의 입력 시간을 줄인다. 키보드·위젯·제어 센터·Mac까지 이어진다.",
+  refs:["Things 3","Dark Noise","impact:Grammarly"],
+  phases:[
+   ["0–2주","절약을 숫자로 돌려주기",[
+     ["measure","키보드 버튼 탭 수 × 문장 길이로 '이번 주 아낀 입력 시간'을 기기 안에서 계산해 앱 첫 화면·위젯에 표시","이미 있는 사용 기록 화면(UsageStats·Passport)을 깊이 지표로 전환"],
+     ["reach","스토어 설명을 '누가·어디서' 중심으로 재작성, 첫 단락에 '계정 없음·키 입력 수집 안 함·iCloud에만 저장'","설명 3줄이 위젯·Mac·AI를 전혀 전달하지 못함, 전체 접근 권한의 불안을 먼저 해소",["Dark Noise"]],
+     ["reach","리뷰 요청을 '키보드로 N번 입력 성공' 직후로 좁히기","requestReview가 13곳에 흩어져 있어 가치 순간과 연결되지 않음",["Things 3"]]
+   ]],
+   ["2–6주","대체재와의 차이를 선명하게",[
+     ["cf","'iOS 텍스트 대치와 무엇이 다른가' 비교 컷(탭 한 번·템플릿 변수·Mac 동기화·온디바이스 AI)","텍스트 대치·클립보드 앱이 많아 반사실성 3 — 다른 점이 곧 내 몫",["impact:Grammarly"]],
+     ["depth","고정 크기 폰트 75곳 → 텍스트 스타일, 키보드 버튼 Dynamic Type 상한 설계","접근성 라벨·동작 줄이기는 이미 상위권, 큰 글자만 비어 있음"],
+     ["dur","상품 6종 → '무료 10개 / 평생 Pro' 두 갈래로 단순화","무엇을 사야 할지 헷갈리면 오래 쓰던 사용자도 결제 앞에서 멈춤"]
+   ]],
+   ["6–12주","직업군으로 넓히기",[
+     ["reach","직업군 템플릿 팩(상담·부동산·강사·자영업 안내 문구)과 공유 링크","같은 문장을 반복하는 집단이 분명한 곳부터, 받은 사람이 다음 사용자"],
+     ["reach","'5년 운영한 인디 키보드 앱' 이야기로 오늘의 앱 제출 스토리 준비","도달을 한 번에 올릴 수 있는 채널, 증거(평점·아낀 시간)가 쌓인 뒤에"]
+   ]]
+  ],
+  metric:"주간 활성 키보드 사용자의 '아낀 입력 시간' 중앙값", keep:"키보드·공유·액션 확장, CloudKit 동기화, Mac 메뉴바 — 입력 도구형 앱의 공통 기반"},
+
+ {id:"6755988507", stage:2, target:[1,7,5,6],
+  hyp:"<b>충동의 순간에 개입한다는 것 자체가 이 앱의 반사실성이다.</b> one sec 연구가 같은 구조(행동 직전의 짧은 마찰)로 앱 열기를 57% 줄였다. 그런데 스토어는 한 줄이고, 결제 요구는 실패한 순간에 뜬다. 성공의 순간으로 옮기면 깊이와 신뢰가 같이 오른다.",
+  why:"배달·쇼핑 같은 충동 소비 앞에 쿨타임을 걸어 한 박자 멈추게 하고, 아낀 돈을 쌓아 보여 준다.",
+  refs:["Opal","Gentler Streak Fitness Tracker","impact:one sec"],
+  phases:[
+   ["0–2주","스토어와 계측",[
+     ["measure","'참았어요' 비율과 이번 달 아낀 돈 합계를 기기 안에서 집계, 단축어 개입 → 참음 전환율 기록","개입이 실제로 멈추게 하는지가 이 앱의 깊이"],
+     ["reach","스토어 설명·스크린샷을 1.0.2 기준으로 교체, 첫 장은 '배달앱을 열면 → 아직 10일 남았어요' 개입 화면, US 영문화","설명 '나의 행동에 쿨타임을 표시해주는 앱'으로는 목적이 안 보임",["Opal"]],
+     ["depth","페이월 트리거를 '쿨타임 3번 깬 직후' → '아낀 돈이 일정 금액을 넘은 순간'","실패감을 느끼는 순간의 결제 요구는 신뢰를 깎음",["Gentler Streak Fitness Tracker"]]
+   ]],
+   ["2–6주","끊겨도 돌아오게",[
+     ["dur","스트릭이 끊긴 날 '다시 시작' 복귀 화면 — 이번 달 아낀 돈은 유지된다고 말하기","절제 앱의 최대 위험은 한 번의 실패 뒤 이탈",["Gentler Streak Fitness Tracker"]],
+     ["cf","단축어 '앱 열 때' 자동화 설정을 단계 체크리스트로 — 설정 완료율 측정","개입이 핵심인데 설정 장벽이 가장 높은 지점",["impact:one sec"]]
+   ]],
+   ["6–12주","아낀 돈으로 넓히기",[
+     ["reach","'이번 달 참아서 아낀 돈' 공유 카드와 절약 커뮤니티용 문구","결과가 곧 홍보물이 되는 구조"],
+     ["reach","카테고리를 금융(또는 라이프스타일+금융)으로 재검토, '충동구매·소비습관' 키워드","지금은 엔터테인먼트로 분류돼 절약 검색에서 안 보임"]
+   ]]
+  ],
+  metric:"개입 알림(단축어 포함) 중 '참았어요'로 끝난 비율", keep:"App Intents 기반 '사도 돼?' 개입 설계, 인터랙티브 위젯 기록 — 습관 개입형 앱의 공통 패턴"},
+
+ {id:"6755983135", stage:2, target:[1,6,5,5],
+  hyp:"<b>'실제로 늘어난 휴일 수'는 드물게 직접 셀 수 있는 깊이다.</b> 그런데 가치('3일로 9일')는 세 번째 스크린샷에, 추천은 입력 뒤에 있다. 가치를 맨 앞으로 옮기고, 한국 직장인의 연간 휴가 계획 시즌에 맞춰 도달을 건다.",
+  why:"공휴일·주말·내 연차를 조합해 최소 연차로 최대 연휴를 찾아 주고, 실제 캘린더에 등록하게 한다.",
+  refs:["Duolingo","Structured","Flighty"],
+  phases:[
+   ["0–2주","가치를 맨 앞으로",[
+     ["measure","추천을 캘린더에 등록한 수와 '추천 덕분에 늘어난 휴일 수' 합계를 기기 안에서 집계해 보여 주기","깊이를 날짜 단위로 셀 수 있는 앱"],
+     ["reach","첫 스크린샷을 '연차 3일로 9일 쉬기' 실제 추천 결과로, KR 설명을 대상·기능 중심으로 확장","가장 강한 카피가 세 번째 장에 있음",["Structured"]],
+     ["depth","온보딩 전에 올해 공휴일 기반 추천 예시를 먼저 보여 주고, 총 연차 입력은 등록 시점으로 미루기","입력보다 가치가 먼저 — 772줄 온보딩이 첫 가치를 막음",["Duolingo"]]
+   ]],
+   ["2–6주","연 단위 도구에 재방문 만들기",[
+     ["dur","휴가 D-Day Live Activity와 '연차 소진 속도' 알림(분기 1회)","연 단위 도구는 잊히기 쉬움 — 이미 있는 위젯 4종을 시간 민감 표면으로",["Flighty"]],
+     ["cf","동료·가족과 '같이 쉬기' — 이미 있는 CloudKit 공유로 겹치는 휴일 찾기","연휴 계산 블로그 글이 못 하는 것: 내 연차·남의 일정과의 조합"],
+     ["depth","고정 크기 폰트 101곳 → 텍스트 스타일, 동작 줄이기 분기","VoiceOver 기반은 이미 좋음, 큰 글자만 비어 있음"]
+   ]],
+   ["6–12주","시즌에 맞춰 넓히기",[
+     ["reach","연말 휴가 계획·공휴일 발표 시점에 맞춘 App Store 인앱 이벤트와 업데이트","수요가 몰리는 시기가 정해진 앱 — 타이밍이 도달"],
+     ["reach","'올해 연차 N일로 M일 쉼' 결과 공유 이미지","결과가 곧 홍보물"]
+   ]]
+  ],
+  metric:"추천으로 등록된 휴가의 '늘어난 휴일 수' 합계", keep:"한국 공휴일·대체공휴일 계산 로직과 테스트(873줄), 캘린더·CloudKit 공유 — 일정형 앱에 재사용"},
+
+ {id:"6775176578", stage:3, target:[1,8,4,6],
+  hyp:"<b>깊이형 앱이다 — 사용자 수가 아니라 '도움 없이 목적지 역에서 내린 횟수'로 잰다.</b> 안내방송 인식과 행선지 카메라 판별은 지도 앱에 없는 부분이지만 스토어에 한 줄도 없다. 외국인·저시력·고령 사용자 5명에게 먼저 확인하고 판돈을 건다.",
+  why:"지하철 안에서 지금 어느 역인지, 몇 정거장 남았는지, 어느 방향 열차인지를 소리·카메라·모션으로 알려 준다.",
+  refs:["Be My Eyes","Passenger Assistance","Transit"],
+  phases:[
+   ["0–2주","컨시어지로 확인하기",[
+     ["measure","'도움 없이 목적지 역에서 내림' 완료 세션 수 + 선택형 '누구와 함께 쓰나요(외국인/저시력/고령/기타)' 1문항","깊이형의 측정 단위는 혼자 해낸 일의 횟수",["Be My Eyes"]],
+     ["depth","저시력·시각장애·외국인 사용자 5명과 실제 승차→하차를 함께 해 보는 컨시어지 테스트","3개월 기능 개발보다 3일 동행이 방향을 먼저 알려 줌"],
+     ["reach","스토어 설명·첫 스크린샷 3장을 '행선지 카메라 확인 → 안내방송으로 현재 역 인식 → 잠금화면 하차 알림'으로, US·JA·ZH 스토어는 해당 언어로","지금 설명은 한 문장, 첫 카피는 전국 지원인데 '서울 길찾기'",["Transit"]]
+   ]],
+   ["2–6주","혼자 내릴 수 있게",[
+     ["depth","VoiceOver만으로 승차→하차 전 과정 완주 검증, 고정 폰트(최소 8pt)를 텍스트 스타일·@ScaledMetric으로","접근성을 약속한 앱의 임팩트는 이 한 흐름이 끝까지 되는지",["Passenger Assistance"]],
+     ["cf","첫 실행을 지하철 탭으로, 권한은 카메라 스캔·방송 인식을 켜는 순간에만 요청, 분석 SDK 필요 여부 재검토","6개 권한을 기능 맥락에서 받아야 '기기 내 처리' 약속과 모순이 없음"]
+   ]],
+   ["6–12주","닿아야 할 사람에게",[
+     ["reach","관광객 채널 — 일본어·중국어 키워드, 숙소·안내소에 둘 QR 안내문","대상이 분명하고 모이는 장소가 있음"],
+     ["reach","접근성 커뮤니티·기관에 테스트 결과와 함께 소개, 포용성 어워드 후보 자료 준비","깊이형 앱의 도달은 신뢰하는 소개 한 번이 광고보다 큼",["Passenger Assistance"]]
+   ]]
+  ],
+  metric:"도움 없이 목적지 역에서 내린 세션 수(주간)", keep:"온디바이스 음성 인식·Vision OCR·모션 기반 위치 추정 — 접근성·내비게이션 앱에 재사용할 수 있는 드문 조합"},
+
+ {id:"6755280882", stage:3, target:[1,6,5,7],
+  hyp:"<b>작업 밀도 격자와 '5분 조각'은 대체재가 드문 반사실성이 높은 부분이다.</b> 과부하·실행 착수가 어려운 사용자에게 가장 필요한 앱인데, 큰 글자와 색 외 표현이 비어 있다. Tiimo가 같은 사용자군으로 올해의 앱이 된 길을 참고해, 사용자의 언어로 스토어를 다시 쓴다.",
+  why:"겹친 일정의 밀도를 색으로 보여 주고, 무거운 일을 5분 안에 집을 수 있는 조각으로 쪼개 착수를 돕는다.",
+  refs:["Tiimo","Structured","Bear"],
+  phases:[
+   ["0–2주","이름이 못 하는 설명을 부제로",[
+     ["measure","'5분 조각' 중 완료한 비율과 과부하 주 경고 뒤 일정을 옮긴 비율을 기기 안에서 집계","착수를 도왔는지가 깊이"],
+     ["reach","KR 설명을 US 설명 수준으로, 부제 '겹친 일정 한눈에 · 5분 할 일 쪼개기'","'욕망의 무지개'라는 이름이 기능을 전달하지 못함 — 부제가 메워야 함",["Structured"]],
+     ["depth","과부하·ADHD 경험이 있는 사용자 5명 인터뷰 — 그들이 쓰는 말로 스크린샷 카피 다시 쓰기","깊이형은 대상의 언어가 곧 발견 키워드",["Tiimo"]]
+   ]],
+   ["2–6주","가장 필요한 사람이 쓸 수 있게",[
+     ["depth","고정 크기 폰트 169곳 → 텍스트 스타일·@ScaledMetric, 격자 셀에 '3월 5일, 일정 3개 겹침' 접근성 값과 숫자·패턴 보조","색 진하기만으로 부하를 표현하면 색각·VoiceOver 사용자가 읽을 수 없음",["Tiimo"]],
+     ["dur","무료 사용자에게 '번개' 위젯 1종, 무거운 주 전날 한 번만 알리는 선택형 알림","지금은 알림 0곳·위젯이 Pro 전용 — 무료 사용자의 재방문 장치가 없음",["Bear"]]
+   ]],
+   ["6–12주","포용성으로 인정받기",[
+     ["reach","신경다양·번아웃 커뮤니티에 인터뷰 결과와 함께 소개","대상이 모인 곳에서의 한 번의 추천"],
+     ["cf","맥 앱(무지개 공방)과 같은 CloudKit 격자를 '한 주의 밀도' 하나로 묶어 설명","두 앱이 따로 보이면 둘 다 약함 — 하나의 관점으로"]
+   ]]
+  ],
+  metric:"'5분 조각' 완료율", keep:"작업 밀도 시각화·조각 쪼개기 모델, 무료/Pro 경계 원칙(ProEntitlement) — 생산성 앱의 공통 자산"}
+];
+const STAGES = [
+ {n:1, when:"1–4주", title:"발견이 병목인 앱부터", desc:"제품 완성도는 이미 높고(첫 가치·플랫폼 8~10점) 증거만 없는 앱. 스토어·리뷰·계측만으로 가장 빨리 움직입니다."},
+ {n:2, when:"3–8주", title:"깊이를 숫자로 셀 수 있는 앱", desc:"'아낀 돈', '늘어난 휴일'처럼 사용자에게 돌려줄 숫자가 분명한 앱. 결제·온보딩 위치를 가치의 순간으로 옮깁니다."},
+ {n:3, when:"6–12주", title:"사용자 조사가 먼저인 깊이형", desc:"대상(외국인·저시력·신경다양 사용자)에게 먼저 확인해야 방향이 맞는 앱. 5명 인터뷰·동행 테스트 뒤에 판돈을 겁니다."}
+];
+
+// ─── Render ───────────────────────────────────────────────────────────────────
+const D = window.MY_APPS;
+const APPS = Object.fromEntries(D.apps.map(a=>[a.id,a]));
+const FACT = [["reach","도달"],["depth","깊이"],["dur","지속"],["cf","반사실성"]];
+const FACT_KO = {reach:"도달",depth:"깊이",dur:"지속",cf:"반사실성",measure:"측정"};
+const TYPE_KO = {breadth:"넓이형",depth:"깊이형",structure:"구조형",tool:"도구형"};
+const SIGN_KO = {pos:["+","양의 방향"],flip:["↺","방향 전환"],mix:["±","부호 혼합"]};
+const gm = v => Math.pow(v.reduce((p,x)=>p*x,1),1/4);
+function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+function refHTML(r){
+  if(r.startsWith("impact:")){ const n=r.slice(7); return `<a class="ref" href="impact.html?q=${encodeURIComponent(n)}">${esc(n)} ↗</a>`; }
+  const label = r==="Gentler Streak Fitness Tracker" ? "Gentler Streak" : r;
+  return window.Insights && Insights.has(r) ? `<button type="button" class="ref" data-insight="${esc(r)}" data-lang="ko">${esc(label)}</button>` : `<span class="tb">${esc(label)}</span>`;
+}
+function cardHTML(p){
+  const a = APPS[p.id], m = a.impact;
+  const now = FACT.map(([k])=>m.lv[k][0]);
+  const pot = [m.potentialReach[0], now[1], now[2], now[3]];
+  const [sym,sl] = SIGN_KO[m.sign]||SIGN_KO.pos;
+  return `<article class="card">
+    <div class="chead"><img class="icon" src="${esc(a.icon)}" alt="" loading="lazy">
+      <div class="ht"><h4>${esc(a.name)}</h4><div class="sub">${esc(a.genre)} · ${esc(a.price)} · 출시 ${esc(a.released.slice(0,7))}</div>
+        <div class="badges"><span class="sgn ${m.sign}">${sym} ${sl}</span><span class="tb">${TYPE_KO[m.type]}</span></div></div></div>
+    <div class="score3">
+      <div><b>${gm(now).toFixed(1)}</b><small>지금</small></div>
+      <div class="tg"><b>${gm(p.target).toFixed(1)}</b><small>12주 목표</small></div>
+      <div class="pt"><b>${gm(pot).toFixed(1)}</b><small>잠재 (도달 ${m.potentialReach[0]})</small></div>
+    </div>
+    <p class="why">${esc(p.why)}</p>
+    <div class="meters">${FACT.map(([k,l],i)=>`<div class="meter${k==="cf"?" cf":""}">
+      <span class="mk">${l}</span>
+      <span class="bar" role="img" aria-label="${l} 지금 ${now[i]}점, 목표 ${p.target[i]}점"><i class="tgt" style="width:${p.target[i]*10}%"></i><i class="now" style="width:${now[i]*10}%"></i><b>${now[i]}${p.target[i]!==now[i]?` → ${p.target[i]}`:""}</b></span>
+      <span class="mn">${esc(m.lv[k][1])}</span></div>`).join("")}</div>
+    <div class="legend"><span><i style="background:var(--lvl-now)"></i>지금</span><span><i style="background:var(--lvl)"></i>12주 목표</span></div>
+    <div class="refs"><span class="rl">레퍼런스</span>${p.refs.map(refHTML).join("")}</div>
+    <div class="refs"><a class="btn" href="my-apps.html#impactSec">내 앱 평가에서 보기</a><a class="btn" href="${esc(a.url)}" target="_blank" rel="noopener">App Store ↗</a></div>
+  </article>`;
+}
+const KEY = "ada-impact-plan-v1";
+let contracts = {}; try{ contracts = JSON.parse(localStorage.getItem(KEY)||"{}"); }catch(_){}
+function planHTML(p){
+  const a = APPS[p.id], c = contracts[p.id]||{};
+  const phases = p.phases.map(([when,title,items])=>`<div class="phase">
+    <div class="phase-h"><span class="pw">${when}</span><h5>${esc(title)}</h5></div>
+    <ul class="items">${items.map(([f,what,because,refs])=>`<li><span class="fac ${f}">${FACT_KO[f]}</span><div><b>${esc(what)}</b><span class="ev">${esc(because)}${refs?refs.map(refHTML).join(""):""}</span></div></li>`).join("")}</ul>
+  </div>`).join("");
+  return `<article class="plan" id="plan-${p.id}">
+    ${cardHTML(p)}
+    <div class="phases">
+      <p class="hyp">${p.hyp}</p>
+      ${phases}
+      <div class="contract" data-id="${p.id}">
+        <h5>판돈 계약 — 숫자는 직접 정하세요</h5>
+        <p class="hint">기준선(0–2주 계측)을 본 뒤에 채우는 걸 권합니다. 지표는 제안일 뿐이니 바꿔도 됩니다.</p>
+        <div class="line">
+          <input class="num" type="number" min="1" max="52" data-f="weeks" value="${esc(c.weeks||"")}" placeholder="12" aria-label="주">주 뒤
+          <input class="txt" type="text" data-f="metric" value="${esc(c.metric||"")}" placeholder="${esc(p.metric)}" aria-label="지표">가
+          <input class="num" type="text" data-f="threshold" value="${esc(c.threshold||"")}" placeholder="?" aria-label="기준값">미만이면
+          <select data-f="action" aria-label="행동">${["판돈을 줄인다 (유지보수만)","방향을 바꾼다","접고 자산만 정산한다"].map(o=>`<option${c.action===o?" selected":""}>${o}</option>`).join("")}</select>
+          <span class="saved" data-saved></span>
+        </div>
+      </div>
+      <p class="keep"><b>접어도 남는 것</b> — ${esc(p.keep)}</p>
+    </div>
+  </article>`;
+}
+const STAGE0 = `<div class="stage" style="grid-column:1 / -1;background:#fff"><span class="when">0단계 · 1–2주 · 6개 공통</span><h3>스토어 문장·첫 스크린샷·계측 하나</h3><p>여섯 앱 모두 앱별 계획의 '0–2주' 항목을 먼저 끝냅니다. 이 단계는 기능 개발이 아니라 이미 만든 가치를 보이게 하고 재는 일이라, 전부 합쳐도 새 앱 하나를 여는 비용보다 작습니다.</p></div>`;
+document.getElementById("seq").innerHTML = STAGE0 + STAGES.map(s=>`<div class="stage">
+  <span class="when">${s.n}단계 · ${s.when}</span><h3>${esc(s.title)}</h3><p>${esc(s.desc)}</p>
+  <div class="apps">${PLANS.filter(p=>p.stage===s.n).map(p=>{const a=APPS[p.id];return `<a class="mini" href="#plan-${p.id}"><img src="${esc(a.icon)}" alt="">${esc(a.name.replace(/ - .*/,""))}</a>`;}).join("")}</div>
+</div>`).join("");
+document.getElementById("planList").innerHTML = [...PLANS].sort((x,y)=>x.stage-y.stage).map(planHTML).join("");
+document.getElementById("planList").addEventListener("input", e=>{
+  const box = e.target.closest(".contract"); if(!box) return;
+  const id = box.dataset.id, c = contracts[id] = contracts[id]||{};
+  c[e.target.dataset.f] = e.target.value;
+  try{ localStorage.setItem(KEY, JSON.stringify(contracts)); box.querySelector("[data-saved]").textContent = "저장됨"; }catch(_){}
+});
+</script>
+</body>
+</html>

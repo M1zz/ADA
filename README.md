@@ -13,6 +13,7 @@ Browse all Apple Design Awards winners and finalists from 2020 to 2026.
 | **[App Field Guide](https://m1zz.github.io/ADA/field-guide.html)** (`docs/field-guide.html`) | 100-app teardown checklist in 10 categories · KO only |
 | **[Impact References](https://m1zz.github.io/ADA/impact.html)** (`docs/impact.html`) | Impact = reach × depth × duration × counterfactual; breadth / depth / structure / tool reference apps, impact vs. value, and how to talk to someone building a low-impact app · KO only |
 | **[Install Queue](https://m1zz.github.io/ADA/install-queue.html)** (`docs/install-queue.html`) | Install every app on iPhone one by one: Get → confirm → next · KO only |
+| **[Impact Plan](https://m1zz.github.io/ADA/impact-plan.html)** (`docs/impact-plan.html`) | 12-week improvement plan for the 6 own apps with the highest potential impact, in the Impact References card format · KO only |
 | **[My Apps](https://m1zz.github.io/ADA/my-apps.html)** (`docs/my-apps.html`) | The developer's own 46 App Store apps, evaluated with a 9-criterion rubric derived from the 291 reference apps · KO only |
 
 All pages share the same header tab bar, so you can switch between them freely.
@@ -98,6 +99,21 @@ the 291 researched reference apps.
   highest potential / highest counterfactual / lower-the-stakes candidates, and a "measure this first" metric per app
 - Security-sensitive specifics are redacted on this public page and were reported to the developer privately
 - Data in `docs/my-apps-data.js`
+
+## Impact Plan (임팩트 개선 계획)
+
+A 12-week plan for the six apps with the highest potential impact on the My Apps page
+(두번알림, 클립키보드, 쿨타임, 골드위크, 한국길찾기, 욕망의 무지개).
+
+- Same card format as Impact References: four factors with current (light) and 12-week target (dark) bars,
+  current / target / potential overall scores, and reference apps
+- Four shared principles: measure first, lower the cost of validation (store before features), put the
+  counterfactual part first, and let the developer set the stakes
+- Sequence: shared store + instrumentation work, then apps whose bottleneck is discovery, then apps where
+  depth can be counted, then depth-type apps that need user research first
+- Per app: impact hypothesis, 0–2 / 2–6 / 6–12 week initiatives tagged by the factor they raise, each tied to
+  signals from the app's evaluation and a reference app; a self-set stakes contract (saved in localStorage);
+  and what remains reusable if the app is folded
 
 ## Data Source
 
