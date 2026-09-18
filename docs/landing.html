@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>앱 랜딩 페이지 · Landing Pages</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ffffff; --surface-hi:#f8fafc; --line:#e2e8f0; --line-soft:#f1f5f9;
+    --text:#0f172a; --muted:#64748b; --muted-dim:#94a3b8; --accent:#0ea5e9; --accent-dim:#0284c7;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Inter",system-ui,-apple-system,"Apple SD Gothic Neo","Pretendard",sans-serif;background:var(--bg);color:var(--text);line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh}
+  a{color:inherit;text-decoration:none}
+  button,select{font-family:inherit}
+  .topbar{max-width:1200px;margin:0 auto;padding:20px 32px 0;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .tabs{display:inline-flex;background:var(--line-soft);border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px;max-width:100%;overflow-x:auto;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{padding:7px 16px;border-radius:999px;font-size:13px;font-weight:600;color:var(--muted);white-space:nowrap}
+  .tab:hover{color:var(--text)}
+  .tab.active{background:#fff;color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+  header{max-width:1200px;margin:0 auto;padding:32px 32px 16px}
+  .crumb{font-size:12.5px;color:var(--muted);margin-bottom:10px}
+  .crumb a{color:var(--accent-dim);text-decoration:underline;text-underline-offset:2px}
+  h1{font-size:clamp(30px,4.5vw,48px);font-weight:800;letter-spacing:-.035em;line-height:1.1;margin-bottom:12px}
+  .lede{font-size:15px;color:var(--muted);max-width:760px;line-height:1.75}
+  .lede b{color:var(--text)}
+  .lede a{word-break:break-all}
+  main{max-width:1200px;margin:0 auto;padding:8px 32px 64px}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+  .gc{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);border-radius:16px;padding:14px;background:#fff}
+  .gc:hover{border-color:var(--muted-dim)}
+  .gc img{width:48px;height:48px;border-radius:11px;border:1px solid var(--line);flex-shrink:0}
+  .gc b{display:block;font-size:14.5px;font-weight:700;letter-spacing:-.01em}
+  .gc span{display:block;font-size:12.5px;color:#334155;line-height:1.55;margin-top:2px}
+  .gc small{display:block;font-size:11px;color:var(--muted-dim);margin-top:4px}
+
+  .toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:12px}
+  .sel{font-size:13px;border:1px solid var(--line);border-radius:999px;padding:7px 12px;background:#fff;color:var(--text);max-width:100%}
+  .btn{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:600;color:var(--text);background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 13px;cursor:pointer;white-space:nowrap}
+  .btn:hover{border-color:var(--muted-dim)}
+  .btn.primary{background:var(--text);color:#fff;border-color:var(--text)}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:2px;background:var(--line-soft)}
+  .seg button{border:none;background:none;font-size:12px;font-weight:600;color:var(--muted);padding:5px 11px;border-radius:999px;cursor:pointer}
+  .seg button.on{background:#fff;color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+  .spacer{flex:1}
+  .note{font-size:12px;color:var(--muted);line-height:1.65;margin:0 0 12px;max-width:860px}
+  .frame-wrap{border:1px solid var(--line);border-radius:18px;background:var(--surface-hi);padding:12px;display:flex;justify-content:center}
+  iframe{width:100%;border:0;border-radius:12px;background:#fff;display:block;min-height:600px;transition:width .2s}
+  .frame-wrap.mobile iframe{width:390px;max-width:100%}
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--text);color:#fff;font-size:13px;font-weight:600;padding:9px 16px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .2s}
+  .toast.show{opacity:1}
+  @media (max-width:600px){
+    .topbar{padding:16px 16px 0}
+    .tab{padding:7px 12px;font-size:12.5px}
+    header{padding:24px 16px 12px}
+    main{padding:8px 16px 48px}
+    .frame-wrap{padding:6px}
+    .sel{flex:1 1 100%}
+  }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <nav class="tabs" aria-label="섹션">
+    <a class="tab" href="ada-archive.html">ADA 아카이브</a>
+    <a class="tab" href="field-guide.html">앱 관찰 기록부</a>
+    <a class="tab" href="impact.html">임팩트 레퍼런스</a>
+    <a class="tab" href="install-queue.html">다운로드 큐</a>
+    <a class="tab" href="my-apps.html">내 앱</a>
+    <a class="tab active" href="impact-plan.html">개선 계획</a>
+  </nav>
+</div>
+<header>
+  <p class="crumb"><a href="impact-plan.html#aso">개선 계획 · ASO</a> › 랜딩 페이지</p>
+  <h1 id="title">앱 랜딩 페이지</h1>
+  <p class="lede" id="lede">각 앱의 지원 URL에 둘 랜딩 페이지입니다. 문구는 <b>코드·스토어에서 확인한 기능만</b> 썼고, 영어 현지화가 있는 앱은 한국어/영어를 한 파일에 담았습니다. 앱을 고르면 미리 보기가 열리고, <b>단독 HTML 내려받기</b>로 받은 파일을 앱 저장소의 GitHub Pages(<code>docs/index.html</code> 등)에 그대로 올리면 됩니다.</p>
+</header>
+<main id="main"></main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="aso-data.js"></script>
+<script>
+const A = (window.ASO && window.ASO.apps) || {};
+function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+function toast(t){const e=document.getElementById("toast");e.textContent=t;e.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove("show"),1600);}
+
+// ── Accent colour from the app icon (mzstatic sends CORS headers) ──
+function iconAccent(url){
+  return new Promise(res=>{
+    const img=new Image(); img.crossOrigin="anonymous";
+    img.onload=()=>{try{
+      const c=document.createElement("canvas");c.width=c.height=32;const x=c.getContext("2d");x.drawImage(img,0,0,32,32);
+      const d=x.getImageData(0,0,32,32).data;let best=null,bs=-1;const bins={};
+      for(let i=0;i<d.length;i+=4){const r=d[i],g=d[i+1],b=d[i+2];const mx=Math.max(r,g,b),mn=Math.min(r,g,b);const sat=mx?(mx-mn)/mx:0;const l=(mx+mn)/510;
+        if(sat<.28||l<.18||l>.88) continue;const k=(r>>5)+","+(g>>5)+","+(b>>5);const o=bins[k]=bins[k]||{n:0,r:0,g:0,b:0,s:0};o.n++;o.r+=r;o.g+=g;o.b+=b;o.s+=sat;}
+      for(const o of Object.values(bins)){const sc=o.n*(o.s/o.n);if(sc>bs){bs=sc;best=o;}}
+      if(!best) return res(null);
+      let r=best.r/best.n,g=best.g/best.n,b=best.b/best.n;
+      // keep contrast with white text: darken until luminance is low enough
+      const lum=()=>{const f=v=>{v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)};return .2126*f(r)+.7152*f(g)+.0722*f(b)};
+      let n=0;while(lum()>.18&&n<20){r*=.9;g*=.9;b*=.9;n++;}
+      res("#"+[r,g,b].map(v=>Math.round(v).toString(16).padStart(2,"0")).join(""));
+    }catch(_){res(null);}};
+    img.onerror=()=>res(null); img.src=url;
+  });
+}
+
+// ── Standalone document ──
+function buildDoc(id, a, accent){
+  const m=a.meta, L=a.landing||{}, langs=["kr","en"].filter(k=>L[k]);
+  const ac=accent||"#0a84ff";
+  const priceOf=k=>k==="kr"?(m.price||""):(m.priceUS||"");
+  const store=k=>`https://apps.apple.com/${k==="kr"?"kr":"us"}/app/id${id}`;
+  const plat=k=>m.mac?"Mac":"iPhone";
+  const shots=(m.shots||[]).length?m.shots:[];
+  const sec=k=>{const l=L[k], ko=k==="kr";
+    return `<div class="lang" data-lang="${ko?"ko":"en"}"${langs.length>1&&!ko?" hidden":""}>
+<header class="hero wrap">
+  <img class="app-icon" src="${esc(m.icon)}" alt="${esc(ko?m.name:(a.store&&a.store.en&&a.store.en.name)||m.name)} ${ko?"아이콘":"icon"}" width="112" height="112">
+  <p class="eyebrow">${esc(l.eyebrow)}</p>
+  <h1>${esc(l.headline)}</h1>
+  <p class="sub">${esc(l.sub)}</p>
+  <p class="cta-row"><a class="cta" href="${store(k)}">${esc(l.cta||(ko?"App Store에서 받기":"Download on the App Store"))}</a><span class="meta">${esc(plat(k))}${priceOf(k)?" · "+esc(priceOf(k)):""}</span></p>
+</header>
+${shots.length?`<section class="shots${m.mac?" mac":""}" aria-label="${ko?"스크린샷":"Screenshots"}"><div class="strip">${shots.map((u,i)=>`<img src="${esc(u)}" alt="${ko?"스크린샷":"Screenshot"} ${i+1}" loading="lazy">`).join("")}</div></section>`:""}
+<section class="wrap features n${(l.features||[]).length}">
+  ${(l.features||[]).map(f=>`<article class="feature"><h2>${esc(f.title)}</h2><p>${esc(f.body)}</p></article>`).join("")}
+</section>
+${l.moment&&l.moment.title?`<section class="wrap moment"><h2>${esc(l.moment.title)}</h2><p>${esc(l.moment.body)}</p></section>`:""}
+<section class="wrap faq"><h2>${ko?"자주 묻는 질문":"FAQ"}</h2>
+  ${(l.faq||[]).map(q=>`<details><summary>${esc(q.q)}</summary><p>${esc(q.a)}</p></details>`).join("")}
+</section>
+${l.privacy?`<section class="wrap privacy"><h2>${ko?"데이터":"Privacy"}</h2><p>${esc(l.privacy)}</p></section>`:""}
+<section class="wrap final"><a class="cta" href="${store(k)}">${esc(l.cta||(ko?"App Store에서 받기":"Download on the App Store"))}</a></section>
+<footer class="wrap">
+  <p>${esc(m.dev||"")}${m.seller?` · <a href="${esc(m.seller)}">${ko?"지원":"Support"}</a>`:""} · <a href="${store(k)}">App Store</a></p>
+</footer>
+</div>`;};
+  const first=L[langs[0]];
+  return `<!DOCTYPE html>
+<html lang="${langs[0]==="en"?"en":"ko"}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${esc(first.title||m.name)}</title>
+<meta name="description" content="${esc(first.sub)}">
+${m.mac?"":`<meta name="apple-itunes-app" content="app-id=${id}">`}
+<meta property="og:title" content="${esc(first.title||m.name)}">
+<meta property="og:description" content="${esc(first.sub)}">
+<meta property="og:image" content="${esc(m.icon)}">
+<link rel="icon" href="${esc(m.icon)}">
+<style>
+:root{--bg:#ffffff;--surface:#f5f5f7;--text:#1d1d1f;--muted:#6e6e73;--line:#d2d2d7;--accent:${ac};--on-accent:#ffffff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#000000;--surface:#161617;--text:#f5f5f7;--muted:#a1a1a6;--line:#38383d}}
+:root[data-theme="dark"]{--bg:#000000;--surface:#161617;--text:#f5f5f7;--muted:#a1a1a6;--line:#38383d}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Apple SD Gothic Neo","Pretendard",system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:880px;margin:0 auto;padding-left:24px;padding-right:24px}
+.langbtn{position:fixed;top:14px;right:14px;z-index:2;font-size:13px;font-weight:600;line-height:1;font-family:inherit;color:var(--text);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:8px 12px;cursor:pointer}
+.hero{text-align:center;padding-top:72px;padding-bottom:40px}
+.app-icon{width:112px;height:112px;border-radius:25px;box-shadow:0 8px 24px rgba(0,0,0,.12);margin-bottom:22px}
+.eyebrow{font-size:14px;font-weight:600;color:var(--accent);margin-bottom:10px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .eyebrow{filter:brightness(1.6)}}
+h1{font-size:clamp(32px,6vw,56px);font-weight:700;letter-spacing:-.025em;line-height:1.1;margin-bottom:16px;text-wrap:balance;word-break:keep-all}
+.sub{font-size:clamp(17px,2.2vw,21px);color:var(--muted);max-width:640px;margin:0 auto 28px;text-wrap:pretty;word-break:keep-all}
+.cta-row{display:flex;flex-direction:column;align-items:center;gap:10px}
+.cta{display:inline-block;background:var(--accent);color:var(--on-accent);font-size:17px;font-weight:600;text-decoration:none;border-radius:999px;padding:14px 28px}
+.cta:hover{filter:brightness(1.08)}
+.meta{font-size:13px;color:var(--muted)}
+.shots{padding:8px 0 48px}
+.strip{display:flex;gap:16px;overflow-x:auto;padding:4px 24px 12px;scroll-snap-type:x mandatory;justify-content:safe center}
+.strip img{height:520px;max-height:70vh;width:auto;border-radius:22px;border:1px solid var(--line);scroll-snap-align:center;flex-shrink:0;background:var(--surface)}
+.shots.mac .strip img{height:340px;border-radius:12px}
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;padding-top:8px;padding-bottom:56px}
+.features.n4{grid-template-columns:repeat(2,minmax(0,1fr))}
+.feature{background:var(--surface);border-radius:20px;padding:24px}
+.feature h2{font-size:19px;font-weight:700;letter-spacing:-.01em;margin-bottom:8px;word-break:keep-all}
+.feature p{font-size:15px;color:var(--muted);word-break:keep-all}
+.moment{text-align:center;padding-top:24px;padding-bottom:64px}
+.moment h2{font-size:clamp(24px,3.6vw,34px);font-weight:700;letter-spacing:-.02em;margin-bottom:14px;word-break:keep-all;text-wrap:balance}
+.moment p{font-size:17px;color:var(--muted);max-width:620px;margin:0 auto;word-break:keep-all}
+.faq,.privacy{padding-bottom:48px}
+.faq h2,.privacy h2{font-size:22px;font-weight:700;margin-bottom:12px}
+details{border-top:1px solid var(--line);padding:14px 0}
+details:last-child{border-bottom:1px solid var(--line)}
+summary{font-size:16px;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--muted);font-weight:400}
+details[open] summary::after{content:"−"}
+details p{font-size:15px;color:var(--muted);margin-top:8px;word-break:keep-all}
+.privacy p{font-size:15px;color:var(--muted)}
+.final{text-align:center;padding-bottom:56px}
+footer{border-top:1px solid var(--line);padding-top:20px;padding-bottom:40px;font-size:13px;color:var(--muted);text-align:center}
+[hidden]{display:none!important}
+@media (max-width:600px){.wrap{padding-left:16px;padding-right:16px}.hero{padding-top:64px}.strip{padding:4px 16px 12px}.strip img{height:440px}.features.n4{grid-template-columns:1fr}.shots.mac .strip img{height:200px}}
+</style>
+</head>
+<body>
+${langs.length>1?`<button class="langbtn" type="button" id="langbtn">English</button>`:""}
+${langs.map(sec).join("\n")}
+${langs.length>1?`<script>
+(function(){var b=document.getElementById("langbtn"),s=document.querySelectorAll(".lang");
+function set(l){for(var i=0;i<s.length;i++){s[i].hidden=s[i].getAttribute("data-lang")!==l;}document.documentElement.lang=l;b.textContent=l==="ko"?"English":"한국어";try{localStorage.setItem("lang",l);}catch(e){}}
+var saved=null;try{saved=localStorage.getItem("lang");}catch(e){}
+set(saved||((navigator.language||"").toLowerCase().indexOf("ko")===0?"ko":"en"));
+b.addEventListener("click",function(){set(document.documentElement.lang==="ko"?"en":"ko");});})();
+<\/script>`:""}
+</body>
+</html>`;
+}
+
+// ── Views ──
+const ids = Object.keys(A).sort((x,y)=>A[x].meta.name.localeCompare(A[y].meta.name,"ko"));
+const q = new URLSearchParams(location.search), cur = q.get("id");
+const main = document.getElementById("main");
+
+function gallery(){
+  main.innerHTML = `<div class="grid">${ids.map(id=>{const a=A[id],l=a.landing.kr;
+    return `<a class="gc" href="?id=${id}"><img src="${esc(a.meta.icon)}" alt="" loading="lazy"><div><b>${esc(a.meta.name)}</b><span>${esc(l.headline)}</span><small>${a.landing.en?"한국어 · English":"한국어"}${a.meta.mac?" · Mac":""}</small></div></a>`;}).join("")}</div>`;
+}
+
+async function detail(id){
+  const a=A[id];
+  document.getElementById("title").textContent = `${a.meta.name} 랜딩 페이지`;
+  document.title = `${a.meta.name} · 랜딩 페이지`;
+  document.getElementById("lede").innerHTML = `${esc(a.positioning.promise)} — 아래는 받게 될 단독 HTML 파일 그대로의 미리 보기입니다.${a.meta.seller?` 지금 지원 URL: <a href="${esc(a.meta.seller)}" target="_blank" rel="noopener" style="color:var(--accent-dim);text-decoration:underline">${esc(a.meta.seller.replace(/^https?:\/\//,""))}</a>`:" 지금은 지원 URL이 없습니다 — 이 페이지를 올린 주소를 App Store Connect의 지원 URL·마케팅 URL에 넣으세요."}`;
+  main.innerHTML = `<div class="toolbar">
+      <select class="sel" id="pick" aria-label="앱 선택">${ids.map(i=>`<option value="${i}"${i===id?" selected":""}>${esc(A[i].meta.name)}</option>`).join("")}</select>
+      <span class="seg" role="group" aria-label="미리 보기 폭"><button type="button" class="on" data-w="desktop">데스크톱</button><button type="button" data-w="mobile">모바일</button></span>
+      <span class="spacer"></span>
+      <a class="btn" href="impact-plan.html#aso-${id}">ASO 계획 보기</a>
+      <button class="btn" type="button" id="open">새 탭에서 열기</button>
+      <button class="btn primary" type="button" id="dl">단독 HTML 내려받기</button>
+    </div>
+    <p class="note">파일 하나에 CSS·언어 전환이 모두 들어 있고 외부 스크립트가 없습니다. 아이콘·스크린샷은 App Store 이미지 주소를 그대로 씁니다(스크린샷을 바꾸면 자동으로 따라옵니다). ${a.landing.en?"한국어/영어는 방문자 기기 언어로 먼저 열리고 우상단 버튼으로 바꿀 수 있습니다.":"영어 현지화가 없어 한국어만 담았습니다."} 강조색은 앱 아이콘에서 뽑았습니다.</p>
+    <div class="frame-wrap" id="fw"><iframe id="frame" title="${esc(a.meta.name)} 랜딩 페이지 미리 보기"></iframe></div>`;
+  const accent = await iconAccent(a.meta.icon);
+  const html = buildDoc(id, a, accent);
+  const fr = document.getElementById("frame");
+  fr.addEventListener("load", ()=>{ try{ const h=fr.contentDocument.documentElement.scrollHeight; fr.style.height=(h+4)+"px"; }catch(_){} });
+  fr.srcdoc = html;
+  document.getElementById("pick").addEventListener("change", e=>{ location.search = "?id="+e.target.value; });
+  document.querySelector(".seg").addEventListener("click", e=>{ const b=e.target.closest("button"); if(!b) return;
+    document.querySelectorAll(".seg button").forEach(x=>x.classList.toggle("on",x===b));
+    document.getElementById("fw").classList.toggle("mobile", b.dataset.w==="mobile");
+    setTimeout(()=>{ try{ fr.style.height=(fr.contentDocument.documentElement.scrollHeight+4)+"px"; }catch(_){} }, 260); });
+  const blob = () => new Blob([html], {type:"text/html;charset=utf-8"});
+  document.getElementById("dl").addEventListener("click", ()=>{ const u=URL.createObjectURL(blob()), l=document.createElement("a");
+    l.href=u; l.download="index.html"; document.body.appendChild(l); l.click(); l.remove(); setTimeout(()=>URL.revokeObjectURL(u),2000); toast("index.html 내려받음"); });
+  document.getElementById("open").addEventListener("click", ()=>{ window.open(URL.createObjectURL(blob()), "_blank", "noopener"); });
+}
+
+if(cur && A[cur]) detail(cur); else gallery();
+</script>
+</body>
+</html>

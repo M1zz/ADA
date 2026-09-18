@@ -172,6 +172,115 @@
   .rest-item .plan{border:none;border-top:1px solid var(--line);border-radius:0 0 16px 16px;margin:0}
   .mergeline{font-size:12.5px;color:#4c1d95;background:#f5f3ff;border:1px solid #ddd6fe;border-radius:10px;padding:8px 12px}
   .btn{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:600;color:var(--text);background:#fff;border:1px solid var(--line);border-radius:8px;padding:6px 11px;cursor:pointer}
+  /* ── ASO ── */
+  .aso-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px}
+  .ast{border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:#fff}
+  .ast b{display:block;font-size:26px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1.1}
+  .ast b small{font-size:13px;color:var(--muted-dim);font-weight:600}
+  .ast span{font-size:12.5px;color:#334155;line-height:1.5}
+  .aso-how{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px}
+  .how{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:var(--surface-hi)}
+  .how h3{font-size:14.5px;font-weight:750;margin-bottom:6px}
+  .how p,.how li{font-size:12.5px;color:#334155;line-height:1.65}
+  .how ul{padding-left:16px}
+  .how b{color:var(--text)}
+  .check{border:1px solid var(--line);border-radius:16px;padding:14px 18px;margin-bottom:18px;background:#fff}
+  .check h3{font-size:15px;font-weight:750;margin-bottom:8px}
+  .check ol{padding-left:20px;display:grid;gap:5px}
+  .check li{font-size:13px;color:#334155;line-height:1.65}
+  .check li b{color:var(--text)}
+  .sub-h{font-size:17px;font-weight:750;letter-spacing:-.02em;margin:6px 0 10px}
+  .aso-filter{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+  .chip{font-family:inherit;font-size:12px;font-weight:600;border:1px solid var(--line);border-radius:999px;padding:5px 11px;background:#fff;color:var(--muted);cursor:pointer}
+  .chip.on{background:var(--text);border-color:var(--text);color:#fff}
+  .arow{display:grid;grid-template-columns:minmax(0,190px) minmax(0,1.4fr) minmax(0,1fr) 92px auto;gap:12px;align-items:center;padding:10px 12px;border-top:1px solid var(--line-soft);font-size:12.5px}
+  .arow:first-child{border-top:none}
+  .arows{border:1px solid var(--line);border-radius:16px;background:#fff;margin-bottom:18px}
+  .arow.head{font-size:10.5px;font-weight:700;letter-spacing:.08em;color:var(--muted-dim);padding-top:10px;padding-bottom:8px}
+  .an{display:flex;gap:9px;align-items:center;min-width:0}
+  .an img{width:34px;height:34px;border-radius:8px;border:1px solid var(--line);flex-shrink:0}
+  .an b{display:block;font-size:13.5px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .old{color:var(--muted-dim);text-decoration:line-through;text-decoration-color:#cbd5e1}
+  .new{color:var(--text);font-weight:600}
+  .kwl{display:flex;flex-wrap:wrap;gap:4px}
+  .kw{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:600;border:1px solid var(--line);border-radius:999px;padding:2px 8px;background:#fff;white-space:nowrap}
+  .kw.primary{border-color:#bae6fd;background:#f0f9ff;color:#075985}
+  .kw i{font-style:normal;font-size:10.5px;font-weight:700;color:var(--muted)}
+  .kw i.hit{color:var(--pos)}
+  .kw i.hard{color:var(--neg)}
+  .dl{font-variant-numeric:tabular-nums;color:#334155}
+  .dl b{color:var(--text)}
+  .abtns{display:flex;gap:6px;justify-content:flex-end}
+  .overlap{border:1px solid var(--line);border-radius:14px;padding:12px 16px;background:var(--surface-hi);font-size:12.5px;color:#334155;line-height:1.7}
+  .overlap b{color:var(--text)}
+
+  details.aso{border:1px solid #bae6fd;border-radius:14px;background:#fff;scroll-margin-top:12px}
+  details.aso > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:14px;background:#f0f9ff}
+  details.aso[open] > summary{border-radius:14px 14px 0 0;border-bottom:1px solid #bae6fd}
+  details.aso > summary::-webkit-details-marker{display:none}
+  details.aso > summary .al{font-size:10.5px;font-weight:700;letter-spacing:.08em;color:var(--accent-dim);white-space:nowrap}
+  details.aso > summary h5{font-size:14px;font-weight:750}
+  details.aso > summary p{font-size:12px;color:var(--muted);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  details.aso > summary::after{content:"▾";color:var(--accent-dim);font-size:12px;transition:transform .15s}
+  details.aso[open] > summary::after{transform:rotate(180deg)}
+  .aso-body{padding:14px;display:flex;flex-direction:column;gap:14px}
+  .strat{font-size:13.5px;color:#0c4a6e;line-height:1.7}
+  .pos4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+  .pos4 div{background:var(--surface-hi);border-radius:10px;padding:8px 10px;font-size:12.5px;line-height:1.55;color:#334155}
+  .pos4 small{display:block;font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--muted-dim);margin-bottom:2px}
+  .lseg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:2px;background:var(--line-soft);align-self:flex-start}
+  .lseg button{border:none;background:none;font-family:inherit;font-size:12px;font-weight:600;color:var(--muted);padding:5px 12px;border-radius:999px;cursor:pointer}
+  .lseg button.on{background:#fff;color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+  .ennote{font-size:12.5px;color:#92400e;background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:8px 12px;line-height:1.6}
+  .ah{font-size:10.5px;font-weight:700;letter-spacing:.1em;color:var(--muted-dim);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+  .ah .cp{margin-left:auto}
+  .ftab{width:100%;border-collapse:collapse;font-size:12.5px}
+  .ftab th{font-size:10.5px;font-weight:700;letter-spacing:.06em;color:var(--muted-dim);text-align:left;padding:4px 8px;border-bottom:1px solid var(--line)}
+  .ftab td{padding:8px;border-bottom:1px solid var(--line-soft);vertical-align:top;line-height:1.55}
+  .ftab td:first-child{font-weight:650;white-space:nowrap;color:var(--text)}
+  .ftab td.now{color:var(--muted)}
+  .ftab td.prop{color:var(--text);font-weight:550;word-break:break-word}
+  .cnt{display:block;font-size:10.5px;font-weight:600;color:var(--muted-dim);font-variant-numeric:tabular-nums}
+  .cnt.over{color:var(--neg)}
+  .cp{font-family:inherit;font-size:11px;font-weight:600;color:var(--accent-dim);background:#fff;border:1px solid #bae6fd;border-radius:6px;padding:3px 8px;cursor:pointer;white-space:nowrap}
+  .cp:hover{background:#f0f9ff}
+  .board{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+  .frame{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface-hi);display:flex;flex-direction:column}
+  .frame .cap{padding:10px 10px 8px;background:#0f172a;color:#fff}
+  .frame .cap b{display:block;font-size:13px;line-height:1.35;letter-spacing:-.01em}
+  .frame .cap span{display:block;font-size:11px;color:#cbd5e1;margin-top:3px;line-height:1.4}
+  .frame img{width:100%;aspect-ratio:9/16;object-fit:cover;object-position:top;display:block;opacity:.55;border-bottom:1px solid var(--line)}
+  .frame.mac img{aspect-ratio:16/10}
+  .frame .noimg{aspect-ratio:9/16;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted-dim);border-bottom:1px solid var(--line)}
+  .frame.mac .noimg{aspect-ratio:16/10}
+  .frame .sc{padding:8px 10px;font-size:11.5px;color:#334155;line-height:1.5}
+  .frame .sc small{display:block;font-size:10px;font-weight:700;color:var(--muted-dim);letter-spacing:.06em}
+  .desc{white-space:pre-wrap;font-size:13px;line-height:1.75;color:#334155;background:var(--surface-hi);border:1px solid var(--line);border-radius:12px;padding:12px 14px;max-height:360px;overflow:auto}
+  .desc .fold{color:var(--text);font-weight:600;background:#fef9c3;border-radius:3px}
+  .desc-now{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .levers{list-style:none;display:grid;gap:6px}
+  .levers li{display:grid;grid-template-columns:62px minmax(0,1fr);gap:10px;font-size:12.5px;color:#334155;line-height:1.6}
+  .levers li b{color:var(--text)}
+  .when{font-size:10.5px;font-weight:700;color:var(--accent-dim);background:#f0f9ff;border-radius:6px;padding:2px 6px;text-align:center;align-self:start;white-space:nowrap}
+  .afoot{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .ameta{font-size:12.5px;color:#334155;line-height:1.65;background:var(--surface-hi);border-radius:12px;padding:10px 14px}
+  .ameta b{color:var(--text)}
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--text);color:#fff;font-size:13px;font-weight:600;padding:9px 16px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:10}
+  .toast.show{opacity:1}
+  @media (max-width:980px){
+    .aso-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .aso-how{grid-template-columns:1fr}
+    .arow{grid-template-columns:minmax(0,1fr) auto}
+    .arow .c2,.arow .c3,.arow .c4{grid-column:1 / -1}
+    .arow.head{display:none}
+    .pos4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  }
+  @media (max-width:600px){
+    .pos4{grid-template-columns:1fr}
+    .ftab th:nth-child(2),.ftab td.now{display:none}
+    .board{grid-template-columns:repeat(2,minmax(0,1fr))}
+    details.aso > summary p{display:none}
+  }
   footer{max-width:1200px;margin:24px auto 0;padding:24px 32px 64px;border-top:1px solid var(--line);color:var(--muted-dim);font-size:12px;line-height:1.9}
   footer a{color:var(--accent-dim);text-decoration:underline;text-underline-offset:2px}
 
@@ -218,6 +327,7 @@
   <nav class="toc" aria-label="목차">
     <a href="#principles">원칙</a>
     <a href="#sequence">순서</a>
+    <a href="#aso">ASO · 스토어 문구</a>
     <a href="#plans">상위 6개 계획</a>
     <a href="#rest">나머지 40개 · 트랙별</a>
   </nav>
@@ -228,7 +338,7 @@
   <h2 class="sec-title">6개 앱 모두에 적용하는 네 가지</h2>
   <div class="principles">
     <div class="principle"><span class="pn">1 · 먼저 잰다</span><h3>측정이 없으면 도달도 깊이도 추정입니다</h3><p>지금 점수의 도달은 평점 수, 지속은 출시 이력으로 추정한 값입니다. 앱마다 <b>깊이를 보여 주는 지표 하나</b>를 기기 안에서 집계해 사용자에게 먼저 돌려주고(“이번 주 12분 아꼈어요”), 그 숫자로 점수를 갱신합니다.</p></div>
-    <div class="principle"><span class="pn">2 · 검증 비용을 낮춘다</span><h3>기능보다 스토어가 먼저</h3><p>6개 중 5개가 스토어 설명 1~3문장입니다. 스토어 문장과 첫 스크린샷을 바꾸는 데 드는 비용은 며칠이고, 이게 도달의 전제입니다. 새 기능은 스토어를 바꾼 뒤에도 도달이 안 움직일 때 만듭니다.</p></div>
+    <div class="principle"><span class="pn">2 · 검증 비용을 낮춘다</span><h3>기능보다 스토어가 먼저</h3><p>6개 중 5개가 스토어 설명 1~3문장입니다. 스토어 문장과 첫 스크린샷을 바꾸는 데 드는 비용은 며칠이고, 이게 도달의 전제입니다. 새 기능은 스토어를 바꾼 뒤에도 도달이 안 움직일 때 만듭니다. <a href="#aso" style="color:var(--accent-dim);text-decoration:underline">46개 앱 스토어 문구 →</a></p></div>
     <div class="principle"><span class="pn">3 · 반사실성을 앞에 둔다</span><h3>"내가 안 만들었으면 없었을 부분"을 첫 장에</h3><p>대체재가 많은 기능(메모, 타이머, 가계부)이 아니라 이 앱에만 있는 순간 — 안내방송 인식, 충동의 순간 개입, 작업 밀도 격자 — 을 스토어 첫 장과 첫 실행의 맨 앞에 둡니다.</p></div>
     <div class="principle"><span class="pn">4 · 판돈은 본인이 정한다</span><h3>숫자는 제가 드리지 않습니다</h3><p>각 계획 아래에 <b>"N주 뒤 [지표]가 [숫자] 미만이면 판돈을 줄인다"</b> 칸이 있습니다. 기준을 남이 정하면 반발이 되고, 본인이 정하면 계약이 됩니다. 입력한 값은 이 브라우저에만 저장됩니다.</p></div>
   </div>
@@ -239,6 +349,36 @@
   <h2 class="sec-title">6개를 동시에 하지 않습니다</h2>
   <p class="sec-sub">공통 작업(스토어·계측)은 한 번에 끝내고, 그다음은 <b>제품은 이미 준비됐고 발견이 병목인 앱</b>부터 판돈을 겁니다. 사용자 조사가 먼저 필요한 깊이형 앱은 인터뷰로 방향을 확인한 뒤에 겁니다.</p>
   <div class="seq" id="seq"></div>
+</section>
+
+<section class="block" id="aso">
+  <span class="sec-label">ASO · 스토어가 먼저</span>
+  <h2 class="sec-title">46개 앱의 스토어 문구와 랜딩 페이지</h2>
+  <p class="sec-sub">원칙 2를 실제로 실행하는 부분입니다. 앱마다 <b>검색 전략</b>(누구의 어떤 검색을 잡을지)과 <b>App Store Connect에 그대로 붙여 넣을 문구</b>(이름·부제·키워드·프로모션 텍스트·설명·스크린샷 캡션·업데이트 노트), 지원 URL에 둘 <b>랜딩 페이지</b>를 만들었습니다. 문구에는 코드·현재 스토어·스크린샷에서 확인한 기능만 넣었습니다. 영어 UI가 없는 앱은 영어 문구를 만들지 않고 이유를 적었습니다.</p>
+  <div class="aso-stats" id="asoStats"></div>
+  <div class="aso-how">
+    <div class="how"><h3>검색이 읽는 곳</h3><ul><li><b>이름 30자</b>가 가장 무겁고, 그다음이 <b>부제 30자</b>, <b>키워드 필드 100자</b>(비공개) 순입니다.</li><li>이름·부제에 이미 있는 단어는 키워드 필드에 다시 넣지 않습니다 — 100자를 새 단어에 씁니다.</li><li>경쟁 앱 이름, '무료', '최고'는 넣지 않습니다(심사 거절 사유).</li></ul></div>
+    <div class="how"><h3>설치가 결정되는 곳</h3><ul><li>검색 결과에는 <b>첫 스크린샷 2~3장</b>이 그대로 보입니다 — 캡션 한 줄이 설명 전체보다 많이 읽힙니다.</li><li>설명은 '더 보기' 전 <b>첫 3줄</b>만 보입니다. 누가·언제·무엇이 달라지는지를 거기에 둡니다.</li><li>평점 수가 적을수록 캡션과 첫 3줄의 비중이 커집니다.</li></ul></div>
+    <div class="how"><h3>바꾸기 전에 할 일</h3><p>App Store Connect <b>앱 분석 → 획득</b>에서 지난 30일의 <b>노출 수, 제품 페이지 조회 수, 전환율, 검색 유입 비중</b>을 적어 두세요. 이 값이 없으면 바꾼 문구가 효과가 있었는지 알 수 없습니다(원칙 1). 앱별 '검색어' 옆 순위는 iTunes 검색 API로 잰 근사치이고, 변경 4주 뒤 같은 방법으로 다시 잽니다.</p></div>
+  </div>
+  <div class="check">
+    <h3>0단계 체크리스트 — 앱마다 같은 순서로, 한 앱에 반나절</h3>
+    <ol>
+      <li><b>기준선 기록</b> — 위 네 지표와 주 검색어 순위를 적는다.</li>
+      <li><b>이름·부제·키워드</b> 교체 — 다음 버전 제출 때 함께 바뀝니다(이름·부제·키워드는 새 버전 심사가 필요).</li>
+      <li><b>프로모션 텍스트</b> — 심사 없이 언제든 바꿀 수 있으니 가장 먼저 시험합니다.</li>
+      <li><b>설명 첫 3줄 + 본문</b> 교체.</li>
+      <li><b>스크린샷 첫 3장</b>에 캡션 — 제안 캡션과 '보여 줄 화면'대로 다시 찍습니다.</li>
+      <li><b>US 스토어</b> — 영어 문구를 넣거나, 영어 UI가 없으면 판매 국가에서 빼는 것을 검토합니다(한국어 문구가 그대로 보이면 전환율만 깎입니다).</li>
+      <li><b>지원 URL = 랜딩 페이지</b> — 앱별 랜딩 페이지를 내려받아 저장소 GitHub Pages에 올리고 지원·마케팅 URL에 연결합니다.</li>
+    </ol>
+  </div>
+  <h3 class="sub-h">앱별 요약</h3>
+  <div class="aso-filter" id="asoFilter"></div>
+  <p class="meta" style="margin:0 0 8px">검색어 옆 숫자 = 지금 iTunes 검색 순위(200위까지, <span id="asoCollected"></span> 측정) · <b style="color:var(--pos)">초록</b> 10위 안 · <b style="color:var(--neg)">빨강</b> 상위 10개 앱의 평점 수 중앙값이 1,000개 이상(경쟁 높음) · 숫자가 없으면 아직 측정 전. 파란 테두리는 주 검색어입니다.</p>
+  <div class="arows" id="asoRows"></div>
+  <div class="overlap" id="asoOverlap"></div>
+  <p style="margin-top:12px"><a class="btn" href="landing.html">랜딩 페이지 46개 모아 보기 →</a></p>
 </section>
 
 <section class="block" id="plans">
@@ -266,11 +406,13 @@
 <footer>
   지금 점수는 <a href="my-apps.html#impactSec">내 앱 임팩트 측정</a>과 같은 값이고(도달은 평점 수, 지속은 출시·업데이트 이력 기반 추정, 반사실성은 추론), 목표 점수는 이 계획을 12주 동안 실행했을 때의 편집 판단입니다. 계획 항목의 근거는 각 앱 평가에서 확인한 스토어·스크린샷·코드 신호이며, 레퍼런스 버튼은 ADA 아카이브의 상세 분석 또는 임팩트 레퍼런스로 연결됩니다. 판돈 계약 칸의 입력은 서버로 보내지 않고 이 브라우저(localStorage)에만 저장됩니다.
 </footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script src="insights-data.js"></script>
 <script src="insights.js"></script>
 <script src="my-apps-data.js"></script>
 <script src="impact-plan-data.js"></script>
+<script src="aso-data.js"></script>
 <script>
 // ─── Plan data ────────────────────────────────────────────────────────────────
 // target: 12주 목표 점수 [reach, depth, dur, cf]. ref: insights 키(상세 분석) 또는 impact:이름(임팩트 레퍼런스).
@@ -447,6 +589,99 @@ function cardHTML(p){
     <div class="refs"><a class="btn" href="my-apps.html#impactSec">내 앱 평가에서 보기</a><a class="btn" href="${esc(a.url)}" target="_blank" rel="noopener">App Store ↗</a></div>
   </article>`;
 }
+// ─── ASO ──────────────────────────────────────────────────────────────────────
+const ASO_APPS = (window.ASO && window.ASO.apps) || {};
+const LIM = {name:30, subtitle:30, keywords:100, promo:170, description:4000};
+const len = s => [...String(s||"")].length;
+const ROLE_KO = {primary:"주", secondary:"보조", "long-tail":"롱테일"};
+function toast(t){ const e=document.getElementById("toast"); e.textContent=t; e.classList.add("show"); clearTimeout(toast.t); toast.t=setTimeout(()=>e.classList.remove("show"),1500); }
+function rankOf(id, loc, kw){
+  const r = ASO_APPS[id] && ASO_APPS[id].ranks && ASO_APPS[id].ranks[loc]; return r ? r[kw] : null;
+}
+function kwChip(id, loc, k){
+  const r = rankOf(id, loc, k.kw);
+  let tag = "";
+  if(r){
+    const pos = r.r ? `${r.r}위` : "순위 밖";
+    const hard = r.top >= 1000, cls = r.r && r.r<=10 ? "hit" : hard ? "hard" : "";
+    tag = `<i class="${cls}" title="iTunes 검색 ${r.n}개 결과 중 ${r.r?r.r+"위":"200위 밖"} · 상위 10개 평점 수 중앙값 ${r.top.toLocaleString()} (${hard?"경쟁 높음":r.top>=100?"경쟁 중간":"경쟁 낮음"})">${pos}</i>`;
+  }
+  return `<span class="kw ${k.role==="primary"?"primary":""}" title="${esc(ROLE_KO[k.role]||k.role)} · ${esc(k.why||"")}">${esc(k.kw)}${tag}</span>`;
+}
+function asoStub(id){
+  const a = ASO_APPS[id]; if(!a) return "";
+  const s = a.store.kr;
+  return `<details class="aso" id="aso-${id}" data-id="${id}">
+    <summary><span class="al">ASO</span><h5>스토어 문구 · 랜딩</h5><p>${esc(s.name)} — ${esc(s.subtitle)}</p></summary>
+    <div class="aso-body"></div>
+  </details>`;
+}
+function cpBtn(id, loc, f, label){ return `<button type="button" class="cp" data-cp="${id}|${loc}|${f}">${label||"복사"}</button>`; }
+function descHTML(t){
+  const lines = String(t||"").split("\n"); let seen=0, i=0;
+  for(; i<lines.length && seen<3; i++) if(lines[i].trim()) seen++;
+  return `<span class="fold">${esc(lines.slice(0,i).join("\n"))}</span>${i<lines.length?"\n"+esc(lines.slice(i).join("\n")):""}`;
+}
+function asoPanel(id, loc){
+  const a = ASO_APPS[id], s = a.store[loc], nowL = loc==="kr" ? a.now.kr : a.now.us, m = a.meta;
+  const cnt = (v,f) => `<span class="cnt${len(v)>LIM[f]?" over":""}">${len(v)}/${LIM[f]}자</span>`;
+  const row = (label, now, f) => `<tr><td>${label}</td><td class="now">${now?esc(now):"<span style='color:var(--muted-dim)'>없음</span>"}</td><td class="prop">${esc(s[f])}${cnt(s[f],f)}</td><td>${cpBtn(id,loc,f)}</td></tr>`;
+  const kws = (a.keywords[loc==="kr"?"kr":"us"]||[]);
+  const shots = s.shots.map((f,i)=>{ const u = m.shots[i];
+    return `<div class="frame${m.mac?" mac":""}"><div class="cap"><b>${esc(f.caption)}</b>${f.sub?`<span>${esc(f.sub)}</span>`:""}</div>
+      ${u?`<img src="${esc(u)}" alt="지금 ${i+1}번째 스크린샷" loading="lazy">`:`<div class="noimg">지금 ${i+1}번째 장 없음</div>`}
+      <div class="sc"><small>${i+1}번째 장 · 보여 줄 화면</small>${esc(f.scene)}</div></div>`; }).join("");
+  const cat = a.category;
+  return `<table class="ftab">
+      <thead><tr><th>항목</th><th>지금 (${loc==="kr"?"KR":"US"})</th><th>제안</th><th></th></tr></thead>
+      <tbody>
+        ${row("이름", nowL&&nowL.name, "name")}
+        ${row("부제", nowL&&nowL.subtitle, "subtitle")}
+        <tr><td>키워드</td><td class="now">비공개 필드</td><td class="prop">${esc(s.keywords)}${cnt(s.keywords,"keywords")}</td><td>${cpBtn(id,loc,"keywords")}</td></tr>
+        ${row("프로모션", "", "promo")}
+        <tr><td>카테고리</td><td class="now">${esc(cat.current||(nowL&&nowL.genre)||"")}</td><td class="prop">${esc(cat.proposed)}${cat.secondary?` · 2차 ${esc(cat.secondary)}`:""}<span class="cnt">${esc(cat.why)}</span></td><td></td></tr>
+      </tbody></table>
+    <div><p class="ah">검색어 · iTunes 검색 순위(근사치)</p><div class="kwl">${kws.map(k=>kwChip(id, loc==="kr"?"kr":"us", k)).join("")||'<span class="meta">없음</span>'}</div></div>
+    <div><p class="ah">스크린샷 캡션 · 위는 제안 캡션, 아래는 지금 그 자리의 스크린샷</p><div class="board">${shots}</div></div>
+    <div><p class="ah">설명 · 노란 부분이 '더 보기' 전에 보이는 첫 3줄 <span class="cnt${len(s.description)>4000?" over":""}">${len(s.description)}자</span>${cpBtn(id,loc,"description")}</p>
+      <div class="desc">${descHTML(s.description)}</div>
+      <p class="desc-now">지금 설명(${len(nowL&&nowL.desc)}자): ${esc((nowL&&nowL.desc||"").slice(0,160))}${len(nowL&&nowL.desc)>160?"…":""}</p></div>
+    <div><p class="ah">다음 업데이트 노트 예시 · 계획 항목이 들어 있으면 그 기능을 출시한 빌드에서만 ${cpBtn(id,loc,"whatsNew")}</p><div class="desc" style="max-height:160px">${esc(s.whatsNew)}</div></div>`;
+}
+function asoBody(id){
+  const a = ASO_APPS[id], P = a.positioning, hasEn = !!a.store.en;
+  return `<p class="strat">${esc(a.strategy)}</p>
+    <div class="pos4"><div><small>누구</small>${esc(P.who)}</div><div><small>어떤 순간</small>${esc(P.moment)}</div><div><small>달라지는 것</small>${esc(P.promise)}</div><div><small>맞지 않는 사람</small>${esc(P.notFor)}</div></div>
+    ${hasEn?`<div class="lseg" role="group" aria-label="스토어"><button type="button" class="on" data-loc="kr">한국 스토어</button><button type="button" data-loc="en">US 스토어 (영어)</button></div>`:""}
+    ${a.store.enNote?`<p class="${hasEn?"ameta":"ennote"}"><b>US 스토어</b> — ${esc(a.store.enNote)}</p>`:""}
+    <div class="aso-panel" data-panel="kr">${asoPanel(id,"kr")}</div>
+    ${hasEn?`<div class="aso-panel" data-panel="en" hidden>${asoPanel(id,"en")}</div>`:""}
+    <div><p class="ah">스토어 밖 레버</p><ul class="levers">${(a.levers||[]).map(l=>`<li><span class="when">${esc(l.when)}</span><div><b>${esc(l.what)}</b> — ${esc(l.how)}</div></li>`).join("")}</ul></div>
+    <div class="ameta">${a.localize&&a.localize.length?`<b>현지화</b> — ${a.localize.map(l=>`${esc(l.locale)}: ${esc(l.why)}`).join(" · ")}<br>`:""}<b>효과 측정</b> — ${esc(a.measure)}<br><b>투자 크기</b> — ${esc(a.trackNote)}</div>
+    <div class="afoot"><a class="btn" href="landing.html?id=${id}">랜딩 페이지 미리 보기 · 내려받기</a>${cpBtn(id,"all","all","App Store Connect용 전체 복사")}</div>`;
+}
+function fullText(id){
+  const a = ASO_APPS[id];
+  return ["kr","en"].filter(k=>a.store[k]).map(k=>{ const s=a.store[k];
+    return `[${k==="kr"?"한국어 (KR)":"English (US)"}]\n이름: ${s.name}\n부제: ${s.subtitle}\n키워드: ${s.keywords}\n프로모션 텍스트: ${s.promo}\n\n설명:\n${s.description}\n\n스크린샷 캡션:\n${s.shots.map((f,i)=>`${i+1}. ${f.caption}${f.sub?" / "+f.sub:""}`).join("\n")}\n\n업데이트 노트:\n${s.whatsNew}`; }).join("\n\n────────\n\n");
+}
+async function copyText(t){
+  try{ await navigator.clipboard.writeText(t); }
+  catch(_){ const ta=document.createElement("textarea"); ta.value=t; ta.style.position="fixed"; ta.style.opacity="0"; document.body.appendChild(ta); ta.select(); try{document.execCommand("copy");}catch(_){ } ta.remove(); }
+  toast("복사했습니다");
+}
+document.addEventListener("toggle", e=>{
+  const d = e.target; if(!(d.matches && d.matches("details.aso")) || !d.open) return;
+  const b = d.querySelector(".aso-body"); if(!b.dataset.ready){ b.innerHTML = asoBody(d.dataset.id); b.dataset.ready = "1"; }
+}, true);
+document.addEventListener("click", e=>{
+  const c = e.target.closest("[data-cp]");
+  if(c){ const [id,loc,f] = c.dataset.cp.split("|"); copyText(f==="all" ? fullText(id) : ASO_APPS[id].store[loc][f]); return; }
+  const l = e.target.closest(".lseg button");
+  if(l){ const body = l.closest(".aso-body"); body.querySelectorAll(".lseg button").forEach(x=>x.classList.toggle("on",x===l));
+    body.querySelectorAll("[data-panel]").forEach(p=>p.hidden = p.dataset.panel!==l.dataset.loc); }
+});
+
 const KEY = "ada-impact-plan-v1";
 let contracts = {}; try{ contracts = JSON.parse(localStorage.getItem(KEY)||"{}"); }catch(_){}
 function planHTML(p){
@@ -461,6 +696,7 @@ function planHTML(p){
       ${p.track==="merge"&&p.mergeWith?`<p class="mergeline"><b>합치기 대상:</b> ${esc(p.mergeWith)} — ${esc(p.trackWhy||"")}</p>`:""}
       <p class="hyp">${p.hyp}</p>
       ${phases}
+      ${asoStub(p.id)}
       <div class="contract" data-id="${p.id}">
         <h5>판돈 계약 — 숫자는 직접 정하세요</h5>
         <p class="hint">기준선(0–2주 계측)을 본 뒤에 채우는 걸 권합니다. 지표는 제안일 뿐이니 바꿔도 됩니다.</p>
@@ -525,6 +761,68 @@ function renderRest(){
 document.getElementById("tracks").addEventListener("click", e=>{ const b=e.target.closest("[data-track]"); if(!b) return; restState.track=b.dataset.track; renderRest(); });
 document.getElementById("restSort").addEventListener("change", e=>{ restState.sort=e.target.value; renderRest(); });
 renderRest();
+
+// ─── ASO section ──────────────────────────────────────────────────────────────
+const TRACK_OF = Object.fromEntries([...PLANS.map(p=>[p.id,"top"]), ...REST.map(p=>[p.id,p.track])]);
+const ASO_TRACKS = [["all","전체"],["top","상위 6개"],...TRACK_ORDER.map(t=>[t,TRACKS[t][0]])];
+const asoState = {track:"all"};
+const hangul = s => /[가-힣]/.test(s||"");
+const GENRE_WORDS = /^(Lifestyle|Entertainment|Utilities|Productivity|Education|라이프스타일|엔터테인먼트|유틸리티|개발자 도구|Journal)$/i;
+function renderAsoStats(){
+  const ids = Object.keys(ASO_APPS), N = ids.length, now = id => ASO_APPS[id].now;
+  const shortDesc = ids.filter(id=>len(now(id).kr&&now(id).kr.desc)<100).length;
+  const weakSub = ids.filter(id=>{const s=(now(id).kr||now(id).us||{}).subtitle; return !s || GENRE_WORDS.test(s.trim());}).length;
+  const usKo = ids.filter(id=>now(id).us && hangul(now(id).us.name)).length;
+  const en = ids.filter(id=>ASO_APPS[id].store.en).length;
+  const tile = (v,t) => `<div class="ast"><b>${v}<small> / ${N}</small></b><span>${t}</span></div>`;
+  document.getElementById("asoStats").innerHTML =
+    tile(shortDesc, "지금 KR 설명이 100자 미만인 앱") +
+    tile(weakSub, "부제가 없거나 장르 이름('Lifestyle' 등)인 앱") +
+    tile(usKo, "US 스토어에 한국어 이름이 그대로 보이는 앱") +
+    tile(en, "영어 UI가 있어 US용 영어 문구를 만든 앱");
+}
+function renderAsoRows(){
+  const cnt = t => Object.keys(ASO_APPS).filter(id=>t==="all"||TRACK_OF[id]===t).length;
+  document.getElementById("asoFilter").innerHTML = ASO_TRACKS.map(([t,l])=>`<button type="button" class="chip${asoState.track===t?" on":""}" data-atrack="${t}">${l} ${cnt(t)}</button>`).join("");
+  const order = ["top",...TRACK_ORDER];
+  const ids = Object.keys(ASO_APPS).filter(id=>asoState.track==="all"||TRACK_OF[id]===asoState.track)
+    .sort((x,y)=>order.indexOf(TRACK_OF[x])-order.indexOf(TRACK_OF[y]) || APPS[x].name.localeCompare(APPS[y].name,"ko"));
+  document.getElementById("asoRows").innerHTML = `<div class="arow head"><span>앱</span><span>이름 · 부제 (지금 → 제안)</span><span>주 검색어 · 순위</span><span>설명 길이</span><span></span></div>` + ids.map(id=>{
+    const a = ASO_APPS[id], s = a.store.kr, n = a.now.kr || a.now.us || {}, t = TRACK_OF[id];
+    const badge = t==="top" ? `<span class="tbadge invest">상위 6</span>` : `<span class="tbadge ${t}">${TRACKS[t][0]}</span>`;
+    const prim = (a.keywords.kr||[]).filter(k=>k.role==="primary").slice(0,3);
+    return `<div class="arow">
+      <div class="an"><img src="${esc(APPS[id].icon)}" alt="" loading="lazy"><div style="min-width:0"><b>${esc(APPS[id].name)}</b>${badge}${a.store.en?` <span class="tb">EN</span>`:""}</div></div>
+      <div class="c2"><span class="old">${esc(n.name)}${n.subtitle?" — "+esc(n.subtitle):""}</span><br><span class="new">${esc(s.name)} — ${esc(s.subtitle)}</span></div>
+      <div class="c3 kwl">${prim.map(k=>kwChip(id,"kr",k)).join("")}</div>
+      <div class="c4 dl">${len(n.desc)}자 → <b>${len(s.description)}자</b></div>
+      <div class="abtns"><a class="btn" href="#aso-${id}" data-open-aso="${id}">문구</a><a class="btn" href="landing.html?id=${id}">랜딩</a></div>
+    </div>`;}).join("");
+}
+function renderAsoOverlap(){
+  const by = {};
+  for(const [id,a] of Object.entries(ASO_APPS)) for(const k of (a.keywords.kr||[])) if(k.role!=="long-tail"){ const w=k.kw.replace(/\s+/g,""); (by[w]=by[w]||{kw:k.kw,ids:new Set()}).ids.add(id); }
+  const shared = Object.values(by).filter(o=>o.ids.size>1).sort((x,y)=>y.ids.size-x.ids.size);
+  document.getElementById("asoOverlap").innerHTML = shared.length
+    ? `<b>내 앱끼리 겹치는 검색어 ${shared.length}개</b> — 같은 검색어를 두 앱이 노리면 서로의 순위를 나눠 먹습니다. 합치기 트랙이거나 역할이 다르면 한쪽 이름·부제에서는 빼는 것을 권합니다.<br>` +
+      shared.map(o=>`<span class="kw" style="margin:4px 4px 0 0">${esc(o.kw)}</span> ${[...o.ids].map(i=>esc(APPS[i].name)).join(" · ")}`).join("<br>")
+    : `<b>내 앱끼리 겹치는 주·보조 검색어가 없습니다</b> — 46개 앱이 서로 다른 검색 의도를 나눠 맡도록 골랐습니다.`;
+}
+function openAso(id){
+  let d = document.getElementById("aso-"+id);
+  if(!d && REST.some(p=>p.id===id)){ restState.track="all"; renderRest(); d = document.getElementById("aso-"+id); }
+  if(!d) return;
+  const r = d.closest(".rest-item"); if(r) r.open = true;
+  d.open = true;
+  requestAnimationFrame(()=>d.scrollIntoView({behavior:"smooth", block:"start"}));
+}
+if(Object.keys(ASO_APPS).length){
+  renderAsoStats(); renderAsoRows(); renderAsoOverlap();
+  document.getElementById("asoCollected").textContent = window.ASO.ranksAt || window.ASO.collected;
+  document.getElementById("asoFilter").addEventListener("click", e=>{ const b=e.target.closest("[data-atrack]"); if(!b) return; asoState.track=b.dataset.atrack; renderAsoRows(); });
+  document.addEventListener("click", e=>{ const a=e.target.closest("[data-open-aso]"); if(!a) return; e.preventDefault(); history.replaceState(null,"","#aso-"+a.dataset.openAso); openAso(a.dataset.openAso); });
+  if(location.hash.startsWith("#aso-")) openAso(location.hash.slice(5));
+} else document.getElementById("aso").hidden = true;
 
 document.addEventListener("input", e=>{
   const box = e.target.closest(".contract"); if(!box) return;

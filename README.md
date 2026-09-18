@@ -118,6 +118,19 @@ A 12-week plan for the six apps with the highest potential impact on the My Apps
   maintain 12, merge 5, reduce 6, fold 9 — with a plan sized to that track, the same card / phases / stakes
   contract, and a merge target where relevant. Track filters and sorting (track, potential, 12-week gain, name).
   Data in `docs/impact-plan-data.js`; security-related items stay generic on this public page
+- **ASO and store copy for all 46 apps** (principle 2 carried out): per app a search strategy (who, which
+  searches, competition checked against real App Store search results), paste-ready App Store Connect copy
+  (name, subtitle, keyword field, promotional text, description, screenshot captions with the scene to shoot,
+  a sample release note) in Korean and, where the app has an English UI, English; category, localization and
+  off-store levers (in-app events, custom product pages, review prompt placement), and how to measure the effect.
+  Copy only claims features confirmed in the source code, current listing or screenshots; privacy statements
+  were checked against the code. The section shows the current listing next to the proposal, character counts
+  against App Store limits, current iTunes Search position per keyword, keyword overlap between the developer's
+  own apps, and a 7-step checklist. Data in `docs/aso-data.js`
+- **Landing pages** (`docs/landing.html?id=<App Store ID>`): one template renders each app's landing page from
+  the same data (hero, screenshots, features, the moment it's for, FAQ, privacy, Smart App Banner) with an
+  accent color taken from the app icon, light/dark mode and a Korean/English switch. **Download standalone
+  HTML** saves a single self-contained `index.html` to drop into the app repo's GitHub Pages
 
 ## Data Source
 
