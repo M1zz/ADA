@@ -13,6 +13,7 @@
         fetched:d=>`App Store figures fetched ${d} via the iTunes Lookup API. Other figures link to their source; check the date on each.`,
         removed:"Not currently on the App Store", close:"Close", source:"Source",
         wow:"Wow point", legacy:"The mark it left",
+        story:"Tell it as a story", storyMsg:"Message", storyScript:"Script (about 1 min)", copy:"Copy script", copied:"Copied",
         tags:{tech:"Tech feat",design:"Design call",scale:"Scale",indie:"Tiny team",first:"First ever",copied:"Widely copied",realworld:"Real-world impact",business:"Business model",accessibility:"Accessibility"}},
     ko:{btn:"상세 분석", points:"왜 좋은 앱인가", impact:"임팩트", evidence:"측정 근거",
         store:"App Store 실측", ratings:n=>`평점 ${n}개`, released:"출시", updated:"최근 업데이트",
@@ -20,6 +21,7 @@
         fetched:d=>`App Store 수치는 ${d}에 iTunes Lookup API로 수집했습니다. 그 외 수치는 출처 링크와 기준 시점을 함께 확인하세요.`,
         removed:"현재 App Store에서 찾을 수 없음", close:"닫기", source:"출처",
         wow:"와우 포인트", legacy:"남긴 임팩트",
+        story:"이야기로 전하기", storyMsg:"메시지", storyScript:"대본 (약 1분)", copy:"대본 복사", copied:"복사됨",
         tags:{tech:"기술력",design:"설계 결단",scale:"규모",indie:"작은 팀",first:"최초",copied:"업계가 따라함",realworld:"현실을 바꿈",business:"비즈니스 모델",accessibility:"접근성"}}
   };
 
@@ -51,7 +53,20 @@
     return `<section class="wow-sec">${tags?`<div class="wow-tags">${tags}</div>`:""}
       <h4>${t.wow}</h4><p class="wow-big">${esc(wt)}</p>
       ${lg?`<h4>${t.legacy}</h4><p class="wow-legacy">${esc(lg)}</p>`:""}
-      ${src?`<div class="ins-src wow-src">${t.source} · ${src}</div>`:""}</section>`;
+      ${src?`<div class="ins-src wow-src">${t.source} · ${src}</div>`:""}</section>${storySection(w,lang)}`;
+  }
+  function storySection(w, lang){
+    const st=w.story; if(!st) return "";
+    const t=L[lang], title=pickLang(st.title,lang), msg=pickLang(st.message,lang), sc=pickLang(st.script,lang)||"";
+    if(!title||!sc) return "";
+    const paras=sc.split(/\n\s*\n/).map(p=>`<p>${esc(p.trim())}</p>`).join("");
+    const plain=`${title}\n\n${msg?msg+"\n\n":""}${sc}`;
+    return `<section class="story-sec"><h4>${t.story}</h4>
+      <p class="story-title">${esc(title)}</p>
+      ${msg?`<div class="story-msg"><span>${t.storyMsg}</span>${esc(msg)}</div>`:""}
+      <div class="story-head"><span>${t.storyScript}</span>
+        <button type="button" class="story-copy" data-copy="${esc(plain)}" data-done="${t.copied}">${t.copy}</button></div>
+      <div class="story-script">${paras}</div></section>`;
   }
 
   function bodyHTML(key, lang){
@@ -116,6 +131,12 @@
     if(!d.open) d.showModal();
   }
   document.addEventListener("click",e=>{
+    const c=e.target.closest(".story-copy"); if(!c) return;
+    const label=c.textContent;
+    const done=()=>{c.textContent=c.dataset.done;setTimeout(()=>c.textContent=label,1500);};
+    if(navigator.clipboard) navigator.clipboard.writeText(c.dataset.copy).then(done,()=>{});
+  });
+  document.addEventListener("click",e=>{
     const b=e.target.closest("[data-insight]"); if(!b) return;
     e.preventDefault(); open(b.dataset.insight, b.dataset.lang==="en"?"en":"ko");
   });
@@ -164,6 +185,16 @@
   .wow-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
   .wow-tag{font-size:11px;font-weight:700;color:#9a3412;background:#fff;border:1px solid #fed7aa;border-radius:999px;padding:3px 9px}
   .wow-src{margin-top:4px}
+  .story-sec{margin-top:14px;padding:14px 16px 16px!important;border-radius:14px;border:1px solid var(--line);background:var(--surface-hi,#f8fafc)}
+  .story-title{font-size:18px;line-height:1.4;font-weight:750;letter-spacing:-.01em;color:var(--text);margin-bottom:10px}
+  .story-msg{font-size:14px;line-height:1.6;color:var(--text);font-weight:600;padding:9px 12px;border-left:3px solid var(--accent);background:#fff;border-radius:0 9px 9px 0;margin-bottom:12px}
+  .story-msg span,.story-head span{display:block;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+  .story-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+  .story-head span{margin:0}
+  .story-copy{font:inherit;font-size:12px;font-weight:600;cursor:pointer;color:var(--text);background:#fff;border:1px solid var(--line);border-radius:8px;padding:5px 10px}
+  .story-copy:hover{border-color:var(--muted-dim)}
+  .story-script p{font-size:14.5px;line-height:1.75;color:#334155;margin-bottom:10px}
+  .story-script p:last-child{margin-bottom:0}
   @media (max-width:600px){
     .ins-dialog{width:100%;max-width:none;margin:auto 0 0;max-height:92dvh}
     .ins-sheet{border-radius:18px 18px 0 0;max-height:92dvh}
