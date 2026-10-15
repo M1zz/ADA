@@ -453,6 +453,7 @@
 </footer>
 
 <script src="insights-data.js"></script>
+<script src="wow-data.js"></script>
 <script src="insights.js"></script>
 <script src="install-data.js"></script>
 <script>
@@ -743,6 +744,7 @@ function cardHTML(it){
       </div>
     </div>
     ${ada}
+    ${window.Insights?Insights.wow(it.key,"ko"):""}
     <div class="impact"><span class="look-label">임팩트 지표</span>${escapeHtml(it.metric)}</div>
     <div class="look"><span class="look-label">관찰 포인트 · 이 임팩트를 만든 설계</span>${escapeHtml(it.look)}</div>
     <div class="card-foot">

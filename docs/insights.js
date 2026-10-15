@@ -4,18 +4,23 @@
 // "Deep dive" button per card and a modal sheet with the full analysis.
 (function(){
   const DATA = window.INSIGHTS_DATA || {apps:{}, alias:{}, fetched:""};
+  const WOW = (window.WOW_DATA && window.WOW_DATA.apps) || {};
 
   const L = {
     en:{btn:"Deep dive", points:"What makes it good", impact:"Impact", evidence:"Evidence & metrics",
         store:"App Store (measured)", ratings:n=>`${n} ratings`, released:"Released", updated:"Last update",
         noMetrics:"No public quantitative metrics found — evidence below is qualitative.",
         fetched:d=>`App Store figures fetched ${d} via the iTunes Lookup API. Other figures link to their source; check the date on each.`,
-        removed:"Not currently on the App Store", close:"Close", source:"Source"},
+        removed:"Not currently on the App Store", close:"Close", source:"Source",
+        wow:"Wow point", legacy:"The mark it left",
+        tags:{tech:"Tech feat",design:"Design call",scale:"Scale",indie:"Tiny team",first:"First ever",copied:"Widely copied",realworld:"Real-world impact",business:"Business model",accessibility:"Accessibility"}},
     ko:{btn:"상세 분석", points:"왜 좋은 앱인가", impact:"임팩트", evidence:"측정 근거",
         store:"App Store 실측", ratings:n=>`평점 ${n}개`, released:"출시", updated:"최근 업데이트",
         noMetrics:"공개된 정량 지표를 찾지 못했습니다 — 아래 근거는 정성적 자료입니다.",
         fetched:d=>`App Store 수치는 ${d}에 iTunes Lookup API로 수집했습니다. 그 외 수치는 출처 링크와 기준 시점을 함께 확인하세요.`,
-        removed:"현재 App Store에서 찾을 수 없음", close:"닫기", source:"출처"}
+        removed:"현재 App Store에서 찾을 수 없음", close:"닫기", source:"출처",
+        wow:"와우 포인트", legacy:"남긴 임팩트",
+        tags:{tech:"기술력",design:"설계 결단",scale:"규모",indie:"작은 팀",first:"최초",copied:"업계가 따라함",realworld:"현실을 바꿈",business:"비즈니스 모델",accessibility:"접근성"}}
   };
 
   function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
@@ -32,6 +37,23 @@
     return `<div class="ins-stats">${cell("US",s.us)}${cell("KR",s.kr)}</div>${meta?`<p class="ins-meta">${meta}</p>`:""}`;
   }
 
+  // "Wow point": the one jaw-dropping fact + the mark it left (wow-data.js).
+  function wowFor(name){const k=resolve(name)||name;return WOW[k]||WOW[name]||null;}
+  function wow(name, lang){
+    const w=wowFor(name), txt=w&&pickLang(w.wow,lang); if(!txt) return "";
+    return `<div class="wow"><span class="wow-label">${L[lang].wow}</span>${esc(txt)}</div>`;
+  }
+  function wowSection(key, lang){
+    const w=wowFor(key); if(!w) return "";
+    const t=L[lang], wt=pickLang(w.wow,lang), lg=pickLang(w.legacy,lang);
+    const tags=(w.tags||[]).filter(x=>t.tags[x]).map(x=>`<span class="wow-tag">${t.tags[x]}</span>`).join("");
+    const src=(w.src||[]).map(s=>`<a href="${esc(s.u)}" target="_blank" rel="noopener">${esc(s.t)}</a>`).join("");
+    return `<section class="wow-sec">${tags?`<div class="wow-tags">${tags}</div>`:""}
+      <h4>${t.wow}</h4><p class="wow-big">${esc(wt)}</p>
+      ${lg?`<h4>${t.legacy}</h4><p class="wow-legacy">${esc(lg)}</p>`:""}
+      ${src?`<div class="ins-src wow-src">${t.source} · ${src}</div>`:""}</section>`;
+  }
+
   function bodyHTML(key, lang){
     const a=DATA.apps[key], t=L[lang];
     const list=(arr)=>arr&&arr.length?`<ul class="ins-list">${arr.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:"";
@@ -41,7 +63,7 @@
       return `<li><span>${esc(txt)}</span>
         <span class="ins-src">${e.date?`<span class="ins-date">${esc(e.date)}</span>`:""}${e.url?`<a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.source||host)}</a>`:esc(e.source||"")}</span></li>`;
     }).join("");
-    return `
+    return `${wowSection(key,lang)}
       <section><h4>${t.points}</h4>${list(pickLang(a.points,lang))}</section>
       <section><h4>${t.impact}</h4>${list(pickLang(a.impact,lang))}</section>
       <section><h4>${t.evidence}</h4>
@@ -131,6 +153,17 @@
   .ins-meta{font-size:12px;color:var(--muted);margin:8px 0 12px}
   .ins-note{font-size:12.5px;color:#92400e;background:#fef3c7;border:1px solid #fde68a;border-radius:9px;padding:8px 10px;margin:8px 0 12px}
   .ins-foot{font-size:11px;color:var(--muted-dim);margin-top:16px;line-height:1.6}
+  .wow{font-size:13px;line-height:1.6;color:var(--text);font-weight:500;margin:10px 0 4px;padding:11px 13px;
+    background:linear-gradient(135deg,#fff7ed,#fdf2f8);border:1px solid #fed7aa;border-radius:11px}
+  .wow-label{display:block;font-size:9.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#c2410c;margin-bottom:5px}
+  .wow-sec{margin-top:14px;padding:14px 16px 16px!important;border-radius:14px;background:linear-gradient(135deg,#fff7ed,#fdf2f8);border:1px solid #fed7aa}
+  .wow-sec h4{color:#c2410c}
+  .wow-sec h4+p{margin-bottom:12px}
+  .wow-big{font-size:16px;line-height:1.6;font-weight:650;color:var(--text)}
+  .wow-legacy{font-size:14px;line-height:1.65;color:#334155}
+  .wow-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+  .wow-tag{font-size:11px;font-weight:700;color:#9a3412;background:#fff;border:1px solid #fed7aa;border-radius:999px;padding:3px 9px}
+  .wow-src{margin-top:4px}
   @media (max-width:600px){
     .ins-dialog{width:100%;max-width:none;margin:auto 0 0;max-height:92dvh}
     .ins-sheet{border-radius:18px 18px 0 0;max-height:92dvh}
@@ -139,5 +172,5 @@
   }`;
   const st=document.createElement("style"); st.textContent=css; document.head.appendChild(st);
 
-  window.Insights={button, open, openCustom, has:n=>!!resolve(n)};
+  window.Insights={button, open, openCustom, wow, has:n=>!!resolve(n)};
 })();
