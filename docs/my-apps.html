@@ -69,6 +69,10 @@
   .bar-fill{position:absolute;left:0;top:0;bottom:0;background:var(--bar);border-radius:0 4px 4px 0}
   .bar-row .bv{font-weight:700;font-variant-numeric:tabular-nums;text-align:right;color:var(--text)}
   .bar-row:hover .bar-fill{filter:brightness(1.12)}
+  .bar-prev{position:absolute;top:-3px;bottom:-3px;width:2px;background:#0f172a;opacity:.45;border-radius:1px}
+  .bar-row .bd{font-size:11px;font-weight:700;margin-left:3px}
+  .up{color:#15803d}.down{color:#b91c1c}.same{color:var(--muted-dim)}
+  .delta-line{font-size:12.5px;color:var(--muted);margin-top:10px}
   .axis{display:grid;grid-template-columns:132px minmax(0,1fr) 40px;gap:10px;font-size:10.5px;color:var(--muted-dim);margin-top:6px}
   .axis .ticks{display:flex;justify-content:space-between;font-variant-numeric:tabular-nums}
   .tip{position:fixed;z-index:60;pointer-events:none;background:#0f172a;color:#fff;font-size:12px;line-height:1.5;padding:8px 10px;border-radius:9px;box-shadow:0 6px 20px rgba(15,23,42,.25);max-width:260px;opacity:0;transition:opacity .1s}
@@ -175,6 +179,12 @@
   .total{text-align:right;flex-shrink:0}
   .total .tv{font-size:24px;font-weight:800;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
   .total .tl{font-size:10.5px;color:var(--muted);font-weight:600}
+  .total .td{font-size:11px;font-weight:700;margin-top:3px;white-space:nowrap}
+  .delta-box{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--line-soft)}
+  .delta-box p{font-size:14px;color:#334155;line-height:1.6}
+  .delta-box ul{list-style:none;padding:0;margin:8px 0 0;display:flex;flex-direction:column;gap:5px}
+  .delta-box li{font-size:13.5px;line-height:1.55;color:#334155}
+  .delta-box li b{font-variant-numeric:tabular-nums;margin-right:4px}
   .one{font-size:13px;color:#334155;line-height:1.6}
   .badges{display:flex;flex-wrap:wrap;gap:5px}
   .b{font-size:10.5px;font-weight:600;padding:2px 7px;border-radius:6px;white-space:nowrap;border:1px solid var(--line);color:var(--muted);background:var(--line-soft)}
@@ -323,6 +333,7 @@
       <option value="potential">잠재 임팩트 높은 순</option>
       <option value="current">현재 임팩트 높은 순</option>
       <option value="updated">최근 업데이트 순</option>
+      <option value="delta">지난 평가보다 많이 오른 순</option>
       <option value="name">이름순</option>
     </select>
     <select class="sort" id="critSort" aria-label="기준별 정렬">
@@ -357,6 +368,12 @@ const state = {sort:"total", crit:"", type:"all", q:""};
 function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
 const total = a => CRIT.reduce((s,c)=>s+(a.scores[c.id]?.s||0),0)/CRIT.length;
 const fmt1 = n => n.toFixed(1);
+// Previous evaluation snapshot (scores only) for "compared with last time".
+const P = D.previous || null;
+const prevTotal = a => { const p=P&&P.apps[a.id]; return p ? CRIT.reduce((s,c)=>s+(p[c.id]||0),0)/CRIT.length : null; };
+const deltaOf = a => { const p=prevTotal(a); return p==null ? null : Math.round((total(a)-p)*10)/10; };
+const deltaTag = (d, cls="") => d==null ? `<span class="${cls} same">신규</span>`
+  : `<span class="${cls} ${d>0?"up":d<0?"down":"same"}">${d>0?"▲ "+fmt1(d):d<0?"▼ "+fmt1(-d):"변화 없음"}</span>`;
 function refBtn(key, label){
   return window.Insights && Insights.has(key)
     ? `<button type="button" class="ref-btn" data-insight="${esc(key)}" data-lang="ko">${esc(label||key)}</button>`
@@ -368,6 +385,11 @@ document.getElementById("lede").innerHTML =
   `App Store에 출시한 <b>${D.apps.length}개 앱</b>을 ADA 수상작·임팩트 기록부 <b>291개 앱</b>을 조사하며 만든 <b>9가지 기준</b>으로 평가했습니다. 각 점수에는 근거(스토어 · 스크린샷 · 소스 코드)가 붙어 있고, 기준마다 비교할 레퍼런스 앱으로 바로 이동할 수 있습니다. 앱을 직접 실행하지는 않았으므로 실행해야만 보이는 부분은 평가에서 빠져 있습니다.`;
 document.getElementById("stApps").textContent = D.apps.length;
 document.getElementById("stAvg").textContent = fmt1(D.apps.reduce((s,a)=>s+total(a),0)/D.apps.length);
+if(P){
+  const moved = D.apps.map(deltaOf).filter(d=>d!=null);
+  document.querySelector("header .stats").insertAdjacentHTML("afterend",
+    `<div class="delta-line">지난 평가(${esc(P.evaluated)}) ${fmt1(P.avg)}점 · 오른 앱 ${moved.filter(d=>d>0).length}개 · 내린 앱 ${moved.filter(d=>d<0).length}개 · 새 앱 ${D.apps.length-moved.length}개</div>`);
+}
 document.getElementById("stCode").textContent = D.apps.filter(a=>a.sources?.code).length;
 document.getElementById("stRatings").textContent = D.apps.reduce((s,a)=>s+(a.ratingKR?.c||0)+(a.ratingUS?.c||0),0);
 
@@ -381,12 +403,12 @@ document.getElementById("pActions").innerHTML = S.actions.map(x=>`<li><b>${esc(x
 const critStats = CRIT.map(c=>{
   const vals = D.apps.map(a=>a.scores[c.id]?.s||0);
   const dist = [[1,2],[3,4],[5,6],[7,8],[9,10]].map(([lo,hi])=>vals.filter(x=>x>=lo&&x<=hi).length);
-  return {c, avg: vals.reduce((s,v)=>s+v,0)/vals.length, dist};
+  return {c, avg: vals.reduce((s,v)=>s+v,0)/vals.length, dist, prev: P&&P.crit?P.crit[c.id]:null};
 });
 document.getElementById("critBars").innerHTML = critStats.map((x,i)=>`
   <div class="bar-row" data-i="${i}">
     <span class="bl" title="${esc(x.c.name)}">${esc(x.c.short||x.c.name)}</span>
-    <span class="bar-track"><span class="bar-fill" style="width:${x.avg/10*100}%"></span></span>
+    <span class="bar-track"><span class="bar-fill" style="width:${x.avg/10*100}%"></span>${x.prev!=null?`<span class="bar-prev" style="left:${x.prev/10*100}%"></span>`:""}</span>
     <span class="bv">${fmt1(x.avg)}</span>
   </div>`).join("");
 const tip = document.getElementById("tip");
@@ -394,7 +416,7 @@ document.getElementById("critBars").addEventListener("mousemove", e=>{
   const row = e.target.closest(".bar-row");
   if(!row){ tip.classList.remove("on"); return; }
   const x = critStats[+row.dataset.i];
-  tip.innerHTML = `<b>${esc(x.c.name)}</b> · 평균 ${fmt1(x.avg)}<br>` + x.dist.map((n,k)=>`${k*2+1}~${k*2+2}점 ${n}개`).join(" · ");
+  tip.innerHTML = `<b>${esc(x.c.name)}</b> · 평균 ${fmt1(x.avg)}${x.prev!=null?` (지난 평가 ${fmt1(x.prev)})`:""}<br>` + x.dist.map((n,k)=>`${k*2+1}~${k*2+2}점 ${n}개`).join(" · ");
   tip.style.left = Math.min(e.clientX+14, innerWidth-270)+"px";
   tip.style.top = (e.clientY+14)+"px";
   tip.classList.add("on");
@@ -424,7 +446,9 @@ document.getElementById("rankLow").innerHTML = [...D.apps].filter(a=>a.impact.lv
   .sort((x,y)=>(x.impact.lv.cf[0]+x.impact.lv.depth[0])-(y.impact.lv.cf[0]+y.impact.lv.depth[0])).slice(0,8)
   .map(a=>rankRow(a, `${a.impact.lv.depth[0]}·${a.impact.lv.cf[0]}`, `깊이·반사실성 · ${a.impact.lv.cf[1]}`)).join("");
 const years = Math.round((Date.parse(D.evaluated) - Math.min(...D.apps.map(a=>Date.parse(a.released))))/31557600000);
-document.getElementById("impMaker").innerHTML = `${D.apps.length}개 앱을 약 ${years}년에 걸쳐 끝까지 출시했습니다. 앱 하나하나의 현재 임팩트는 작지만, 이 완주 경험이 <b>공통 모듈·배포 흐름·설계 원칙</b>으로 쌓였고 점수에도 흔적이 있습니다 — 2025년 9월 이후 출시한 39개 앱은 이전 7개보다 신뢰 점수 평균이 높습니다(5.7 → 6.6). 다만 전체 평균은 거의 같아서, 쌓인 역량이 아직 스토어·도달로 이어지지는 않았습니다. 이건 앱의 임팩트가 아니라 <b>만드는 행위의 임팩트</b>이고, 다음 앱에서 환전됩니다. 다만 <a href="impact.html#persuade" style="color:var(--accent-dim);text-decoration:underline">판돈</a>은 점검할 때입니다: 새 앱을 여는 비용보다, 잠재 임팩트 상위 앱에 도달을 붙이는 비용이 훨씬 쌉니다.`;
+const cut="2025-09-01", recent=D.apps.filter(a=>a.released>=cut), older=D.apps.filter(a=>a.released<cut);
+const avgC=(arr,id)=>arr.reduce((t,a)=>t+(a.scores[id]?.s||0),0)/Math.max(arr.length,1);
+document.getElementById("impMaker").innerHTML = `${D.apps.length}개 앱을 약 ${years}년에 걸쳐 끝까지 출시했습니다. 앱 하나하나의 현재 임팩트는 작지만, 이 완주 경험이 <b>공통 모듈·배포 흐름·설계 원칙</b>으로 쌓였고 점수에도 흔적이 있습니다 — 2025년 9월 이후 출시한 ${recent.length}개 앱은 이전 ${older.length}개보다 신뢰 점수 평균이 높습니다(${fmt1(avgC(older,"trust"))} → ${fmt1(avgC(recent,"trust"))}). 다만 쌓인 역량이 아직 스토어·도달로 이어지지는 않았습니다(스토어 ${fmt1(avgC(D.apps,"store"))} · 증거 ${fmt1(avgC(D.apps,"evidence"))}). 이건 앱의 임팩트가 아니라 <b>만드는 행위의 임팩트</b>이고, 다음 앱에서 환전됩니다. 다만 <a href="impact.html#persuade" style="color:var(--accent-dim);text-decoration:underline">판돈</a>은 점검할 때입니다: 새 앱을 여는 비용보다, 잠재 임팩트 상위 앱에 도달을 붙이는 비용이 훨씬 쌉니다.`;
 function impRowHTML(a){
   const m=a.impact, [sym,sl]=SIGN_KO[m.sign]||SIGN_KO.pos;
   return `<article class="imp-row">
@@ -480,7 +504,7 @@ function cardHTML(a){
         <h3>${esc(a.name)}</h3>
         <div class="sub">${esc(a.genre)} · ${esc(a.price)} · 평점 ${ratings}개</div>
       </div>
-      <div class="total"><div class="tv">${fmt1(t)}</div><div class="tl">/ 10</div></div>
+      <div class="total"><div class="tv">${fmt1(t)}</div><div class="tl">/ 10</div>${P?deltaTag(deltaOf(a),"td"):""}</div>
     </div>
     <p class="one">${esc(a.oneLiner)}</p>
     <div class="imp-inline">임팩트 현재 <b>${fmt1(impCurrent(a))}</b> → 잠재 <b>${fmt1(impPotential(a))}</b> · 반사실성 <b>${a.impact.lv.cf[0]}</b></div>
@@ -511,6 +535,7 @@ function render(){
   else if(state.sort==="low") rows.sort((x,y)=>total(x)-total(y));
   else if(state.sort==="potential") rows.sort((x,y)=>impPotential(y)-impPotential(x));
   else if(state.sort==="current") rows.sort((x,y)=>impCurrent(y)-impCurrent(x));
+  else if(state.sort==="delta") rows.sort((x,y)=>(deltaOf(y)??-99)-(deltaOf(x)??-99) || total(y)-total(x));
   else if(state.sort==="updated") rows.sort((x,y)=>String(y.updated).localeCompare(String(x.updated)));
   else rows.sort((x,y)=>x.name.localeCompare(y.name,"ko"));
   document.getElementById("metaLine").innerHTML = `<b>${rows.length}</b>개 앱`;
@@ -532,6 +557,10 @@ function evalHTML(a){
         <div class="badges" style="margin-top:6px"><span class="b type">${a.impactType} · ${esc(TYPES[a.impactType])}</span><span class="b">총점 ${fmt1(total(a))} / 10</span><span class="b">출시 ${esc(a.released)} · 업데이트 ${esc(a.updated)}</span></div>
       </div>
     </div>
+    ${P&&a.delta?`<section><h4>지난 평가 대비 (${esc(P.evaluated)})</h4><div class="delta-box">
+      <p>${deltaTag(deltaOf(a))} ${prevTotal(a)!=null?`<span class="same">${fmt1(prevTotal(a))} → ${fmt1(total(a))}</span> · `:""}${esc(a.delta.summary)}</p>
+      ${a.delta.changes&&a.delta.changes.length?`<ul>${a.delta.changes.map(x=>{const c=CRIT.find(k=>k.id===x.c);return `<li><b class="${x.to>x.from?"up":"down"}">${esc(c?c.name:x.c)} ${x.from}→${x.to}</b>${esc(x.why)}</li>`;}).join("")}</ul>`:""}
+    </div></section>`:""}
     <section><h4>임팩트 유형</h4><p style="font-size:14px;color:#334155;line-height:1.65">${esc(a.impactWhy)}</p>
       <div class="refs" style="margin-top:8px"><span class="rl">비교할 레퍼런스</span>${a.references.map(r=>refBtn(r.key)).join("")}</div>
       <ul class="ins-list" style="margin-top:8px">${a.references.map(r=>`<li><b>${esc(r.key)}</b> — ${esc(r.why)}</li>`).join("")}</ul>
