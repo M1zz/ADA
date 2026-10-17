@@ -6,7 +6,7 @@
   const DATA = window.INSIGHTS_DATA || {apps:{}, alias:{}, fetched:""};
   const WOW = (window.WOW_DATA && window.WOW_DATA.apps) || {};
   const TRY = (window.TRY_DATA && window.TRY_DATA.apps) || {};
-  const TRY_KEY = "ada-try-v1";
+  const TRY_KEY = "ada-try-v2"; // v2: missions rewritten around each app's surprise
 
   const L = {
     en:{btn:"Deep dive", points:"What makes it good", impact:"Impact", evidence:"Evidence & metrics",
@@ -15,7 +15,7 @@
         fetched:d=>`App Store figures fetched ${d} via the iTunes Lookup API. Other figures link to their source; check the date on each.`,
         removed:"Not currently on the App Store", close:"Close", source:"Source",
         wow:"Wow point", legacy:"The mark it left",
-        tryIt:"Try it yourself", tryMin:m=>`About ${m} min`, trySetup:"Before you start", tryDo:"Things to experience", tryMake:"Then try it in your own app", tryAsk:"Answer in one sentence", tryBtn:n=>`Try it · ${n}`, tryDone:(a,b)=>`${a}/${b} done`,
+        tryIt:"Try it yourself", tryMin:m=>`About ${m} min`, trySetup:"Before you start", tryDo:"Feel the surprise", tryWow:"What surprises you", tryMake:"Bring that surprise into your own app", tryAsk:"Answer in one sentence", tryBtn:n=>`Try it · ${n}`, tryDone:(a,b)=>`${a}/${b} done`,
         story:"Tell it as a story", storyMsg:"Message", storyScript:"Script (about 1 min)", copy:"Copy script", copied:"Copied",
         tags:{tech:"Tech feat",design:"Design call",scale:"Scale",indie:"Tiny team",first:"First ever",copied:"Widely copied",realworld:"Real-world impact",business:"Business model",accessibility:"Accessibility"}},
     ko:{btn:"상세 분석", points:"왜 좋은 앱인가", impact:"임팩트", evidence:"측정 근거",
@@ -24,7 +24,7 @@
         fetched:d=>`App Store 수치는 ${d}에 iTunes Lookup API로 수집했습니다. 그 외 수치는 출처 링크와 기준 시점을 함께 확인하세요.`,
         removed:"현재 App Store에서 찾을 수 없음", close:"닫기", source:"출처",
         wow:"와우 포인트", legacy:"남긴 임팩트",
-        tryIt:"직접 해보기", tryMin:m=>`약 ${m}분`, trySetup:"시작 전에", tryDo:"경험해 볼 것", tryMake:"그다음 내 앱에서 따라 해볼 것", tryAsk:"한 문장으로 답해 보기", tryBtn:n=>`해볼 것 ${n}개`, tryDone:(a,b)=>`${a}/${b} 완료`,
+        tryIt:"직접 해보기", tryMin:m=>`약 ${m}분`, trySetup:"시작 전에", tryDo:"놀라움 체험하기", tryWow:"여기서 놀라는 점", tryMake:"이 놀라움을 내 앱에 옮겨 보기", tryAsk:"한 문장으로 답해 보기", tryBtn:n=>`해볼 것 ${n}개`, tryDone:(a,b)=>`${a}/${b} 완료`,
         story:"이야기로 전하기", storyMsg:"메시지", storyScript:"대본 (약 1분)", copy:"대본 복사", copied:"복사됨",
         tags:{tech:"기술력",design:"설계 결단",scale:"규모",indie:"작은 팀",first:"최초",copied:"업계가 따라함",realworld:"현실을 바꿈",business:"비즈니스 모델",accessibility:"접근성"}}
   };
@@ -83,7 +83,9 @@
   function trySection(key, lang){
     const g=tryFor(key); if(!g) return "";
     const t=L[lang], k=resolve(key)||key, done=new Set(tryLoad()[k]||[]);
-    const item=(x,id)=>`<li><label><input type="checkbox" class="try-ck" data-try="${esc(k)}" data-id="${id}"${done.has(id)?" checked":""}><span>${esc(pickLang(x,lang)||"")}</span></label></li>`;
+    // A mission is {do, wow} (action + the surprise it reveals); make items are plain {ko, en}.
+    const item=(x,id)=>{const d=x.do?pickLang(x.do,lang):pickLang(x,lang), w=x.wow&&pickLang(x.wow,lang);
+      return `<li><label><input type="checkbox" class="try-ck" data-try="${esc(k)}" data-id="${id}"${done.has(id)?" checked":""}><span>${esc(d||"")}${w?`<span class="try-wow"><b>${t.tryWow}</b>${esc(w)}</span>`:""}</span></label></li>`;};
     const mi=(g.missions||[]).map((x,i)=>item(x,"m"+i)).join(""), mk=(g.make||[]).map((x,i)=>item(x,"k"+i)).join("");
     const setup=pickLang(g.setup,lang), ask=pickLang(g.ask,lang), total=tryCount(key);
     return `<section class="try-sec" id="try-sec"><div class="try-top"><h4>${t.tryIt}</h4>
@@ -255,7 +257,10 @@
   .try-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px}
   .try-list label{display:flex;gap:9px;align-items:flex-start;cursor:pointer;font-size:14.5px;line-height:1.6;color:#334155;background:#fff;border:1px solid #dcfce7;border-radius:9px;padding:8px 11px}
   .try-list input{margin-top:4px;width:16px;height:16px;flex-shrink:0;accent-color:#16a34a}
-  .try-list input:checked+span{color:var(--muted);text-decoration:line-through;text-decoration-color:#86efac}
+  .try-list input:checked+span{color:var(--muted)}
+  .try-list input:checked+span>.try-wow{opacity:.7}
+  .try-wow{display:block;margin-top:7px;padding:7px 10px;border-radius:8px;background:linear-gradient(135deg,#fff7ed,#fdf2f8);border:1px solid #fed7aa;color:#7c2d12;font-size:14px;line-height:1.6}
+  .try-wow b{display:block;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#c2410c;margin-bottom:1px}
   .try-ask{margin-top:12px;font-size:14px;line-height:1.6;font-weight:600;color:var(--text);padding:9px 12px;border-left:3px solid #16a34a;background:#fff;border-radius:0 9px 9px 0}
   .try-ask span{display:block;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
   .try-btn{--ac:#16a34a}
