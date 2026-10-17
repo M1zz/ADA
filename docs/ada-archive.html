@@ -422,6 +422,7 @@
 
 <script src="insights-data.js"></script>
 <script src="wow-data.js"></script>
+<script src="try-data.js"></script>
 <script src="insights.js"></script>
 <script>
 // ─── i18n ────────────────────────────────────────────────────────────────────
@@ -1188,6 +1189,7 @@ function cardHTML(d){
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg>
       </a>
       ${window.Insights?Insights.button(d.name,lang):""}
+      ${window.Insights&&Insights.tryButton?Insights.tryButton(d.name,lang):""}
     </div>
   </article>`;
 }

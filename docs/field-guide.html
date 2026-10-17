@@ -454,6 +454,7 @@
 
 <script src="insights-data.js"></script>
 <script src="wow-data.js"></script>
+<script src="try-data.js"></script>
 <script src="insights.js"></script>
 <script src="install-data.js"></script>
 <script>
@@ -752,6 +753,7 @@ function cardHTML(it){
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17 17 7M9 7h8v8"/></svg>
       </a>
       ${window.Insights?Insights.button(it.key,"ko"):""}
+      ${window.Insights&&Insights.tryButton?Insights.tryButton(it.key,"ko"):""}
       <button class="mark" data-mark="${escapeHtml(it.key)}" aria-pressed="${isDone}">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="m5 12 5 5L20 7"/></svg>
         ${isDone?"관찰 완료":"관찰 표시"}

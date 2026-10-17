@@ -282,6 +282,8 @@
 </footer>
 
 <script src="insights-data.js"></script>
+<script src="wow-data.js"></script>
+<script src="try-data.js"></script>
 <script src="insights.js"></script>
 <script src="install-data.js"></script>
 <script>
@@ -396,7 +398,7 @@ function rowHTML(it, i){
       <div class="rmeta">${sub}</div>
       ${badgesHTML(it)}
       ${isPending ? confirmHTML(it) : ""}
-      <div class="ractions">${getBtn(it)}${markBtns(it)}${window.Insights?Insights.button(it.k,"ko"):""}</div>
+      <div class="ractions">${getBtn(it)}${markBtns(it)}${window.Insights?Insights.button(it.k,"ko"):""}${m==="d"&&window.Insights&&Insights.tryButton?Insights.tryButton(it.k,"ko"):""}</div>
     </div>
   </article>`;
 }
@@ -426,6 +428,7 @@ function renderNext(list){
       <button class="btn" data-mark="d" data-k="${esc(it.k)}">✓ 설치함</button>
       <button class="btn" data-mark="s" data-k="${esc(it.k)}">건너뛰기</button>
       ${window.Insights?Insights.button(it.k,"ko"):""}
+      ${window.Insights&&Insights.tryButton?Insights.tryButton(it.k,"ko"):""}
     </div>
   </section>`;
 }
